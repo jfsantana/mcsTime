@@ -13,15 +13,16 @@ if ($_POST['mod'] == 1) {
   $accion = "Crear";
 } else {
   $accion = "Editar";
-  //Listado Clientes
+  //Listado Consultora
   $id = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=$id";
   $rs         = API::GET($URL, $token);
-  $arrayClientes  = API::JSON_TO_ARRAY($rs);
+  $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
+  //var_dump($arrayCconsultora);
 
-  $NombreCliente = $arrayClientes[0]['NombreCliente'];
-  if ($arrayClientes[0]['estado'] == 'Activo')
+  $Nombre = $arrayCconsultora[0]['nombreEmpresaConsultora'];
+  if ($arrayCconsultora[0]['estado'] == 'Activo')
     $estado = 1;
   else
     $estado = 0;
@@ -30,13 +31,14 @@ if ($_POST['mod'] == 1) {
   // var_dump($arrayClientes[0]['estado'] );
 
 }
+//var_dump($accion);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Clientes</h1>
+        <h1 class="m-0">Consultora</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -44,9 +46,9 @@ if ($_POST['mod'] == 1) {
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_clientes.model.php" method="post" name="Reporte24H" id="Reporte24H">
-  <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>" >
-  <input type="hidden" name="idCliente" value="<?php echo @$_POST['id'] ?>" >
+<form action="../funciones/funcionesGenerales/XM_consultora.model.php" method="post" name="Reporte24H" id="Reporte24H">
+  <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
+  <input type="hidden" name="idEmpresaConsultora" value="<?php echo @$_POST['id'] ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -54,7 +56,7 @@ if ($_POST['mod'] == 1) {
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title"><?php echo $accion; ?> Cliente</h3>
+            <h3 class="card-title"><?php echo $accion; ?> Consultora</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -62,14 +64,18 @@ if ($_POST['mod'] == 1) {
             <div class="card-body">
               <div class="form-group">
                 <label for="nombreCliente">Nombre</label>
-                <input type="text" class="form-control" name="nombreCliente" id="nombreCliente" placeholder="Nombre del Cliente" value="<?php echo @$NombreCliente;?>">
+                <input type="text" class="form-control" name="nombreEmpresaConsultora" id="nombreEmpresaConsultora" placeholder="Nombre de la Consultora" value="<?php echo @$Nombre; ?>">
               </div>
               <!-- select -->
               <div class="form-group">
                 <label>Select</label>
-                <select class="form-control" name="activoCliente" id="activoCliente">
-                  <option <?php if(@$estado==1){echo 'selected';} ?> value=1 >Activo</option>
-                  <option <?php if(@$estado==0){echo 'selected';} ?> value=0 >Desactivado</option>
+                <select class="form-control" name="activo" id="activo">
+                  <option <?php if (@$estado == 1) {
+                            echo 'selected';
+                          } ?> value=1>Activo</option>
+                  <option <?php if (@$estado == 0) {
+                            echo 'selected';
+                          } ?> value=0>Desactivado</option>
                 </select>
               </div>
 

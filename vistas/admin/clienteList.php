@@ -76,8 +76,6 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
               </thead>
               <tbody>
               <?php foreach( $arrayClientes as $Clinete){?>
-
-
                     <tr>
                       <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')"  class="nav-link "><?php echo $Clinete['idCliente']; ?></a></td>
                       <td><?php echo $Clinete['NombreCliente']; ?></td>

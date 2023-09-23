@@ -162,7 +162,7 @@ class clientes extends conexion
                         NombreCliente ='$this->nombreCliente',
                         activo =$this->activo
                     WHERE idCliente = $this->idCliente";
-//echo $query; die;
+    //echo $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
