@@ -2,6 +2,18 @@
 if (!isset($_SESSION)) {
       session_start();
   }
+
+  require_once '../funciones/wsdl/clases/consumoApi.class.php';
+
+//Listado Clientes
+ $idProyecto = @$_POST["idProyecto"];
+ $token= $_SESSION['token'];
+ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idProyecto=$idProyecto";
+ $rs         = API::GET($URL, $token);
+ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
+
+//print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+
   ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -24,7 +36,7 @@ if (!isset($_SESSION)) {
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>99999</h3>
+                <h3><?php echo count($arrayProyecto);?></h3>
 
                 <p>Num Proyectos</p>
               </div>
@@ -56,65 +68,38 @@ if (!isset($_SESSION)) {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>ID</th>
+                    <th>Proyecto</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Activo</th>
+                    <th>Gerente Consultora</th>
+                    <th>Cliente</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                  </tr>
-                                   <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                  </tr>
+                  <?php foreach( $arrayProyecto as $Proyecto){
+                    echo "<tr>
+                            <td>".$Proyecto['idProyecto']."</td>
+                            <td>".$Proyecto['nameProyecto']."</td>
+                            <td>".$Proyecto['fechaInicio']."</td>
+                            <td>".$Proyecto['fechaFin']."</td>
+                            <td>".$Proyecto['activo']."</td>
+                            <td>".$Proyecto['gerenteProyecto']."</td>
+                            <td>".$Proyecto['NombreCliente']."</td>
+                          </tr>";
+                       }?>
+
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>ID</th>
+                    <th>Proyecto</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Activo</th>
+                    <th>Gerente Consultora</th>
+                    <th>Cliente</th>
                   </tr>
                   </tfoot>
                 </table>

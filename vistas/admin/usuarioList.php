@@ -2,6 +2,17 @@
 if (!isset($_SESSION)) {
       session_start();
   }
+  require_once '../funciones/wsdl/clases/consumoApi.class.php';
+
+//Listado Clientes
+ $id_usu = @$_POST["id_usu"];
+ $token= $_SESSION['token'];
+ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?id_usu=$id_usu";
+ $rs         = API::GET($URL, $token);
+ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
+
+//print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+
   ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -24,7 +35,7 @@ if (!isset($_SESSION)) {
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>99999</h3>
+                <h3><?php echo count($arrayConsultores);?></h3>
 
                 <p>Num Consultores</p>
               </div>
@@ -56,65 +67,47 @@ if (!isset($_SESSION)) {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>User</th>
+                    <th>Activo</th>
+                    <th>Telefono</th>
+                    <th>Cedula</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Rol</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                  </tr>
-                                   <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                  </tr>
+                  <?php foreach( $arrayConsultores as $consultores){
+                    echo "<tr>
+                            <td>".$consultores['id_usu']."</td>
+                            <td>".$consultores['nom_usu']."</td>
+                            <td>".$consultores['ape_usu']."</td>
+                            <td>".$consultores['log_usu']."</td>
+                            <td>".$consultores['act_usu']."</td>
+                            <td>".$consultores['tel_usu']."</td>
+                            <td>".$consultores['ced_usu']."</td>
+                            <td>".$consultores['car_usu']."</td>
+                            <td>".$consultores['cor_usu']."</td>
+                            <td>".$consultores['des_rol']."</td>
+                          </tr>";
+                }?>
+
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>User</th>
+                    <th>Activo</th>
+                    <th>Telefono</th>
+                    <th>Cedula</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Rol</th>
                   </tr>
                   </tfoot>
                 </table>

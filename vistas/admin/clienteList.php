@@ -2,20 +2,16 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-//require_once '../funciones/wsdl/clases/consumoApi.class.php';
-
+require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 //Listado Clientes
-// $id = @$_POST["id"];
-// $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
-// echo $URL ; die;
-// $rs         = API::GET($URL, $token);
-// $arrayClientes  = API::JSON_TO_ARRAY($rs);
-
+ $id = @$_POST["id"];
+ $token= $_SESSION['token'];
+ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
+ $rs         = API::GET($URL, $token);
+ $arrayClientes  = API::JSON_TO_ARRAY($rs);
 
 //print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
-
-
 
 ?>
 <!-- Content Header (Page header) -->
@@ -39,8 +35,7 @@ if (!isset($_SESSION)) {
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>99999</h3>
-
+            <h3><?php echo count($arrayClientes);?></h3>
             <p>Num Clientes</p>
           </div>
           <div class="icon">
@@ -64,7 +59,7 @@ if (!isset($_SESSION)) {
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Listado de Clientes</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -78,52 +73,20 @@ if (!isset($_SESSION)) {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
+              <?php foreach( $arrayClientes as $Clinete){
+                    echo "<tr>
+                            <td>".$Clinete['idCliente']."</td>
+                            <td>".$Clinete['NombreCliente']."</td>
+                            <td>".$Clinete['estado']."</td>
+                          </tr>";
+                }?>
 
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-
-                </tr>
-                <tr>
-                  <th>id</th>
-                  <th>Nombre Cliente</th>
-                  <th>Activo</th>
-
-                </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Rendering engine</th>
-                  <th>Browser</th>
-                  <th>Platform(s)</th>
-                  <th>Engine version</th>
-                  <th>CSS grade</th>
+                <th>id</th>
+                  <th>Nombre Cliente</th>
+                  <th>Activo</th>
                 </tr>
               </tfoot>
             </table>

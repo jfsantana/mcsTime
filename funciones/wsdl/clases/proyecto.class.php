@@ -11,10 +11,10 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class proyecto extends conexion
 {
     // Tabla Principal de Empleados
-    private $tabla = 'dg_empleados';
+    private $tabla = 'dg_empresa_consultora';
 
     // se debe crear atributos para las tablas que se van a validar en la funcion "post"
     private $id_usu = '';
@@ -42,45 +42,46 @@ class empleados extends conexion
     private $fechaCreacion = '0000-00-00';
 
     // Activaciond e token
-    private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
+    private $token = '';
 
-    public function listaEmpleados($id_usu)
+    /**
+     * Listaod de Cliente
+     * http://mcstime/funciones/wsdl/clientes?id
+     */
+    public function listaProyecto($idProyecto)
     {
-        $where = " WHERE id_usu <> '' ";
-
-        if ($id_usu > 1) {
-          $where = $where. ' AND id_usu = '.$id_usu;
+      $where = " WHERE dg_proyecto.idProyecto <> '' ";
+      if ($idProyecto!='') {
+          $where =  $where . " and dg_proyecto.idProyecto = ".$idProyecto;
         }
+      $query = "SELECT
+                  dg_proyecto.idProyecto,
+                  dg_proyecto.nameProyecto,
+                  dg_proyecto.fechaInicio,
+                  dg_proyecto.fechaFin,
+                  dg_proyecto.activo,
+                  dg_proyecto.gerenteProyecto,
+                  dg_cliente.NombreCliente
 
-        $query = "SELECT
-                    dg_empleados.id_usu,
-                    dg_empleados.nom_usu,
-                    dg_empleados.ape_usu,
-                    dg_empleados.log_usu,
-                    dg_empleados.pass_usu,
-                    dg_empleados.act_usu,
-                    dg_empleados.tel_usu,
-                    dg_empleados.ced_usu,
-                    dg_empleados.car_usu,
-                    dg_empleados.cor_usu,
-                    dg_empleados.rol_usu,
-                    dm_rol.des_rol
-                  FROM
-                    dg_empleados
-                    INNER JOIN
-                    dm_rol
-                    ON
-                      dg_empleados.rol_usu = dm_rol.id_rol $where ORDER BY ape_usu";
+                FROM
+                  rel_clienteproyecto
+                  INNER JOIN
+                  dg_cliente
+                  ON
+                    rel_clienteproyecto.idCliente = dg_cliente.idCliente
+                  INNER JOIN
+                  dg_proyecto
+                  ON
+                    rel_clienteproyecto.idProyecto = dg_proyecto.idProyecto
+                  $where";
 
-        $datos = parent::ObtenerDatos($query);
-
-        return $datos;
+      $datos = parent::ObtenerDatos($query);
+      return $datos;
     }
 
     public function obtenerEmpleado($NumPersonal)
     {
         $query = 'select * from '.$this->tabla." where npe_usu ='$NumPersonal'";
-
         return parent::ObtenerDatos($query);
     }
 
@@ -447,7 +448,7 @@ class empleados extends conexion
     private function EliminarEmpleados()
     {
         $query = "delete from $this->tabla
-        WHERE id = $ this->id";
+        WHERE id =";
 
         $update = parent::nonQuery($query);
 
