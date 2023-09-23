@@ -1,0 +1,14 @@
+Datos de correo
+usuario: noreply.siaho@gmail.com
+clave: S1st3m4s
+
+
+
+    $mail->SMTPDebug = 0;
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'noreply.siaho@gmail.com';
+    $mail->Password = 'gqkownjelyrdzijx';        // token Gmail
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = 465;
