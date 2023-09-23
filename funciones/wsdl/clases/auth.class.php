@@ -5,6 +5,7 @@ require_once 'respuestas.class.php';
 class auth extends conexion{
 
     public function login($json){
+
         $_respuestas = new respuestas;
         $datos = json_decode($json,true);
         if(!isset($datos['usuario']) || !isset($datos['password'])){
@@ -15,7 +16,7 @@ class auth extends conexion{
             $usuario = $datos['usuario']; //empleados_nroPersonal
             $password = $datos['password'];
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
-            //echo $datos; die;
+
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
                 $verificar = $this->insertarToken($datos[0]["log_usu"]);
@@ -39,8 +40,8 @@ class auth extends conexion{
     }
 
     private function obtenerDatosUsuarios($usuario,$password){
-        $query="select * from dg_empleados where log_usu='".$usuario."' and pass_usu = '".$password."' and act_usu = 'A'";
-
+        $query="select * from dg_empleados where log_usu='".$usuario."' and pass_usu = '".$password."' and act_usu = 1";
+        //echo $query; die;
         $datos1 = parent::ObtenerDatos($query);
 
         if(isset($datos1[0]["log_usu"])){

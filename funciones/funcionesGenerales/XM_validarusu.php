@@ -16,7 +16,7 @@
       'password' => $_POST['password'],
     ];
 
-    $rs = API::POST($URL, $token, $parametros);
+  $rs = API::POST($URL, $token, $parametros);
   $rs = API::JSON_TO_ARRAY($rs);
 
   if (@$rs['result']['token']) {
