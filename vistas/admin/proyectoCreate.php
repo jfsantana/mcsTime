@@ -15,23 +15,22 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
 } else {
+
   $accion = "Editar";
   //Listado Clientes
   $id = @$_POST["id"];
-
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idProyecto=$id";
   $rs         = API::GET($URL, $token);
   $arrayProyecto  = API::JSON_TO_ARRAY($rs);
-
-  $Nombre = $arrayProyecto[0]['NombreCliente'];
-  if ($arrayProyecto[0]['estado'] == 'Activo')
+  $Nombre = $arrayProyecto[0]['nameProyecto'];
+  $fechaInicio = $arrayProyecto[0]['fechaInicio'];
+  $fechaFin = $arrayProyecto[0]['fechaFin'];
+  $NombreCliente = $arrayProyecto[0]['NombreCliente'];
+  $gerenteProyecto = $arrayProyecto[0]['gerenteProyecto'];
+  if ($arrayProyecto[0]['activo'] == 1)
     $estado = 1;
   else
     $estado = 0;
-
-
-  // var_dump($arrayClientes[0]['estado'] );
-
 }
 ?>
 <!-- Content Header (Page header) -->
@@ -71,7 +70,7 @@ if ($_POST['mod'] == 1) {
               <div class="form-group">
                 <label>Date Inicio:</label>
                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                  <input type="text" name="fechaInicio"  class="form-control datetimepicker-input" data-target="#reservationdate" />
+                  <input type="text" name="fechaInicio"  class="form-control datetimepicker-input" data-target="#reservationdate" value="<?php echo @$fechaInicio; ?>"/>
                   <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                   </div>
@@ -80,7 +79,7 @@ if ($_POST['mod'] == 1) {
               <div class="form-group">
                 <label>Date Inicio:</label>
                 <div class="input-group date" id="reservationdateFin" data-target-input="nearest">
-                  <input type="text" name="fechaFin" class="form-control datetimepicker-input" data-target="#reservationdateFin" />
+                  <input type="text" name="fechaFin" class="form-control datetimepicker-input" data-target="#reservationdateFin" value="<?php echo @$fechaFin; ?>"/>
                   <div class="input-group-append" data-target="#reservationdateFin" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                   </div>
@@ -92,10 +91,14 @@ if ($_POST['mod'] == 1) {
                 <select class="form-control select2" name="Cliente" style="width: 100%;">
                   <option>Seleccione</option>
                   <?php
-                  foreach ($arrayClientes as $cliente) {
-                    echo "<option value='" . $cliente['idCliente'] . "'>" . $cliente['NombreCliente'] . "</option>";
-                  }
-                  ?>
+                  foreach ($arrayClientes as $cliente) {?>
+                    <option value='<?php echo $cliente['idCliente'];?>'
+                           <?php if ($NombreCliente == $cliente['NombreCliente']) {
+                                  echo 'selected';
+                          } ?>>
+                          <?php echo $cliente['NombreCliente'];?>
+                    </option>
+                  <?php } ?>
                   <!-- <option selected="selected">Alabama</option> -->
 
                 </select>

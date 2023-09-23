@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {// Get READ
     }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {// POST CREATE
-     //$postBody = file_get_contents('php://input'); // para el plug in de crome
+    //$postBody = file_get_contents('php://input'); // para el plug in de crome
     $postBody = json_encode($_POST);
 
     $datosArray = $_proyecto->post($postBody);

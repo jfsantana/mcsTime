@@ -77,17 +77,17 @@ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arrayProyecto as $Proyecto) {
-                  echo "<tr>
-                            <td>" . $Proyecto['idProyecto'] . "</td>
-                            <td>" . $Proyecto['nameProyecto'] . "</td>
-                            <td>" . $Proyecto['fechaInicio'] . "</td>
-                            <td>" . $Proyecto['fechaFin'] . "</td>
-                            <td>" . $Proyecto['activo'] . "</td>
-                            <td>" . $Proyecto['gerenteProyecto'] . "</td>
-                            <td>" . $Proyecto['NombreCliente'] . "</td>
-                          </tr>";
-                } ?>
+                <?php foreach ($arrayProyecto as $Proyecto) { ?>
+                  <tr>
+                            <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/proyectoCreate.php',2,'<?php echo $Proyecto['idProyecto']; ?>')" class="nav-link "><?php echo $Proyecto['idProyecto']; ?></a></td>
+                            <td><?php echo $Proyecto['nameProyecto']; ?></td>
+                            <td><?php echo $Proyecto['fechaInicio']; ?></td>
+                            <td><?php echo $Proyecto['fechaFin']; ?></td>
+                            <td><?php echo $Proyecto['activo']; ?></td>
+                            <td><?php echo $Proyecto['gerenteProyecto']; ?></td>
+                            <td><?php echo $Proyecto['NombreCliente']; ?></td>
+                          </tr>
+                <?php } ?>
 
               </tbody>
               <tfoot>

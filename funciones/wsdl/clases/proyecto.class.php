@@ -111,6 +111,7 @@ class proyecto extends conexion
             if ($datos['mod'] != 1) {
 
               $this->idProyecto = @$datos['idProyecto'];
+
               $resp = $this->Update();
             } else {
               $resp = $this->Insertar();
@@ -198,9 +199,9 @@ class proyecto extends conexion
                           fechaInicio ='$this->fechaInicio',
                           fechaFin ='$this->fechaFin',
                           activo =$this->activoCliente,
-                          gerenteProyecto ='$this->gerenteProyecto',
+                          gerenteProyecto ='$this->gerenteProyecto'
                       WHERE idProyecto = $this->idProyecto";
-      //echo $query; die;
+        //      echo $query; die;
       $update = parent::nonQuery($query);
 
       if ($update >= 1) {
