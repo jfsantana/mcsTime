@@ -37,6 +37,21 @@
       $_SESSION['activo'] = @$datosEmpleado[0]['"act_usu'];
       $_SESSION['HOY'] = @date('Y-m-d');
 
+
+      $dia_actual = date('j'); // Obtener el día actual
+      $dia_semana_actual = date('N'); // Obtener el día de la semana actual (1 para lunes, 7 para domingo)
+
+      if ($dia_actual <= 27 ) {
+        $_SESSION['corte'] = @date('mY');
+      } else {//&& $dia_semana_actual >= 1 && $dia_semana_actual <= 5
+          $prox_dia_habil = strtotime('next weekday', strtotime(date('Y-m-27')));
+          $mes=date('m', $prox_dia_habil)+1;
+          $_SESSION['corte']= $mes.date('Y', $prox_dia_habil);
+      }
+
+
+      //$_SESSION['corte'] = @date('mY');
+
       header('Location:../../vistas/home.php');
       exit;
   } else {

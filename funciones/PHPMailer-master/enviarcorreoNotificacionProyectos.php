@@ -21,13 +21,13 @@ $date = date('Y-m-d');
 $proyectoAHOHeaderId = $_GET['proyectoAHOHeaderId'];
 // WS datos empleado
 $token = $_SESSION['token'];
-$URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/proyectos?proyectoAHOHeaderId=$proyectoAHOHeaderId";
+$URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/proyectos?proyectoAHOHeaderId=$proyectoAHOHeaderId';
 $rs = API::GET($URL, $token);
 $arrayProyecto = API::JSON_TO_ARRAY($rs);
 
-if ($arrayProyecto[0]['estatus'] == 1) {
-    $estatusProyecto = 'Activo';
-}
+// if ($arrayProyecto[0]['estatus'] == 1) {
+//     $estatusProyecto = 'Activo';
+// }
 
 $asunto = 'Proyectos Planificados en Calendario de actividades Cod: '.$arrayProyecto[0]['proyectoAHOHeaderId'];
 $body = '
