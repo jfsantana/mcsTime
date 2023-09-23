@@ -26,10 +26,7 @@ if ($_POST['mod'] == 1) {
     $estado = 1;
   else
     $estado = 0;
-
-
   // var_dump($arrayClientes[0]['estado'] );
-
 }
 //var_dump($accion);
 ?>
@@ -46,13 +43,13 @@ if ($_POST['mod'] == 1) {
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_consultora.model.php" method="post" name="Reporte24H" id="Reporte24H">
+<form action="../funciones/funcionesGenerales/XM_consultora.model.php" method="post" name="consultora" id="consultora">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idEmpresaConsultora" value="<?php echo @$_POST['id'] ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-12 col-12">
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
@@ -68,7 +65,7 @@ if ($_POST['mod'] == 1) {
               </div>
               <!-- select -->
               <div class="form-group">
-                <label>Select</label>
+                <label>Estado</label>
                 <select class="form-control" name="activo" id="activo">
                   <option <?php if (@$estado == 1) {
                             echo 'selected';

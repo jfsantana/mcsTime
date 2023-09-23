@@ -50,7 +50,7 @@ if ($_POST['mod'] == 1) {
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-12 col-12">
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
@@ -66,7 +66,7 @@ if ($_POST['mod'] == 1) {
               </div>
               <!-- select -->
               <div class="form-group">
-                <label>Select</label>
+                <label>Estado</label>
                 <select class="form-control" name="activoCliente" id="activoCliente">
                   <option <?php if(@$estado==1){echo 'selected';} ?> value=1 >Activo</option>
                   <option <?php if(@$estado==0){echo 'selected';} ?> value=0 >Desactivado</option>

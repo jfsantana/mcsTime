@@ -24,6 +24,8 @@
 <!-- daterangepicker-->
 <script src="../plugins/moment/moment.min.js"></script>
 <script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- date-range-picker -->
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4-->
 <script src="../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote-->
@@ -56,9 +58,24 @@
 <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="../../dist/js/demo.js"></script> -->
-<!-- Page specific script -->
+
+
+<!-- /**************CALENDARIO ***************************** */ -->
+
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../../plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- /************************************************ */ -->
+<!-- Select2 -->
+<script src="../plugins/select2/js/select2.full.min.js"></script>
+
+
+
+
+
+
+
+
+
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -74,7 +91,21 @@
       "autoWidth": false,
       "responsive": true,
     });
+    $('.select2').select2();
+
   });
+
+    //Date picker
+    $('#reservationdate').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+    //Date picker
+    $('#reservationdateFin').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+
+
+
 </script>
 
 <script>

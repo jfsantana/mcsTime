@@ -5,11 +5,11 @@ if (!isset($_SESSION)) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 //Listado Clientes
- $id = @$_POST["id"];
- $token= $_SESSION['token'];
- $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
- $rs         = API::GET($URL, $token);
- $arrayClientes  = API::JSON_TO_ARRAY($rs);
+$id = @$_POST["id"];
+$token = $_SESSION['token'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
+$rs         = API::GET($URL, $token);
+$arrayClientes  = API::JSON_TO_ARRAY($rs);
 
 //print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
@@ -35,7 +35,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
-            <h3><?php echo count($arrayClientes);?></h3>
+            <h3><?php echo count($arrayClientes); ?></h3>
             <p>Num Clientes</p>
           </div>
           <div class="icon">
@@ -64,47 +64,47 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
             <h3 class="card-title">Listado de Clientes</h3>
           </div>
           <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>id</th>
-                  <th>Nombre Cliente</th>
-                  <th>Activo</th>
-
-                </tr>
-              </thead>
-              <tbody>
-              <?php foreach( $arrayClientes as $Clinete){?>
-                    <tr>
-                      <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')"  class="nav-link "><?php echo $Clinete['idCliente']; ?></a></td>
-                      <td><?php echo $Clinete['NombreCliente']; ?></td>
-                      <td><?php echo $Clinete['estado']; ?></td>
-                    </tr>
-                <?php } ?>
-
-              </tbody>
-              <tfoot>
-                <tr>
+        <div class="card-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
                 <th>id</th>
-                  <th>Nombre Cliente</th>
-                  <th>Activo</th>
+                <th>Nombre Cliente</th>
+                <th>Activo</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($arrayClientes as $Clinete) { ?>
+                <tr>
+                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')" class="nav-link "><?php echo $Clinete['idCliente']; ?></a></td>
+                  <td><?php echo $Clinete['NombreCliente']; ?></td>
+                  <td><?php echo $Clinete['estado']; ?></td>
                 </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
+              <?php } ?>
+
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>id</th>
+                <th>Nombre Cliente</th>
+                <th>Activo</th>
+              </tr>
+            </tfoot>
+          </table>
         </div>
-        <!-- /.card -->
-
-
-        <!-- /.card -->
-      </section>
-      <!-- /.Left col -->
-      <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
-      <!-- right col -->
+        <!-- /.card-body -->
     </div>
-    <!-- /.row (main row) -->
-  </div><!-- /.container-fluid -->
+    <!-- /.card -->
+
+
+    <!-- /.card -->
+</section>
+<!-- /.Left col -->
+<!-- right col (We are only adding the ID to make the widgets sortable)-->
+
+<!-- right col -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
 </section>
