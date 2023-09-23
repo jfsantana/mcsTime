@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-  <?php include_once ('add/head_Aux_.php');?>
+<?php include_once ('add/head_Aux_.php');?>
 
 </head>
 <body class="hold-transition login-page">

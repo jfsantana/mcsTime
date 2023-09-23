@@ -11,7 +11,7 @@
  Target Server Version : 50736 (5.7.36)
  File Encoding         : 65001
 
- Date: 22/09/2023 20:48:58
+ Date: 22/09/2023 21:02:05
 */
 
 SET NAMES utf8mb4;
@@ -130,13 +130,14 @@ CREATE TABLE `dg_proyecto`  (
   `fechaInicio` date NULL DEFAULT NULL,
   `fechaFin` date NULL DEFAULT NULL,
   `activo` bigint(20) NULL DEFAULT NULL,
+  `gerenteProyecto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`idProyecto`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dg_proyecto
 -- ----------------------------
-INSERT INTO `dg_proyecto` VALUES (1, 'Actualizacion Tecnologica (P1)', '2023-10-02', '2024-05-15', 1);
+INSERT INTO `dg_proyecto` VALUES (1, 'Actualizacion Tecnologica (P1)', '2023-10-02', '2024-05-15', 1, NULL);
 
 -- ----------------------------
 -- Table structure for dg_reporte_tiempo
@@ -152,11 +153,13 @@ CREATE TABLE `dg_reporte_tiempo`  (
   `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Descripcion de la Actividad',
   `fechaActividad` date NULL DEFAULT NULL COMMENT 'Fecha a Registrar',
   `hora` float(11, 2) NULL DEFAULT NULL COMMENT 'Horas registradas',
+  `corte` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Corte al que pertenece el regitro MMAAAA',
+  `tipoAtencion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'REMOTO - PRESENCIAL',
   `fechaCreacion` date NULL DEFAULT NULL COMMENT 'Fecha de creacion del registro',
   `creadoPor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Usuario que lo creo',
   `estado` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'CREADO-APROBADO-RECHAZADO',
-  `corte` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Corte al que pertenece el regitro MMAAAA',
-  `presecial` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'REMOTO - PRESENCIAL',
+  `fechaActualizacion` date NULL DEFAULT NULL COMMENT 'Fecha de actualizacion de estado',
+  `actualizadoPor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Usuario que realizo la ultima actualizacion',
   PRIMARY KEY (`idRegistro`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 

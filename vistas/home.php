@@ -16,13 +16,14 @@ if (!isset($_SESSION)) {
     <img class="animation__shake" src="../dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div>
 
-  <!-- Navbar   TOPMENU-->
+  <!-- Navbar -->
+
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <?php include_once('../add/topMenuCentral.php'); ?>
 
     <!-- Mensajeria de la plantilla -->
-    <?php //include_once('../add/topMesage.php'); ?>
+    <?php include_once('../add/topMesage.php'); ?>
   </nav>
   <!-- /.navbar -->
 
