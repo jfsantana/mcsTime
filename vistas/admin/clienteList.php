@@ -41,7 +41,9 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
           <div class="icon">
             <i class="ion ion-bag"></i>
           </div>
-          <a href="#" class="small-box-footer">Crear Cliente <i class="fas fa-arrow-circle-right"></i></a>
+
+
+          <a href="#" onclick="enviarParametrosGetsionCreate('admin/clienteCreate.php','1')" class="small-box-footer">Crear Cliente <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -56,7 +58,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
     <div class="row">
       <!-- Left col -->
       <section class="col-lg-12 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-->
+        <!-- Custom tabs (Charts with tabs)-  ->
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Listado de Clientes</h3>
@@ -73,13 +75,15 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
                 </tr>
               </thead>
               <tbody>
-              <?php foreach( $arrayClientes as $Clinete){
-                    echo "<tr>
-                            <td>".$Clinete['idCliente']."</td>
-                            <td>".$Clinete['NombreCliente']."</td>
-                            <td>".$Clinete['estado']."</td>
-                          </tr>";
-                }?>
+              <?php foreach( $arrayClientes as $Clinete){?>
+
+
+                    <tr>
+                      <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')"  class="nav-link "><?php echo $Clinete['idCliente']; ?></a></td>
+                      <td><?php echo $Clinete['NombreCliente']; ?></td>
+                      <td><?php echo $Clinete['estado']; ?></td>
+                    </tr>
+                <?php } ?>
 
               </tbody>
               <tfoot>

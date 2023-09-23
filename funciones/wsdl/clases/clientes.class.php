@@ -1,4 +1,5 @@
 <?php
+
 /************************************************************
  * Diseñado por Jesus Santana
  * CLASE EMPLEADOS
@@ -13,61 +14,44 @@ require_once 'respuestas.class.php';
 // hereda de la clase conexion
 class clientes extends conexion
 {
-    // Tabla Principal de Empleados
-    private $tabla = 'dg_cliente';
+  // Tabla Principal de Empleados
+  private $tabla = 'dg_cliente';
 
-    // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-    private $id_usu = '';
-    private $nom_usu = '';
-    private $ape_usu = '';
-    private $log_usu = '';
-    private $pass_usu = '';
-    private $act_usu = '';
-    private $tel_usu = '';
-    private $ced_usu = '';
-    private $npe_usu = '';
-    private $car_usu = '';
-    private $cor_usu = '';
-    private $com_usu = '';
-    private $ger_usu = '';
-    private $are_usu = '';
-    private $niv = '';
-    private $sal_usu = '';
-    private $rol_usu = '';
-    private $fcr_usu = '';
-    private $ucr_usu = '';
-    private $fmo_usu = '';
-    private $umo_usu = '';
-    private $creador = '';
-    private $fechaCreacion = '0000-00-00';
+  // se debe crear atributos para las tablas que se van a validar en la funcion "post"
+  private $nombreCliente = '';
+  private $activo = '';
+  private $idCliente = '';
 
-    // Activaciond e token
-    private $token = '';
+  private $creador = '';
+  private $fechaCreacion = '0000-00-00';
 
-    /**
-     * Listaod de Cliente
-     * http://mcstime/funciones/wsdl/clientes?id
-     */
-    public function listaClientes($id)
-    {
-      $where = " WHERE idCliente <> '' ";
-      if ($id!='') {
-          $where =  $where . " and idCliente = ".$id;
-        }
-      $query = "select idCliente, NombreCliente,CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
-      $datos = parent::ObtenerDatos($query);
-      return $datos;
+  // Activaciond e token
+  private $token = '';
+
+  /**
+   * Listaod de Cliente
+   * http://mcstime/funciones/wsdl/clientes?id
+   */
+  public function listaClientes($id)
+  {
+    $where = " WHERE idCliente <> '' ";
+    if ($id != '') {
+      $where =  $where . " and idCliente = " . $id;
     }
+    $query = "select idCliente, NombreCliente,CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
 
-    public function obtenerEmpleado($NumPersonal)
-    {
-        $query = 'select * from '.$this->tabla." where npe_usu ='$NumPersonal'";
-        return parent::ObtenerDatos($query);
-    }
+  public function obtenerEmpleado($NumPersonal)
+  {
+    $query = 'select * from ' . $this->tabla . " where npe_usu ='$NumPersonal'";
+    return parent::ObtenerDatos($query);
+  }
 
-    public function obtenerEmpleadoToken($token)
-    {
-        $query = "SELECT
+  public function obtenerEmpleadoToken($token)
+  {
+    $query = "SELECT
                        dg_empleados.*,
                         dm_rol.des_rol
                     FROM
@@ -83,387 +67,194 @@ class clientes extends conexion
                       where
                             dg_empleado_token.token = '$token'";
 
-        return parent::ObtenerDatos($query);
-    }
+    return parent::ObtenerDatos($query);
+  }
 
-    public function post($json)
-    {
-        $_respuestas = new respuestas();
-        $datos = json_decode($json, true);
+  public function post($json)
+  {
 
-        if (!isset($datos['token'])) {
-            return $_respuestas->error_401();
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
+
+    if (!isset($datos['token'])) {
+      return $_respuestas->error_401();
+    } else {
+
+      $this->token = $datos['token'];
+      $arrayToken = $this->buscarToken();
+
+      if ($arrayToken) {
+        // valida los campos obligatorios
+        if (
+          (!isset($datos['nombreCliente'])) ||
+          (!isset($datos['activoCliente']))
+        ) {
+          // en caso de que la validacion no se cumpla se arroja un error
+          $datosArray = $_respuestas->error_400();
+          echo json_encode($datosArray);
         } else {
-            $this->token = $datos['token'];
-            $arrayToken = $this->buscarToken();
 
-            if ($arrayToken) {
-                // valida los campos obligatorios
-                if (
-                    (!isset($datos['ced_usu'])) ||
-                    (!isset($datos['npe_usu'])) ||
-                    (!isset($datos['car_usu'])) ||
-                    (!isset($datos['cor_usu'])) ||
-                    (!isset($datos['nom_usu'])) ||
-                    (!isset($datos['ape_usu'])) ||
-                    (!isset($datos['log_usu'])) ||
-                    (!isset($datos['rol_usu'])) ||
-                    (!isset($datos['act_usu'])) ||
-                    (!isset($datos['com_usu'])) ||
-                    (!isset($datos['are_usu'])) ||
-                    (!isset($datos['ger_usu']))
-                    // ||                     (!isset($datos['pass_usu']))
-                ) {
-                    // en caso de que la validacion no se cumpla se arroja un error
-                    $datosArray = $_respuestas->error_400();
-                    echo json_encode($datosArray);
-                } else {
-                    // Asignacion de datos validados su existencia en el If anterior
-                    $this->ced_usu = $datos['ced_usu'];
-                    $this->npe_usu = $datos['npe_usu'];
-                    $this->car_usu = $datos['car_usu'];
 
-                    $this->tel_usu = @$datos['tel_usu'];
-                    $this->cor_usu = $datos['cor_usu'];
-                    $this->nom_usu = $datos['nom_usu'];
-                    $this->ape_usu = $datos['ape_usu'];
-                    $this->log_usu = $datos['log_usu'];
-                    $this->rol_usu = $datos['rol_usu'];
-                    $this->act_usu = $datos['act_usu'];
-                    $this->com_usu = $datos['com_usu'];
-                    $this->ger_usu = $datos['ger_usu'];
-                    $this->pass_usu = @$datos['pass_usu'];
+          // Asignacion de datos validados su existencia en el If anterior
+          $this->nombreCliente = @$datos['nombreCliente'];
+          $this->activo = @$datos['activoCliente'];
+          $this->fechaCreacion = date('Y-m-d');
 
-                    $this->fechaCreacion = date('Y-m-d');
+          if ($datos['mod'] != 1) {
 
-                    // llama a la funcion de insertar
-                    $resp = $this->InsertarEmpleados();
+            $this->idCliente = @$datos['idCliente'];
+            $resp = $this->Update();
+          } else {
+            $resp = $this->Insertar();
+          }
 
-                    // valida que paso d/rante el inser
-                    if ($resp) {
-                        $respuesta = $_respuestas->response;
-                        $respuesta['status'] = 'OK';
-                        $respuesta['result'] = [
-                            'idHeaderNew' => $resp,
-                        ];
 
-                        return $respuesta;
-                    } else {
-                        return $_respuestas->error_500();
-                    }
-                }
-            } else {
-                return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
-            }
+          if ($resp) {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'OK';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'Ejecutado Correctamente'
+            ];
+          } else {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'ERROR';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'ERROR EN LA ACCION SOBRE EL CLIENTE'
+            ];
+          }
+          return $respuesta;
         }
+      } else {
+        return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
+      }
     }
+  }
 
-    private function InsertarEmpleados()
-    {
-        $query = 'insert Into '.$this->tabla."
+  private function Insertar()
+  {
+    $query = 'insert Into ' . $this->tabla . "
             (
-                ced_usu,
-                npe_usu,
-                car_usu,
-                tel_usu,
-                cor_usu,
-                nom_usu,
-                ape_usu,
-                log_usu,
-                rol_usu,
-                act_usu,
-                com_usu,
-                ger_usu,
-                fcr_usu,
-                pass_usu
+              NombreCliente,
+              activo
                 )
         value
         (
-            '$this->ced_usu',
-            '$this->npe_usu',
-            '$this->car_usu',
-            '$this->tel_usu',
-            '$this->cor_usu',
-            '$this->nom_usu',
-            '$this->ape_usu',
-            '$this->log_usu',
-            '$this->rol_usu',
-            '$this->act_usu',
-            '$this->com_usu',
-            '$this->ger_usu',
-            '$this->fechaCreacion',
-            '$this->pass_usu'
+            '$this->nombreCliente',
+            $this->activo
             )";
+    $Insertar = parent::nonQueryId($query);
 
-        $Insertar = parent::nonQueryId($query);
-
-        // print_r ($Insertar);die;
-        if ($Insertar) {
-            return $Insertar;
-        } else {
-            return 0;
-        }
+    // print_r ($Insertar);die;
+    if ($Insertar) {
+      return $Insertar;
+    } else {
+      return 0;
     }
+  }
 
-    public function put($datos)
-    {
-        $_respuestas = new respuestas();
-        // $datos = json_decode($json, true);
-        // $datos = explode('&', $json);
-
-        if (!isset($datos['token'])) {
-            return $_respuestas->error_401();
-        } else {
-            $this->token = $datos['token'];
-            $arrayToken = $this->buscarToken();
-
-            if ($arrayToken) {
-                // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
-                if (
-                    !isset($datos['id_usu'])
-                ) {
-                    // en caso de que la validacion no se cumpla se arroja un error
-                    $datosArray = $_respuestas->error_400();
-                    echo json_encode($datosArray);
-                } else {
-                    $this->id_usu = $datos['id_usu'];
-                    $this->creador = $datos['creadoPor'];
-                    $this->fechaCreacion = date('Y-m-d');
-
-                    // Validaciones de campos
-                    if (isset($datos['ced_usu'])) {
-                        $this->ced_usu = $datos['ced_usu'];
-                    } else {
-                        return $_respuestas->error_401('El numero de Cedula no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['npe_usu'])) {
-                        $this->npe_usu = $datos['npe_usu'];
-                    } else {
-                        return $_respuestas->error_401('El numero de Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['car_usu'])) {
-                        $this->car_usu = $datos['car_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Cargo del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['tel_usu'])) {
-                        $this->tel_usu = $datos['tel_usu'];
-                    }
-
-                    if (isset($datos['cor_usu'])) {
-                        $this->cor_usu = $datos['cor_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Correo del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['nom_usu'])) {
-                        $this->nom_usu = $datos['nom_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Nombre del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['ape_usu'])) {
-                        $this->ape_usu = $datos['ape_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Apellido del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['log_usu'])) {
-                        $this->log_usu = $datos['log_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Usuaio del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['rol_usu'])) {
-                        $this->rol_usu = $datos['rol_usu'];
-                    } else {
-                        return $_respuestas->error_401('El ROL del Personal no puede estar en Blanco');
-                    }
-
-                    if (isset($datos['act_usu'])) {
-                        $this->act_usu = $datos['act_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Personal debe tener un Estado (adtivo / Desactivado)');
-                    }
-
-                    if (isset($datos['com_usu'])) {
-                        $this->com_usu = $datos['com_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Personal debe Complejo Asignado)');
-                    }
-
-                    if (isset($datos['ger_usu'])) {
-                        $this->ger_usu = $datos['ger_usu'];
-                    } else {
-                        return $_respuestas->error_401('El Personal debe Gerencia Asignado)');
-                    }
-
-                    if (isset($datos['are_usu'])) {
-                        $this->are_usu = $datos['are_usu'];
-                    } else {
-                        $this->are_usu = 0;
-                    }
-                    if (isset($datos['niv'])) {
-                        $this->niv = $datos['niv'];
-                    } else {
-                        $this->niv = 0;
-                    }
-                    if (isset($datos['ucr_usu'])) {
-                        $this->ucr_usu = $datos['ucr_usu'];
-                    } else {
-                        $this->ucr_usu = 0;
-                    }
-                    if (isset($datos['umo_usu'])) {
-                        $this->umo_usu = $datos['umo_usu'];
-                    } else {
-                        $this->umo_usu = 0;
-                    }
-
-                    // llama a la funcion de insertar
-                    $resp = $this->UpdateEmpleados();
-
-                    // valida que paso d/rante el inser
-                    if ($resp) {
-                        $respuesta = $_respuestas->response;
-                        $respuesta['status'] = 'OK';
-                        $respuesta['result'] = [
-                            'Id' => $this->id_usu,
-                        ];
-
-                        return $respuesta;
-                    } else {
-                        return $_respuestas->error_201('No se actualizo ningun valor');
-                    }
-                }
-            } else {
-                return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
-            }
-        }
-    }
-
-    private function UpdateEmpleados()
-    {
-        $query = 'update '.$this->tabla."
+  private function Update()
+  {
+    $query = 'update ' . $this->tabla . "
                         set
 
-                        nom_usu ='$this->nom_usu',
-                        ape_usu ='$this->ape_usu',
-                        log_usu ='$this->log_usu',
-                        pass_usu = '$this->pass_usu',
-                        act_usu = '$this->act_usu',
-                        tel_usu = '$this->tel_usu',
-                        ced_usu = '$this->ced_usu',
-                        npe_usu = '$this->npe_usu',
-                        car_usu = '$this->car_usu',
-                        com_usu = '$this->com_usu',
-                        ger_usu = '$this->ger_usu',
-                        are_usu = $this->are_usu,
-                        niv = $this->niv,
-                        ucr_usu = $this->ucr_usu,
-                        fmo_usu = '$this->fechaCreacion',
-                        umo_usu = $this->umo_usu,
-                        npe_usu = '$this->npe_usu',
-                        npe_usu = '$this->npe_usu',
-                        npe_usu = '$this->npe_usu',
-                        npe_usu = '$this->npe_usu',
-                        npe_usu = '$this->npe_usu'
-                    WHERE id_usu = $this->id_usu";
+                        NombreCliente ='$this->nombreCliente',
+                        activo =$this->activo
+                    WHERE idCliente = $this->idCliente";
+//echo $query; die;
+    $update = parent::nonQuery($query);
 
-        $update = parent::nonQuery($query);
-
-        if ($update >= 1) {
-            return $update;
-        } else {
-            return 0;
-        }
+    if ($update >= 1) {
+      return $update;
+    } else {
+      return 0;
     }
+  }
 
-    public function delete($json)
-    {
-        $_respuestas = new respuestas();
-        $datos = json_decode($json, true);
+  public function delete($json)
+  {
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
 
-        if (!isset($datos['token'])) {
-            return $_respuestas->error_401();
+    if (!isset($datos['token'])) {
+      return $_respuestas->error_401();
+    } else {
+      $this->token = $datos['token'];
+      $arrayToken = $this->buscarToken();
+
+      if ($arrayToken) {
+        // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
+        if (
+          !isset($datos['id'])
+        ) {
+          // en caso de que la validacion no se cumpla se arroja un error
+          $datosArray = $_respuestas->error_400();
+          echo json_encode($datosArray);
         } else {
-            $this->token = $datos['token'];
-            $arrayToken = $this->buscarToken();
+          // Asignacion de datos validados su existencia en el If anterior
+          // $this->id = $datos['id'];
 
-            if ($arrayToken) {
-                // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
-                if (
-                    !isset($datos['id'])
-                ) {
-                    // en caso de que la validacion no se cumpla se arroja un error
-                    $datosArray = $_respuestas->error_400();
-                    echo json_encode($datosArray);
-                } else {
-                    // Asignacion de datos validados su existencia en el If anterior
-                   // $this->id = $datos['id'];
+          // llama a la funcion de insertar
+          $resp = $this->EliminarEmpleados();
 
-                    // llama a la funcion de insertar
-                    $resp = $this->EliminarEmpleados();
+          // valida que paso d/rante el inser
+          if ($resp) {
+            $respuesta = $_respuestas->response;
+            $respuesta['result'] = [
+              'Msg' => "eliminado el registro $ this->id",
+            ];
 
-                    // valida que paso d/rante el inser
-                    if ($resp) {
-                        $respuesta = $_respuestas->response;
-                        $respuesta['result'] = [
-                            'Msg' => "eliminado el registro $ this->id",
-                        ];
-
-                        return $respuesta;
-                    } else {
-                        return $_respuestas->error_500();
-                    }
-                }
-            } else {
-                return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
-            }
+            return $respuesta;
+          } else {
+            return $_respuestas->error_500();
+          }
         }
+      } else {
+        return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
+      }
     }
+  }
 
-    private function EliminarEmpleados()
-    {
-        $query = "delete from $this->tabla
+  private function EliminarEmpleados()
+  {
+    $query = "delete from $this->tabla
         WHERE id =";
 
-        $update = parent::nonQuery($query);
+    $update = parent::nonQuery($query);
 
-        if ($update >= 1) {
-            return $update;
-        } else {
-            return 0;
-        }
+    if ($update >= 1) {
+      return $update;
+    } else {
+      return 0;
     }
+  }
 
-    private function buscarToken()
-    {
-        $query = "select * from dg_empleado_token where token = '$this->token' and estado = 1";
+  private function buscarToken()
+  {
+    $query = "select * from dg_empleado_token where token = '$this->token' and estado = 1";
 
-        $resp = parent::ObtenerDatos($query);
+    $resp = parent::ObtenerDatos($query);
 
-        if ($resp) {
-            $actualizarToken = $this->actualizarToken($resp[0]['empleadoTokenId']);
+    if ($resp) {
+      $actualizarToken = $this->actualizarToken($resp[0]['empleadoTokenId']);
 
-            return $resp;
-        } else {
-            return 0;
-        }
+      return $resp;
+    } else {
+      return 0;
     }
+  }
 
-    private function actualizarToken($tokenId)
-    {
-        $date = date('Y-m-d H:i');
-        $query = "update dg_empleado_token set date = '$date' where empleadoTokenId = '$tokenId'";
-        $resp = parent::nonQuery($query);
+  private function actualizarToken($tokenId)
+  {
+    $date = date('Y-m-d H:i');
+    $query = "update dg_empleado_token set date = '$date' where empleadoTokenId = '$tokenId'";
+    $resp = parent::nonQuery($query);
 
-        if ($resp >= 1) {
-            return $resp;
-        } else {
-            return 0;
-        }
+    if ($resp >= 1) {
+      return $resp;
+    } else {
+      return 0;
     }
+  }
 }

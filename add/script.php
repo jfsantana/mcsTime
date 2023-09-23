@@ -79,6 +79,7 @@
 
 <script>
   function enviarParametros(page) {
+
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = 'home.php';
@@ -92,4 +93,71 @@
     document.body.appendChild(form);
     form.submit();
   }
+
+  function enviarParametrosCRUD(page) {
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '../../vistas/home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function enviarParametrosGetsionCreate(page,mod) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+
+  function enviarParametrosGetsionUpdate(page,mod,id) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
 </script>
