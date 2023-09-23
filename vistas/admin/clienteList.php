@@ -58,7 +58,7 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
     <div class="row">
       <!-- Left col -->
       <section class="col-lg-12 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-  ->
+        <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Listado de Clientes</h3>
