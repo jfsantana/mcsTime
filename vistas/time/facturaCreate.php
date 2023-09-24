@@ -25,7 +25,7 @@ if($corteAux!=$_SESSION['corte'])
   //Listado Clientes
   $id = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idUser=".$_SESSION['id_user']."&corteFactura=$corteAux";
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=".$_SESSION['id_user']."&corteFactura=$corteAux";
   $rs         = API::GET($URL, $token);
   $arrayFactura  = API::JSON_TO_ARRAY($rs);
   //var_dump($arrayFactura);
@@ -70,7 +70,7 @@ $mes_actual = date('m');
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_Time.model.php" method="post" name="Reporte24H" id="Reporte24H">
+<form action="../funciones/funcionesGenerales/XM_Factura.model.php" method="post" name="Reporte24H" id="Reporte24H">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idFactura" value="<?php echo @ $idFactura  ?>">
   <input type="hidden" name="idEmpleado" value="<?php echo @ $idEmpleado  ?>">

@@ -12,30 +12,17 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class time extends conexion
+class factura extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'dg_reporte_tiempo';
+  private $tabla = 'dg_reporte_factura';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idRegistro = '';
+  private $idFactura = '';
   private $idEmpleado = '';
   private $corte = '';
-  private $fechaActividad = '0000-00-00';
-  private $hora = '';
-  private $idEmpresaConsultora = '';
-  private $idCliente = '';
-  private $idProyecto = '';
-  private $idTipoActividad = '';
-  private $tipoAtencion = '';
-  private $descripcion = '';
-
-  private $estadoAP1 = '';
-  private $estadoAP2 = '';
-  private $fechaActualizacion = '';
-  private $actualizadoPor = '';
-
-
+  private $MontoFactura = '';
+  private $urlFactura = '';
 
   private $creadoPor = '';
   private $fechaCreacion = '0000-00-00';
@@ -169,7 +156,6 @@ class time extends conexion
 
   public function post($json)
   {
-
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -183,39 +169,28 @@ class time extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['idEmpleado'])) ||
-          (!isset($datos['corte']))||
-          (!isset($datos['fechaActividad']))||
-          (!isset($datos['hora']))||
-          (!isset($datos['idEmpresaConsultora']))||
-          (!isset($datos['idCliente']))||
-          (!isset($datos['idProyecto']))||
-          (!isset($datos['idTipoActividad']))||
-          (!isset($datos['tipoAtencion']))||
-          (!isset($datos['descripcion']))
+          (!isset($datos['corte'])) ||
+          (!isset($datos['MontoFactura']))||
+          (!isset($datos['urlFactura']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
 
+
           // Asignacion de datos validados su existencia en el If anterior
           $this->idEmpleado = @$datos['idEmpleado'];
           $this->corte = @$datos['corte'];
-          $this->fechaActividad = @$datos['fechaActividad'];
-          $this->hora = @$datos['hora'];
-          $this->idEmpresaConsultora = @$datos['idEmpresaConsultora'];
-          $this->idCliente = @$datos['idCliente'];
-          $this->idProyecto = @$datos['idProyecto'];
-          $this->idTipoActividad = @$datos['idTipoActividad'];
-          $this->tipoAtencion = @$datos['tipoAtencion'];
-          $this->descripcion = @$datos['descripcion'];
-
+          $this->urlFactura = @$datos['urlFactura'];
+          $this->MontoFactura = @$datos['MontoFactura'];
           $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
 
-          if (($datos['mod'])==2) {
-            $this->idRegistro = @$datos['idRegistro'];
+
+
+          if (($datos['idFactura'])<>'') {
+            $this->idFactura = @$datos['idFactura'];
             $resp = $this->Update();
 
           } else {
@@ -252,40 +227,20 @@ class time extends conexion
     $query = 'insert Into ' . $this->tabla . "
                   (
                     idEmpleado,
-                    idEmpresaConsultora,
-                    idCliente,
-                    idProyecto,
-                    idTipoActividad,
-                    tipoAtencion,
-                    descripcion,
-                    fechaActividad,
-                    hora,
                     corte,
-                    fechaCreacion,
+                    urlFactura,
+                    MontoFactura,
                     creadoPor,
-                    estadoAP1,
-                    estadoAP2,
-                    fechaActualizacion,
-                    actualizadoPor
-                  )
+                    fechaCreacion
+                      )
               value
               (
                   '$this->idEmpleado',
-                  '$this->idEmpresaConsultora',
-                  '$this->idCliente',
-                  '$this->idProyecto',
-                  '$this->idTipoActividad',
-                  '$this->tipoAtencion',
-                  '$this->descripcion',
-                  '$this->fechaActividad',
-                  '$this->hora',
                   '$this->corte',
-                  '$this->fechaCreacion',
+                  '$this->urlFactura',
+                  '$this->MontoFactura',
                   '$this->creadoPor',
-                  'NUEVO',
-                  'NUEVO',
-                  '$this->fechaCreacion',
-                  '$this->creadoPor'
+                  '$this->fechaCreacion'
                   )";
                   //echo $query; die;
     $Insertar = parent::nonQueryId($query);
@@ -302,20 +257,10 @@ class time extends conexion
   {
     $query = 'update ' . $this->tabla . "
                         set
-                        idEmpleado ='$this->idEmpleado',
-                        idEmpresaConsultora ='$this->idEmpresaConsultora',
-                        idCliente ='$this->idCliente',
-                        idProyecto ='$this->idProyecto',
-                        idTipoActividad ='$this->idTipoActividad',
-                        tipoAtencion ='$this->tipoAtencion',
-                        descripcion ='$this->descripcion',
-                        fechaActividad ='$this->fechaActividad',
-                        hora ='$this->hora',
-                        corte ='$this->corte',
-                        fechaCreacion ='$this->fechaCreacion',
-                        actualizadoPor ='$this->creadoPor'
-                    WHERE idFactura = $this->idRegistro ";
-      //echo $query; die;
+                        urlFactura ='$this->urlFactura',
+                        MontoFactura ='$this->MontoFactura'
+                    WHERE idFactura = $this->idFactura ";
+
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

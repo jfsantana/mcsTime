@@ -23,7 +23,7 @@ if (!isset($_SESSION)) {
     <?php include_once('../add/topMenuCentral.php'); ?>
 
     <!-- Mensajeria de la plantilla -->
-    <?php include_once('../add/topMesage.php'); ?>
+    <?php //include_once('../add/topMesage.php'); ?>
   </nav>
   <!-- /.navbar -->
 

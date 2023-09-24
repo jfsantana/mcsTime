@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 //Listado Clientes
-$idEmpresaConsultora = @$_POST["idEmpresaConsultora"];
+$idEmpresaConsultora = @$_POST["id"];
 $token = $_SESSION['token'];
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=$idEmpresaConsultora";
 $rs         = API::GET($URL, $token);
