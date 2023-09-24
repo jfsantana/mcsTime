@@ -17,8 +17,9 @@ else
   $corteAux = $_POST['id'];
 
 
-
-
+  $disabled='';
+if($corteAux!=$_SESSION['corte'])
+  $disabled='disabled';
 
   $accion = "Editar";
   //Listado Clientes
@@ -36,6 +37,9 @@ else
   $urlFactura = @$arrayFactura[0]['urlFactura'];
   $MontoFactura = @$arrayFactura[0]['MontoFactura'];
 
+  if(!isset( $idEmpleado)){
+    $idEmpleado=$_SESSION['id_user'];
+  }
 
 $meses = array(
   1 => '01',
@@ -66,9 +70,10 @@ $mes_actual = date('m');
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_clientes.model.php" method="post" name="Reporte24H" id="Reporte24H">
+<form action="../funciones/funcionesGenerales/XM_Time.model.php" method="post" name="Reporte24H" id="Reporte24H">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
-  <input type="hidden" name="idFactura" value="<?php echo @$_POST['id'] ?>">
+  <input type="hidden" name="idFactura" value="<?php echo @ $idFactura  ?>">
+  <input type="hidden" name="idEmpleado" value="<?php echo @ $idEmpleado  ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -85,7 +90,7 @@ $mes_actual = date('m');
               <!-- select -->
               <div class="form-group">
                 <label>Corte</label>
-                <select class="form-control" name="Corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,this.value)">
+                <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,this.value)">
                   <?php for ($i = 1; $i <= $mes_actual; $i++) {
                     $corteAux2 = $meses[$i] . @date('Y');
                   ?>
@@ -100,11 +105,11 @@ $mes_actual = date('m');
               </div>
               <div class="form-group">
                 <label for="nombreCliente">Monto</label>
-                <input type="text" class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>">
+                <input type="text" class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>" <?php echo $disabled;?>
               </div>
               <div class="form-group">
                 <label for="nombreCliente">Link </label>
-                <input type="text" class="form-control" name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>">
+                <input type="text" class="form-control" name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>" <?php echo $disabled;?>
               </div>
 
 
@@ -112,7 +117,7 @@ $mes_actual = date('m');
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary"><?php echo $accion; ?></button>
+              <button type="submit" class="btn btn-primary">Subir Link de Factura</button>
             </div>
           </form>
         </div>
@@ -130,15 +135,19 @@ $mes_actual = date('m');
 
     var select = document.getElementById("miSelect");
     var botones = document.getElementsByClassName("btn btn-primary");
+    var input = document.getElementsByClassName("form-control");
 
     if (select.value != "<?php echo $_SESSION['corte']; ?>") {
       for (var i = 0; i < botones.length; i++) {
 
         botones[i].disabled = true;
+
+
       }
     } else {
       for (var i = 0; i < botones.length; i++) {
         botones[i].disabled = false;
+
       }
     }
   }

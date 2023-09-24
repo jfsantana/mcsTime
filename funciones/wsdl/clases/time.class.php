@@ -15,14 +15,16 @@ require_once 'respuestas.class.php';
 class time extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'dg_cliente';
+  private $tabla = 'dg_reporte_factura';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $nombreCliente = '';
-  private $activo = '';
-  private $idCliente = '';
+  private $idFactura = '';
+  private $idEmpleado = '';
+  private $corte = '';
+  private $MontoFactura = '';
+  private $urlFactura = '';
 
-  private $creador = '';
+  private $creadoPor = '';
   private $fechaCreacion = '0000-00-00';
 
   // Activaciond e token
@@ -145,8 +147,9 @@ class time extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['nombreCliente'])) ||
-          (!isset($datos['activoCliente']))
+          (!isset($datos['corte'])) ||
+          (!isset($datos['MontoFactura']))||
+          (!isset($datos['urlFactura']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
@@ -155,16 +158,22 @@ class time extends conexion
 
 
           // Asignacion de datos validados su existencia en el If anterior
-          $this->nombreCliente = @$datos['nombreCliente'];
-          $this->activo = @$datos['activoCliente'];
+          $this->idEmpleado = @$datos['idEmpleado'];
+          $this->corte = @$datos['corte'];
+          $this->urlFactura = @$datos['urlFactura'];
+          $this->MontoFactura = @$datos['MontoFactura'];
+          $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
 
-          if ($datos['mod'] != 1) {
 
-            $this->idCliente = @$datos['idCliente'];
+
+          if (($datos['idFactura'])<>'') {
+            $this->idFactura = @$datos['idFactura'];
             $resp = $this->Update();
+
           } else {
             $resp = $this->Insertar();
+
           }
 
 
@@ -194,15 +203,24 @@ class time extends conexion
   private function Insertar()
   {
     $query = 'insert Into ' . $this->tabla . "
-            (
-              NombreCliente,
-              activo
-                )
-        value
-        (
-            '$this->nombreCliente',
-            $this->activo
-            )";
+                  (
+                    idEmpleado,
+                    corte,
+                    urlFactura,
+                    MontoFactura,
+                    creadoPor,
+                    fechaCreacion
+                      )
+              value
+              (
+                  '$this->idEmpleado',
+                  '$this->corte',
+                  '$this->urlFactura',
+                  '$this->MontoFactura',
+                  '$this->creadoPor',
+                  '$this->fechaCreacion'
+                  )";
+                  //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
@@ -217,11 +235,10 @@ class time extends conexion
   {
     $query = 'update ' . $this->tabla . "
                         set
+                        urlFactura ='$this->urlFactura',
+                        MontoFactura ='$this->MontoFactura'
+                    WHERE idFactura = $this->idFactura ";
 
-                        NombreCliente ='$this->nombreCliente',
-                        activo =$this->activo
-                    WHERE idCliente = $this->idCliente";
-    //echo $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
