@@ -17,29 +17,29 @@ else
   $corteAux = $_POST['id'];
 
 
-  $disabled='';
-if($corteAux!=$_SESSION['corte'])
-  $disabled='disabled';
+$disabled = '';
+if ($corteAux != $_SESSION['corte'])
+  $disabled = 'disabled';
 
-  $accion = "Editar";
-  //Listado Clientes
-  $id = @$_POST["id"];
-  $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=".$_SESSION['id_user']."&corteFactura=$corteAux";
-  $rs         = API::GET($URL, $token);
-  $arrayFactura  = API::JSON_TO_ARRAY($rs);
-  //var_dump($arrayFactura);
-  //var_dump($URL);
+$accion = "Editar";
+//Listado Clientes
+$id = @$_POST["id"];
+$token = $_SESSION['token'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $_SESSION['id_user'] . "&corteFactura=$corteAux";
+$rs         = API::GET($URL, $token);
+$arrayFactura  = API::JSON_TO_ARRAY($rs);
+//var_dump($arrayFactura);
+//var_dump($URL);
 
-  $idFactura = @$arrayFactura[0]['idFactura'];
-  $idEmpleado = @$arrayFactura[0]['idEmpleado'];
-  $corte = @$arrayFactura[0]['corte'];
-  $urlFactura = @$arrayFactura[0]['urlFactura'];
-  $MontoFactura = @$arrayFactura[0]['MontoFactura'];
+$idFactura = @$arrayFactura[0]['idFactura'];
+$idEmpleado = @$arrayFactura[0]['idEmpleado'];
+$corte = @$arrayFactura[0]['corte'];
+$urlFactura = @$arrayFactura[0]['urlFactura'];
+$MontoFactura = @$arrayFactura[0]['MontoFactura'];
 
-  if(!isset( $idEmpleado)){
-    $idEmpleado=$_SESSION['id_user'];
-  }
+if (!isset($idEmpleado)) {
+  $idEmpleado = $_SESSION['id_user'];
+}
 
 $meses = array(
   1 => '01',
@@ -72,8 +72,8 @@ $mes_actual = date('m');
 <!-- Main content -->
 <form action="../funciones/funcionesGenerales/XM_Factura.model.php" method="post" name="Reporte24H" id="Reporte24H">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
-  <input type="hidden" name="idFactura" value="<?php echo @ $idFactura  ?>">
-  <input type="hidden" name="idEmpleado" value="<?php echo @ $idEmpleado  ?>">
+  <input type="hidden" name="idFactura" value="<?php echo @$idFactura  ?>">
+  <input type="hidden" name="idEmpleado" value="<?php echo @$idEmpleado  ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -105,20 +105,18 @@ $mes_actual = date('m');
               </div>
               <div class="form-group">
                 <label for="nombreCliente">Monto</label>
-                <input type="text" class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>" <?php echo $disabled;?>
-              </div>
-              <div class="form-group">
-                <label for="nombreCliente">Link </label>
-                <input type="text" class="form-control" name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>" <?php echo $disabled;?>
-              </div>
+                <input type="text" class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>" <?php echo $disabled; ?> </div>
+                <div class="form-group">
+                  <label for="nombreCliente">Link </label>
+                  <input type="text" class="form-control" name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>" <?php echo $disabled; ?> </div>
 
 
-            </div>
-            <!-- /.card-body -->
+                </div>
+                <!-- /.card-body -->
 
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Subir Link de Factura</button>
-            </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Subir Link de Factura</button>
+                </div>
           </form>
         </div>
       </div>
@@ -130,7 +128,6 @@ $mes_actual = date('m');
 </form>
 
 <script>
-
   function deshabilitarBotones() {
 
     var select = document.getElementById("miSelect");

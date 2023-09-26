@@ -2,15 +2,15 @@
 
 // ARCHIVO BASE PARA LOS SERVICIOS
 require_once 'clases/respuestas.class.php';
-require_once 'clases/time.class.php';
+require_once 'clases/aprobacionHoras.class.php';
 
 $_respuestas = new respuestas();
-$_time = new time();
+$_aprobacionHoras = new aprobacionHoras();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
-  if ( isset($_GET['id']) ||     isset($_GET['corte']) ) {
+  if ( isset($_GET['corte'])) {
 
-    $listaclientes = $_time->listaHoras($_GET['id'], $_GET['corte']);
+    $listaclientes = $_aprobacionHoras->listdoConsultoresConsolidado($_GET['corte']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
@@ -18,21 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
   } elseif ( isset($_GET['idRegister'])
   ) {
 
-    $listaclientes = $_time->detalleRegistro($_GET['idRegister']);
+    $listaclientes = $_aprobacionHoras->detalleRegistro($_GET['idRegister']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
 
   }  elseif (     isset($_GET['idUser']) ||     isset($_GET['corteFactura'])  ) {
 
-    //$listaclientes = $_time->detalleFactura($_GET['idUser'], $_GET['corteFactura']);
+    //$listaclientes = $_aprobacionHoras->detalleFactura($_GET['idUser'], $_GET['corteFactura']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
 
   } elseif (    isset($_GET['idTipoActividad'])  ) {
 
-    $listaclientes = $_time->listTipoActividad($_GET['idTipoActividad']);
+    $listaclientes = $_aprobacionHoras->listTipoActividad($_GET['idTipoActividad']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
   //$postBody = file_get_contents('php://input'); // para el plugd in de crome
   $postBody = json_encode($_POST);
 
-  $datosArray = $_time->post($postBody);
+  $datosArray = $_aprobacionHoras->post($postBody);
 
   // Devolvemos la respuesta
   header('Content-Type: application/json;charset=utf-8');

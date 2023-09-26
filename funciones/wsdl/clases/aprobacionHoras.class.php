@@ -12,7 +12,7 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class time extends conexion
+class aprobacionHoras extends conexion
 {
   // Tabla Principal de Empleados
   private $tabla = 'dg_reporte_tiempo';
@@ -47,55 +47,16 @@ class time extends conexion
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id
    */
-  public function listaHoras($id, $corte)
+  public function listdoConsultoresConsolidado($corte)
   {
-    $where = " WHERE idRegistro <> '' ";
-    if ($id != '') {
-      $where =  $where . " and idEmpleado = " . $id;
-    }
+    $where = " WHERE corte <> '' ";
     if ($corte != '') {
-      $where =  $where . " and corte = " . $corte;
+      $where =  $where . " and corte = '" . $corte."'";
     }
 
     $query = "
-              SELECT
-                dg_reporte_tiempo.idRegistro,
-                dg_empleados.nom_usu,
-                dg_empleados.ape_usu,
-                dg_empresa_consultora.nombreEmpresaConsultora,
-                dg_cliente.NombreCliente,
-                dg_proyecto.nameProyecto,
-                dm_tipo_actividad.descripcionTipoActividad,
-                dg_reporte_tiempo.tipoAtencion,
-                dg_reporte_tiempo.descripcion,
-                dg_reporte_tiempo.fechaActividad,
-                dg_reporte_tiempo.hora,
-                dg_reporte_tiempo.corte,
-                dg_reporte_tiempo.estadoAP1
-              FROM
-                dg_reporte_tiempo
-                INNER JOIN
-                dg_empleados
-                ON
-                  dg_reporte_tiempo.idEmpleado = dg_empleados.id_usu
-                INNER JOIN
-                dg_empresa_consultora
-                ON
-                  dg_reporte_tiempo.idEmpresaConsultora = dg_empresa_consultora.idEmpresaConsultora
-                INNER JOIN
-                dg_cliente
-                ON
-                  dg_reporte_tiempo.idCliente = dg_cliente.idCliente
-                INNER JOIN
-                dg_proyecto
-                ON
-                  dg_reporte_tiempo.idProyecto = dg_proyecto.idProyecto
-                INNER JOIN
-                dm_tipo_actividad
-                ON
-                  dg_reporte_tiempo.idTipoActividad = dm_tipo_actividad.irTipoActividad
-
-                $where order by dg_reporte_tiempo.fechaActividad DESC";
+              select * from vw_consolidado_horas_consultores
+                $where order by vw_consolidado_horas_consultores.nombre ";
 
 
     $datos = parent::ObtenerDatos($query);
@@ -240,12 +201,6 @@ class time extends conexion
           $this->tipoAtencion = @$datos['tipoAtencion'];
           $this->descripcion = @$datos['descripcion'];
 
-          if(@$datos['estadoAP1']<>'') {
-            $this->estadoAP1 = @$datos['estadoAP1'];
-          }else{
-            $this->estadoAP1 = 1;
-          }
-
           $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
 
@@ -344,8 +299,6 @@ class time extends conexion
                         tipoAtencion ='$this->tipoAtencion',
                         descripcion ='$this->descripcion',
                         fechaActividad ='$this->fechaActividad',
-                        estadoAP1 ='$this->estadoAP1',
-                        estadoAP2 ='1',
                         hora ='$this->hora',
                         fechaActualizacion ='$this->fechaCreacion',
                         actualizadoPor ='$this->creadoPor'

@@ -3,12 +3,27 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
+//var_dump($_POST);
 
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $_SESSION['id_user'] . "&corte=" . $_SESSION['corte'];
+
+
+if ($_SESSION['id_rol'] < 30) {
+  $idAux='';
+  if(!isset($_POST['id'])){
+    $idAux='';
+  }else{
+  $idAux=@$_POST['id'];
+}
+  //'id' => string '122'
+}else{
+  $idAux=$_SESSION['id_user'];
+}
+
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $_SESSION['corte'];
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
@@ -77,7 +92,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="Aprobacion" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th style="width: 2%;"></th>
@@ -90,13 +105,31 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                   <th>Descripcion</th>
                   <th style="width: 9%;">Fecha</th>
                   <th style="width: 2%;">Hora</th>
-                  <th style="width: 2%;">Corte</th>
+                  <th style="width: 2%;">Estado</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                 $total = 0;
                 foreach ($arrayTiempo as $TiempoCarga) { //f
+                  switch ($TiempoCarga['estadoAP1']) {
+                    case 1:
+                      $estado="Nuevas";
+                      $background='';
+                      break;
+                    case 2:
+                      $estado="Rechazadas";
+                      $background='style="background-color: red;"';
+                      break;
+                    case 3:
+                      $estado="Aprobadas";
+                      $background='style="background-color: green;"';
+                      break;
+                    default:
+                      $estado="Nuevas";
+                      $background='';
+                      break;
+                    }
                 ?>
 
                   <tr>
@@ -116,12 +149,11 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $TiempoCarga['NombreCliente']; ?></td>
                     <td><?php echo $TiempoCarga['nameProyecto']; ?></td>
                     <td><?php echo $TiempoCarga['descripcionTipoActividad']; ?></td>
-                    <!-- <td>< ?php echo $TiempoCarga['tipoAtencion']; ?></td> -->
                     <td><?php echo $TiempoCarga['descripcion']; ?></td>
                     <td><?php echo $TiempoCarga['fechaActividad']; ?></td>
-                    <td><?php echo $TiempoCarga['hora'];
+                    <td ><?php echo $TiempoCarga['hora'];
                         $total = $total + $TiempoCarga['hora']; ?></td>
-                    <td><?php echo $TiempoCarga['corte']; ?></td>
+                    <td <?php  echo  $background; ?>><?php  echo  $estado; ?></td>
                   </tr>
                 <?php } ?>
               </tbody>
@@ -138,7 +170,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                   <th>Descripcion</th>
                   <th>Fecha</th>
                   <th style="width: 2%;"><?php echo $total; ?></th>
-                  <th style="width: 2%;">Corte</th>
+                  <th style="width: 2%;">Estado</th>
                 </tr>
               </tfoot>
             </table>

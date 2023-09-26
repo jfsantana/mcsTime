@@ -38,7 +38,7 @@ if ($_POST['mod'] == 1) {
   //Listado Registro Horas
   $id = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idRegister=$id&corte=".@$_SESSION['corte'];
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idRegister=$id";
   var_dump($URL);
   $rs         = API::GET($URL, $token);
   $arrayRegistroTimne  = API::JSON_TO_ARRAY($rs);
@@ -95,6 +95,7 @@ if ($_POST['mod'] == 1) {
   $fechaActividad = @$arrayRegistroTimne[0]['fechaActividad'];
   $hora = @$arrayRegistroTimne[0]['hora'];
   $corte = @$arrayRegistroTimne[0]['corte'];
+  $estadoAP1 = @$arrayRegistroTimne[0]['estadoAP1'];
 
 
 
@@ -150,7 +151,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-3">
                   <label>Fecha Actividad</label>
                   <div class="input-group date" id="reservationdateFin" data-target-input="nearest">
-                    <input type="text" name="fechaActividad" <?php echo   $disabled; ?> class="form-control datetimepicker-input" data-target="#reservationdateFin" value="<?php echo @$fechaActividad; ?>" />
+                    <input type="text" name="fechaActividad" <?php echo   @$disabled; ?> class="form-control datetimepicker-input" data-target="#reservationdateFin" value="<?php echo @$fechaActividad; ?>" />
                     <div class="input-group-append" data-target="#reservationdateFin" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -159,7 +160,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="nombreCliente">Hora(s)</label>
-                  <input type="number" min=0 max=20 class="form-control" <?php echo   $disabled; ?> name="hora" id="hora" placeholder="Nombre del Cliente" value="<?php echo @$hora; ?>">
+                  <input type="number" min=0 max=20 class="form-control" <?php echo   @$disabled; ?> name="hora" id="hora" placeholder="Nombre del Cliente" value="<?php echo @$hora; ?>">
                 </div>
 
                 <div class="col-sm-3">
@@ -170,7 +171,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Consultora</label>
-                  <select class="form-control" name="idEmpresaConsultora" <?php echo   $disabled; ?> id="idEmpresaConsultora">
+                  <select class="form-control" name="idEmpresaConsultora" <?php echo   @$disabled; ?> id="idEmpresaConsultora">
                     <option>Seleccione</option>
                     <?php foreach ($arrayCconsultora as $consultora) { ?>
                       <option <?php if (@$idEmpresaConsultora == $consultora['idEmpresaConsultora']) {
@@ -183,7 +184,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Cliente</label>
-                  <select class="form-control" name="idCliente" id="idCliente" <?php echo   $disabled; ?>>
+                  <select class="form-control" name="idCliente" id="idCliente" <?php echo   @$disabled; ?>>
                     <option>Seleccione</option>
                     <?php foreach ($arrayClientes as $cliente) { ?>
                       <option <?php if (@$idCliente == $cliente['idCliente']) {
@@ -196,7 +197,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Proyecto</label>
-                  <select class="form-control" name="idProyecto" id="idProyecto" <?php echo   $disabled; ?>>
+                  <select class="form-control" name="idProyecto" id="idProyecto" <?php echo   @$disabled; ?>>
                     <option>Seleccione</option>
                     <?php foreach ($arrayProyecto as $proyecto) { ?>
                       <option <?php if (@$idProyecto == $proyecto['idProyecto']) {
@@ -207,9 +208,9 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <!-- select -->
-                <div class="col-sm-8">
+                <div class="col-sm-4">
                   <label>Tipo de Actividad</label>
-                  <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   $disabled; ?>>
+                  <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   @$disabled; ?>>
                     <option>Seleccione</option>
                     <?php foreach ($arrayTipoActividad as $tipoActividad) { ?>
                       <option <?php if (@$idTipoActividad == $tipoActividad['irTipoActividad']) {
@@ -221,7 +222,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Tipo de Atencion</label>
-                  <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   $disabled; ?>>
+                  <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   @$disabled; ?>>
                     <option>Seleccione</option>
 
                     <option <?php if (@$tipoAtencion == "Remota") {
@@ -232,16 +233,42 @@ if ($_POST['mod'] == 1) {
                             } ?> value="Presencial">Presencial</option>
                   </select>
                 </div>
+                <!-- select -->
+                <div class="col-sm-4">
+
+
+                  <?php if ($_SESSION['id_rol'] > 30) { ?>
+
+
+                  <?php } else { ?>
+                    <label>Estado de la Actividad</label>
+                    <select class="form-control" name="estadoAP1" id="estadoAP1" <?php echo   @$disabled; ?>>
+                      <option>Seleccione</option>
+                      <option <?php if (@$estadoAP1 == "1") {
+                                echo 'selected';
+                              } ?> value="1">Nuevo</option>
+                      <!-- $_SESSION['id_rol']  30-->
+                      <option <?php if (@$estadoAP1 == "2") {
+                                echo 'selected';
+                              } ?> value="2">Rechazado</option>
+                      <option <?php if (@$estadoAP1 == "3") {
+                                echo 'selected';
+                              } ?> value="3">Aprobado</option>
+                    </select>
+
+                  <?php } ?>
+
+                </div>
                 <div class="col-sm-12">
                   <label for="nombreCliente">Descripcion Actividad</label>
-                  <input type="text" class="form-control" name="descripcion" <?php echo   $disabled; ?> placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$descripcion ?>">
+                  <input type="text" class="form-control" name="descripcion" <?php echo   @$disabled; ?> placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$descripcion ?>">
                 </div>
               </div>
             </div>
             <!-- /.card-body -->
             <?php if (@$arrayRegistroTimne[0]['estadoAP1'] <> 3) { ?>
               <div class="card-footer">
-                <button type="submit" class="btn btn-primary" <?php echo   $disabled; ?> disable><?php echo $accion; ?></button>
+                <button type="submit" class="btn btn-primary" <?php echo   @$disabled; ?> disable><?php echo $accion; ?></button>
               </div>
             <?php } ?>
           </form>
