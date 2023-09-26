@@ -12,25 +12,25 @@
         <ul class="nav nav-treeview">
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('admin/clienteList.php')"  class="nav-link ">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="nav-icon far fa-circle text-danger"></i>
               <p>Cliente</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')"  class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="nav-icon far fa-circle text-danger"></i>
               <p>Empresa Consultora</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('admin/proyectoList.php')"  class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="nav-icon far fa-circle text-danger"></i>
               <p>Proyecto</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
-              <i class="far fa-circle nav-icon"></i>
+              <i class="nav-icon far fa-circle text-danger"></i>
               <p>Consultores</p>
             </a>
           </li>
@@ -39,7 +39,7 @@
 
       <li class="nav-item">
         <a href="#" onclick="enviarParametros('time/cargaTimeResumenList.php')"  class="nav-link">
-          <i class="nav-icon far fa-calendar-alt"></i>
+          <i class="nav-icon far fa-calendar-alt  text-success"></i>
           <p>
             Registro de Tiempo
           </p>
@@ -48,7 +48,7 @@
 
       <li class="nav-item">
         <a href="#" onclick="enviarParametros('time/cargaTimeResumenAprobList.php')" class="nav-link">
-          <i class="nav-icon fas fa-edit"></i>
+          <i class="nav-icon fas fa-edit text-warning"></i>
           <p>
             Aprobacion
           </p>
@@ -57,7 +57,7 @@
 
       <li class="nav-item">
         <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-copy"></i>
+          <i class="nav-icon fas fa-copy  text-info"></i>
           <p>
             Consultas
             <i class="fas fa-angle-left right"></i>

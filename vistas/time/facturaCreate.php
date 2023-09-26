@@ -9,7 +9,7 @@ $_SESSION['corte'];
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 //$_POST['corte']='082023';
-//var_dump($_POST);
+
 
 if (!isset($_POST['id']))
   $corteAux = $_SESSION['corte'];

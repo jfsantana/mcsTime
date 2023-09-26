@@ -31,9 +31,9 @@ $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-warning">
           <div class="inner">
             <h3><?php echo count($arrayCconsultora); ?></h3>
 
@@ -67,7 +67,7 @@ $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>id</th>
+
                   <th>Nombre Consultora</th>
                   <th>Estado</th>
                 </tr>
@@ -75,8 +75,7 @@ $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
               <tbody>
                 <?php foreach ($arrayCconsultora as $consultora) { ?>
                  <tr>
-                            <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/empresaConsultoraCreate.php',2,'<?php echo $consultora['idEmpresaConsultora']; ?>')"> <?php echo $consultora['idEmpresaConsultora']; ?></a></td>
-                            <td><?php echo $consultora['nombreEmpresaConsultora']; ?></td>
+                            <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/empresaConsultoraCreate.php',2,'<?php echo $consultora['idEmpresaConsultora']; ?>')"> <?php echo $consultora['nombreEmpresaConsultora']; ?></a></td>
                             <td><?php echo $consultora['estado']; ?></td>
                           </tr>
                 <?php } ?>
@@ -84,7 +83,7 @@ $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
               </tbody>
               <tfoot>
                 <tr>
-                  <th>id</th>
+
                   <th>Nombre Consultora</th>
                   <th>Estado</th>
                 </tr>

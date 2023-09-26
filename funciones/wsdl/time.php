@@ -7,7 +7,7 @@ require_once 'clases/time.class.php';
 $_respuestas = new respuestas();
 $_time = new time();
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
+if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
   if (
     isset($_GET['id']) ||     isset($_GET['corte'])
   ) {
@@ -16,9 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     echo json_encode($listaclientes);
     http_response_code(200);
   } elseif (
+    isset($_GET['idRegister'])
+  ) {
+    $listaclientes = $_time->detalleRegistro($_GET['idRegister']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($listaclientes);
+    http_response_code(200);
+  }  elseif (
     isset($_GET['idUser']) ||     isset($_GET['corteFactura'])
   ) {
-    $listaclientes = $_time->detalleFactura($_GET['idUser'], $_GET['corteFactura']);
+    //$listaclientes = $_time->detalleFactura($_GET['idUser'], $_GET['corteFactura']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
@@ -32,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   } else {
     http_response_code(200);
   }
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST
   //$postBody = file_get_contents('php://input'); // para el plugd in de crome
   $postBody = json_encode($_POST);
 
@@ -47,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     http_response_code(200);
   }
   echo json_encode($datosArray);
-} elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') { // PUT  UPDATER
+} elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') { // PUT
   // Devolvemos la respuesta
   header('Content-Type: application/json;charset=utf-8');
   $responseCode = $datosArray['result']['error_id'];

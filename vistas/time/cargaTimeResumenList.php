@@ -11,7 +11,7 @@ $token = $_SESSION['token'];
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $_SESSION['id_user'] . "&corte=" . $_SESSION['corte'];
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);
-//var_dump($arrayTiempo);
+//var_dump($URL);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -86,29 +86,42 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                   <th>Cliente</th>
                   <th>Proyecto</th>
                   <th>Actividad</th>
-                  <th>Atencion</th>
+                  <!-- <th>Atencion</th> -->
                   <th>Descripcion</th>
                   <th style="width: 9%;">Fecha</th>
-                  <th>Hora</th>
+                  <th style="width: 2%;">Hora</th>
+                  <th style="width: 2%;">Corte</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
                 $total = 0;
-                foreach ($arrayTiempo as $TiempoCarga) { ?>
+                foreach ($arrayTiempo as $TiempoCarga) { //f
+                ?>
 
                   <tr>
-                    <th style="width: 2%;"><a class="btn btn-app"> <i class="fas fa-edit"></i> </a></th>
+
+                    <th style="width: 2%;">
+                      <?php if ($TiempoCarga['estadoAP1'] == 3) { ?>
+                        <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeCreate.php',2,'<?php echo $TiempoCarga['idRegistro']; ?>')" class="nav-link "><i class="fas fa-eye"></i> </a>
+                      <?php } else { ?>
+                        <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeCreate.php',2,'<?php echo $TiempoCarga['idRegistro']; ?>')" class="nav-link "><i class="fas fa-edit"></i> </a>
+                      <?php } ?>
+
+
+                    </th>
+
                     <td><?php echo $TiempoCarga['ape_usu'] . ", " . $TiempoCarga['nom_usu']; ?></td>
                     <td><?php echo $TiempoCarga['nombreEmpresaConsultora']; ?></td>
                     <td><?php echo $TiempoCarga['NombreCliente']; ?></td>
                     <td><?php echo $TiempoCarga['nameProyecto']; ?></td>
                     <td><?php echo $TiempoCarga['descripcionTipoActividad']; ?></td>
-                    <td><?php echo $TiempoCarga['tipoAtencion']; ?></td>
+                    <!-- <td>< ?php echo $TiempoCarga['tipoAtencion']; ?></td> -->
                     <td><?php echo $TiempoCarga['descripcion']; ?></td>
                     <td><?php echo $TiempoCarga['fechaActividad']; ?></td>
                     <td><?php echo $TiempoCarga['hora'];
                         $total = $total + $TiempoCarga['hora']; ?></td>
+                    <td><?php echo $TiempoCarga['corte']; ?></td>
                   </tr>
                 <?php } ?>
               </tbody>
@@ -121,10 +134,11 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                   <th>Proyecto</th>
                   <th>Actividad</th>
 
-                  <th>Atencion</th>
+                  <!-- <th>Atencion</th> -->
                   <th>Descripcion</th>
                   <th>Fecha</th>
-                  <th><?php echo $total; ?></th>
+                  <th style="width: 2%;"><?php echo $total; ?></th>
+                  <th style="width: 2%;">Corte</th>
                 </tr>
               </tfoot>
             </table>

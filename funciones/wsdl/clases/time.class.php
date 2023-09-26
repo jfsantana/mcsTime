@@ -53,6 +53,10 @@ class time extends conexion
     if ($id != '') {
       $where =  $where . " and idEmpleado = " . $id;
     }
+    if ($corte != '') {
+      $where =  $where . " and corte = " . $corte;
+    }
+
     $query = "
               SELECT
                 dg_reporte_tiempo.idRegistro,
@@ -91,11 +95,34 @@ class time extends conexion
                 ON
                   dg_reporte_tiempo.idTipoActividad = dm_tipo_actividad.irTipoActividad
 
-                $where order by dg_reporte_tiempo.fechaActividad";
+                $where order by dg_reporte_tiempo.fechaActividad DESC";
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
 
+  public function detalleRegistro($idRegistro)
+  {
+
+    $where = " WHERE idRegistro <> '' ";
+    $where =  $where . " and idRegistro = " . $idRegistro;
+    $query = "
+              SELECT
+                dg_reporte_tiempo.*,
+                CONCAT(dg_empleados.ape_usu,', ', dg_empleados.nom_usu) as nombre
+
+              FROM
+                dg_reporte_tiempo
+                INNER JOIN
+                dg_empleados
+                ON
+                  dg_reporte_tiempo.idEmpleado = dg_empleados.id_usu
+
+              $where
+                ";
+               // echo $query; die;
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
   public function detalleFactura($idUser, $corte)
   {
     $id=$idUser;
@@ -282,8 +309,8 @@ class time extends conexion
                   '$this->corte',
                   '$this->fechaCreacion',
                   '$this->creadoPor',
-                  'NUEVO',
-                  'NUEVO',
+                  '1',
+                  '1',
                   '$this->fechaCreacion',
                   '$this->creadoPor'
                   )";
@@ -302,7 +329,6 @@ class time extends conexion
   {
     $query = 'update ' . $this->tabla . "
                         set
-                        idEmpleado ='$this->idEmpleado',
                         idEmpresaConsultora ='$this->idEmpresaConsultora',
                         idCliente ='$this->idCliente',
                         idProyecto ='$this->idProyecto',
@@ -311,10 +337,9 @@ class time extends conexion
                         descripcion ='$this->descripcion',
                         fechaActividad ='$this->fechaActividad',
                         hora ='$this->hora',
-                        corte ='$this->corte',
-                        fechaCreacion ='$this->fechaCreacion',
+                        fechaActualizacion ='$this->fechaCreacion',
                         actualizadoPor ='$this->creadoPor'
-                    WHERE idFactura = $this->idRegistro ";
+                    WHERE idRegistro = $this->idRegistro ";
       //echo $query; die;
     $update = parent::nonQuery($query);
 

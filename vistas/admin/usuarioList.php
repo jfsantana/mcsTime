@@ -31,9 +31,9 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-danger">
           <div class="inner">
             <h3><?php echo count($arrayConsultores); ?></h3>
 

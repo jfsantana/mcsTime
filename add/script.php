@@ -75,7 +75,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true,
-
+      "order": [[ 7, "desc" ]],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],

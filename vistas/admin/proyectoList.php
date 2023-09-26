@@ -31,9 +31,9 @@ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-success">
           <div class="inner">
             <h3><?php echo count($arrayProyecto); ?></h3>
 
@@ -67,7 +67,7 @@ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
+
                   <th>Proyecto</th>
                   <th>Fecha Inicio</th>
                   <th>Fecha Fin</th>
@@ -79,8 +79,7 @@ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
               <tbody>
                 <?php foreach ($arrayProyecto as $Proyecto) { ?>
                   <tr>
-                            <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/proyectoCreate.php',2,'<?php echo $Proyecto['idProyecto']; ?>')" class="nav-link "><?php echo $Proyecto['idProyecto']; ?></a></td>
-                            <td><?php echo $Proyecto['nameProyecto']; ?></td>
+                            <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/proyectoCreate.php',2,'<?php echo $Proyecto['idProyecto']; ?>')" class="nav-link "><?php echo $Proyecto['nameProyecto']; ?></a></td>
                             <td><?php echo $Proyecto['fechaInicio']; ?></td>
                             <td><?php echo $Proyecto['fechaFin']; ?></td>
                             <td><?php echo $Proyecto['activo']; ?></td>
@@ -92,7 +91,6 @@ $arrayProyecto  = API::JSON_TO_ARRAY($rs);
               </tbody>
               <tfoot>
                 <tr>
-                  <th>ID</th>
                   <th>Proyecto</th>
                   <th>Fecha Inicio</th>
                   <th>Fecha Fin</th>

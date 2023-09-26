@@ -31,7 +31,7 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-lg-12 col-6">
+      <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
@@ -68,7 +68,7 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th>id</th>
+
                 <th>Nombre Cliente</th>
                 <th>Activo</th>
 
@@ -77,8 +77,7 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
             <tbody>
               <?php foreach ($arrayClientes as $Clinete) { ?>
                 <tr>
-                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')" class="nav-link "><?php echo $Clinete['idCliente']; ?></a></td>
-                  <td><?php echo $Clinete['NombreCliente']; ?></td>
+                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/clienteCreate.php',2,'<?php echo $Clinete['idCliente']; ?>')" class="nav-link "><?php echo $Clinete['NombreCliente']; ?></a></td>
                   <td><?php echo $Clinete['estado']; ?></td>
                 </tr>
               <?php } ?>
@@ -86,7 +85,7 @@ $arrayClientes  = API::JSON_TO_ARRAY($rs);
             </tbody>
             <tfoot>
               <tr>
-                <th>id</th>
+
                 <th>Nombre Cliente</th>
                 <th>Activo</th>
               </tr>
