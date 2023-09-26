@@ -15,21 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
     echo json_encode($listaclientes);
     http_response_code(200);
 
-  } elseif ( isset($_GET['idRegister'])
-  ) {
-
-    $listaclientes = $_aprobacionHoras->detalleRegistro($_GET['idRegister']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($listaclientes);
-    http_response_code(200);
-
-  }  elseif (     isset($_GET['idUser']) ||     isset($_GET['corteFactura'])  ) {
-
-    //$listaclientes = $_aprobacionHoras->detalleFactura($_GET['idUser'], $_GET['corteFactura']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($listaclientes);
-    http_response_code(200);
-
   } elseif (    isset($_GET['idTipoActividad'])  ) {
 
     $listaclientes = $_aprobacionHoras->listTipoActividad($_GET['idTipoActividad']);

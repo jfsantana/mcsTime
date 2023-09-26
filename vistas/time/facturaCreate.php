@@ -9,7 +9,7 @@ $_SESSION['corte'];
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 //$_POST['corte']='082023';
-
+//var_dump($_POST['mod']);
 
 if (!isset($_POST['id']))
   $corteAux = $_SESSION['corte'];
@@ -25,7 +25,7 @@ $accion = "Editar";
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $_SESSION['id_user'] . "&corteFactura=$corteAux";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $_POST['mod'] . "&corteFactura=$corteAux";
 $rs         = API::GET($URL, $token);
 $arrayFactura  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayFactura);
@@ -90,7 +90,7 @@ $mes_actual = date('m');
               <!-- select -->
               <div class="form-group">
                 <label>Corte</label>
-                <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,this.value)">
+                <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,this.value)" required>
                   <?php for ($i = 1; $i <= $mes_actual; $i++) {
                     $corteAux2 = $meses[$i] . @date('Y');
                   ?>
@@ -105,10 +105,10 @@ $mes_actual = date('m');
               </div>
               <div class="form-group">
                 <label for="nombreCliente">Monto</label>
-                <input type="text" class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>" <?php echo $disabled; ?> </div>
+                <input type="number" min=0  required class="form-control" name="MontoFactura" id="MontoFactura" placeholder="MontoFactura" value="<?php echo @$MontoFactura; ?>" <?php echo $disabled; ?> </div>
                 <div class="form-group">
                   <label for="nombreCliente">Link </label>
-                  <input type="text" class="form-control" name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>" <?php echo $disabled; ?> </div>
+                  <input type="text" class="form-control" required name="urlFactura" id="urlFactura" placeholder="Link del archivo compartido en el Drive" value="<?php echo @$urlFactura; ?>" <?php echo $disabled; ?> </div>
 
 
                 </div>

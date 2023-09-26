@@ -57,7 +57,9 @@ if (!isset($_SESSION)) {
     }
 
     ?>
-    <?php include_once($url); ?>
+    <?php
+    //var_dump($url);
+    include_once($url); ?>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">

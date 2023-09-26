@@ -29,6 +29,7 @@ class time extends conexion
   private $idTipoActividad = '';
   private $tipoAtencion = '';
   private $descripcion = '';
+  private $observacionEstado = '';
 
   private $estadoAP1 = '';
   private $estadoAP2 = '';
@@ -71,7 +72,8 @@ class time extends conexion
                 dg_reporte_tiempo.fechaActividad,
                 dg_reporte_tiempo.hora,
                 dg_reporte_tiempo.corte,
-                dg_reporte_tiempo.estadoAP1
+                dg_reporte_tiempo.estadoAP1,
+                dg_reporte_tiempo.observacionEstado
               FROM
                 dg_reporte_tiempo
                 INNER JOIN
@@ -240,6 +242,7 @@ class time extends conexion
           $this->tipoAtencion = @$datos['tipoAtencion'];
           $this->descripcion = @$datos['descripcion'];
 
+          $this->observacionEstado = @$datos['observacionEstado'];
           if(@$datos['estadoAP1']<>'') {
             $this->estadoAP1 = @$datos['estadoAP1'];
           }else{
@@ -347,6 +350,7 @@ class time extends conexion
                         estadoAP1 ='$this->estadoAP1',
                         estadoAP2 ='1',
                         hora ='$this->hora',
+                        observacionEstado ='$this->observacionEstado',
                         fechaActualizacion ='$this->fechaCreacion',
                         actualizadoPor ='$this->creadoPor'
                     WHERE idRegistro = $this->idRegistro ";

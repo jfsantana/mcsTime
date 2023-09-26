@@ -107,7 +107,7 @@ $cortes = array(
             <table id="Aprobacion" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th></th>
+                  <th>Aprobar (Nuevas)</th>
                   <th>Trabajador</th>
                   <th>Consultora</th>
                   <th>Cliente</th>
@@ -130,7 +130,10 @@ $cortes = array(
                   <tr>
 
                     <td style="widtd: 2%;">
-                      <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeCreate.php',2,'<?php echo $ResumenConsultore['idRegistro']; ?>')" class="nav-link "><i class="fas fa-eye"></i> </a>
+                      <?php
+                      if ($ResumenConsultore['Nuevas'] != '0.00') { ?>
+                        <a href="../funciones/funcionesGenerales/XM_aprobacionHora.model.php?id_usu=<?php echo $ResumenConsultore['id_usu']; ?>&corte=<?php echo $corteSeleccionado; ?>" class="nav-link "><i class="fas  fa-edit"></i> </a>
+                      <?php } ?>
                     </td>
                     <td>
                       <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeResumenList.php',2,'<?php echo $ResumenConsultore['id_usu']; ?>')" class="nav-link ">

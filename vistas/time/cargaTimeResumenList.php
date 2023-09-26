@@ -56,7 +56,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           <div class="icon">
             <i class="ion ion-archive"></i>
           </div>
-          <a href="#" onclick="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,'<?php echo $_SESSION['corte']; ?>')" class="small-box-footer">Carga de Factura <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" onclick="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux ; ?>','<?php echo $_SESSION['corte']; ?>')" class="small-box-footer">Carga de Factura <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <div class="col-lg-6 col-12">

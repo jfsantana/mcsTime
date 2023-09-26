@@ -17,10 +17,13 @@ class aprobacionHoras extends conexion
   // Tabla Principal de Empleados
   private $tabla = 'dg_reporte_tiempo';
 
-  // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idRegistro = '';
-  private $idEmpleado = '';
+
+  private $id_usu = '';
   private $corte = '';
+  // se debe crear atributos para las tablas que se van a validar en la funcion "post"
+  // private $idRegistro = '';
+  private $idEmpleado = '';
+  //  private $corte = '';
   private $fechaActividad = '0000-00-00';
   private $hora = '';
   private $idEmpresaConsultora = '';
@@ -35,7 +38,7 @@ class aprobacionHoras extends conexion
   private $fechaActualizacion = '';
   private $actualizadoPor = '';
 
-
+  private $observacionEstado = '';
 
   private $creadoPor = '';
   private $fechaCreacion = '0000-00-00';
@@ -51,7 +54,7 @@ class aprobacionHoras extends conexion
   {
     $where = " WHERE corte <> '' ";
     if ($corte != '') {
-      $where =  $where . " and corte = '" . $corte."'";
+      $where =  $where . " and corte = '" . $corte . "'";
     }
 
     $query = "
@@ -82,13 +85,13 @@ class aprobacionHoras extends conexion
 
               $where
                 ";
-               // echo $query; die;
+    // echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
   public function detalleFactura($idUser, $corte)
   {
-    $id=$idUser;
+    $id = $idUser;
     $where = " WHERE idFactura <> '' ";
 
     $where =  $where . " and idEmpleado = " . $id;
@@ -111,8 +114,8 @@ class aprobacionHoras extends conexion
   {
 
     $where = " WHERE irTipoActividad <> '' ";
-    if($idTipoActividad<>'')
-    $where =  $where . " and irTipoActividad = " . $idTipoActividad;
+    if ($idTipoActividad <> '')
+      $where =  $where . " and irTipoActividad = " . $idTipoActividad;
 
     $query = "
               SELECT
@@ -123,7 +126,7 @@ class aprobacionHoras extends conexion
               $where
               order by 1
                 ";
-                //echo $query; die;
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
@@ -173,16 +176,8 @@ class aprobacionHoras extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['idEmpleado'])) ||
-          (!isset($datos['corte']))||
-          (!isset($datos['fechaActividad']))||
-          (!isset($datos['hora']))||
-          (!isset($datos['idEmpresaConsultora']))||
-          (!isset($datos['idCliente']))||
-          (!isset($datos['idProyecto']))||
-          (!isset($datos['idTipoActividad']))||
-          (!isset($datos['tipoAtencion']))||
-          (!isset($datos['descripcion']))
+          (!isset($datos['id_usu'])) ||
+          (!isset($datos['corte']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
@@ -190,28 +185,16 @@ class aprobacionHoras extends conexion
         } else {
 
           // Asignacion de datos validados su existencia en el If anterior
-          $this->idEmpleado = @$datos['idEmpleado'];
+          $this->id_usu = @$datos['id_usu'];
           $this->corte = @$datos['corte'];
-          $this->fechaActividad = @$datos['fechaActividad'];
-          $this->hora = @$datos['hora'];
-          $this->idEmpresaConsultora = @$datos['idEmpresaConsultora'];
-          $this->idCliente = @$datos['idCliente'];
-          $this->idProyecto = @$datos['idProyecto'];
-          $this->idTipoActividad = @$datos['idTipoActividad'];
-          $this->tipoAtencion = @$datos['tipoAtencion'];
-          $this->descripcion = @$datos['descripcion'];
+          $this->observacionEstado = @$datos['observacionEstado'];
+
 
           $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
 
-          if (($datos['mod'])==2) {
-            $this->idRegistro = @$datos['idRegistro'];
-            $resp = $this->Update();
 
-          } else {
-            $resp = $this->Insertar();
-
-          }
+          $resp = $this->Update();
 
 
           if ($resp) {
@@ -237,73 +220,19 @@ class aprobacionHoras extends conexion
     }
   }
 
-  private function Insertar()
-  {
-    $query = 'insert Into ' . $this->tabla . "
-                  (
-                    idEmpleado,
-                    idEmpresaConsultora,
-                    idCliente,
-                    idProyecto,
-                    idTipoActividad,
-                    tipoAtencion,
-                    descripcion,
-                    fechaActividad,
-                    hora,
-                    corte,
-                    fechaCreacion,
-                    creadoPor,
-                    estadoAP1,
-                    estadoAP2,
-                    fechaActualizacion,
-                    actualizadoPor
-                  )
-              value
-              (
-                  '$this->idEmpleado',
-                  '$this->idEmpresaConsultora',
-                  '$this->idCliente',
-                  '$this->idProyecto',
-                  '$this->idTipoActividad',
-                  '$this->tipoAtencion',
-                  '$this->descripcion',
-                  '$this->fechaActividad',
-                  '$this->hora',
-                  '$this->corte',
-                  '$this->fechaCreacion',
-                  '$this->creadoPor',
-                  '1',
-                  '1',
-                  '$this->fechaCreacion',
-                  '$this->creadoPor'
-                  )";
-                  //echo $query; die;
-    $Insertar = parent::nonQueryId($query);
-
-    // print_r ($Insertar);die;
-    if ($Insertar) {
-      return $Insertar;
-    } else {
-      return 0;
-    }
-  }
-
   private function Update()
   {
     $query = 'update ' . $this->tabla . "
                         set
-                        idEmpresaConsultora ='$this->idEmpresaConsultora',
-                        idCliente ='$this->idCliente',
-                        idProyecto ='$this->idProyecto',
-                        idTipoActividad ='$this->idTipoActividad',
-                        tipoAtencion ='$this->tipoAtencion',
-                        descripcion ='$this->descripcion',
-                        fechaActividad ='$this->fechaActividad',
-                        hora ='$this->hora',
+                        observacionEstado ='Aprobacion por Lote',
+                        estadoAP1 ='3',
                         fechaActualizacion ='$this->fechaCreacion',
                         actualizadoPor ='$this->creadoPor'
-                    WHERE idRegistro = $this->idRegistro ";
-      //echo $query; die;
+                    WHERE
+                      idEmpleado=$this->id_usu
+                      AND corte='$this->corte'
+                      and estadoAP1=1 ";
+
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
