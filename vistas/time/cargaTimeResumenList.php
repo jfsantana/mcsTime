@@ -92,7 +92,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table id="Aprobacion" class="table table-bordered table-striped">
+            <table id="registro" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th style="width: 2%;"></th>

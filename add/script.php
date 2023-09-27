@@ -87,7 +87,15 @@
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#Aprobacion_wrapper .col-md-6:eq(0)');
+
+    $("#registro").DataTable({
+      "responsive": true,
+
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#registro_wrapper .col-md-6:eq(0)');
 
 
     $('#example2').DataTable({
