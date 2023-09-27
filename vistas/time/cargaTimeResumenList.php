@@ -2,6 +2,10 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+if (!isset($_SESSION['id_user'])) {
+  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  exit();
+}
 
 //var_dump($_POST);
 

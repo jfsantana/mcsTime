@@ -2,6 +2,10 @@
 if (!isset($_SESSION)) {
   session_start();
 }
+if (!isset($_SESSION['id_user'])) {
+  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  exit();
+}
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $_SESSION['id_user'];
@@ -9,13 +13,20 @@ $_SESSION['corte'];
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 //$_POST['corte']='082023';
-//var_dump($_POST['mod']);
+//var_dump($_POST);
 
 if (!isset($_POST['id']))
   $corteAux = $_SESSION['corte'];
 else
   $corteAux = $_POST['id'];
 
+  if (!isset($_POST['mod']))
+  $idAux = $_SESSION['id_user'];
+else
+  $idAux = $_POST['mod'];
+
+
+//var_dump($idAux);
 
 $disabled = '';
 if ($corteAux != $_SESSION['corte'])
@@ -25,7 +36,7 @@ $accion = "Editar";
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $_POST['mod'] . "&corteFactura=$corteAux";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $idAux . "&corteFactura=$corteAux";
 $rs         = API::GET($URL, $token);
 $arrayFactura  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayFactura);
@@ -90,7 +101,7 @@ $mes_actual = date('m');
               <!-- select -->
               <div class="form-group">
                 <label>Corte</label>
-                <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php',2,this.value)" required>
+                <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux;?>',this.value)" required>
                   <?php for ($i = 1; $i <= $mes_actual; $i++) {
                     $corteAux2 = $meses[$i] . @date('Y');
                   ?>

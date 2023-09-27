@@ -72,6 +72,13 @@
 
 
 <script>
+function validarSesion() {
+    if (!isset($_SESSION['id_user'])) {
+        header("Location: https://www.google.com");
+        exit();
+    }
+}
+
   $(function () {
     $("#example1").DataTable({
       "responsive": true,
@@ -91,11 +98,19 @@
 
     $("#registro").DataTable({
       "responsive": true,
-
+      "order": [[ 1, "asc" ]],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#registro_wrapper .col-md-6:eq(0)');
+
+    $("#reporte").DataTable({
+      "responsive": true,
+      "order": [[ 1, "asc" ]],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#Reporte_wrapper .col-md-6:eq(0)');
 
 
     $('#example2').DataTable({

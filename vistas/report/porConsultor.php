@@ -6,7 +6,6 @@ if (!isset($_SESSION['id_user'])) {
   header("Location:  http://" . $_SERVER['HTTP_HOST']);
   exit();
 }
-
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 $mes_actual = date('m');
@@ -48,8 +47,8 @@ $cortes = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Aprobacion de Tiempos</h1>
-        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/cargaTimeResumenAprobList.php',2,this.value)">
+        <h1 class="m-0">Por Consultor</h1>
+        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user'];?>',this.value)">
             <?php for ($i = 1; $i <= $mes_actual; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
@@ -70,10 +69,8 @@ $cortes = array(
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-info">
           <div class="inner">
             <h3>Aprobaciones</h3>
@@ -86,10 +83,7 @@ $cortes = array(
           <a href="#" class="small-box-footer">Registro de Tiempos <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-
-
-      <!-- ./col -->
-    </div>
+    </div> -->
     <!-- /.row -->
 
 
@@ -101,76 +95,45 @@ $cortes = array(
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Reporte Base Por Consultor (Consultor/Cliente/Proyecto/Total horas APROBADAS)</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
             <table id="Aprobacion" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>Aprobar (Nuevas)</th>
                   <th>Trabajador</th>
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Horas Nuevas</th>
-                  <th>Horas Rechazadas</th>
-                  <th>Horas Aprobadas</th>
-                  <th>Horas Totales Registradas</th>
+                  <th>Horas Totales Aprobadas</th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                $totalNuevas = 0;
-                $totalRechazadas = 0;
-                $totalAprobadas = 0;
                 $totalTotal = 0;
-                foreach ($arrayResumenConsultores as $ResumenConsultore) { //f
+                foreach ($arrayResumenConsultores as $ResumenConsultore) { //
+                  if ($ResumenConsultore['Aprobadas'] != '0.00') {
                 ?>
 
-                  <tr>
-
-                    <td style="widtd: 2%;">
-                      <?php
-                      if ($ResumenConsultore['Nuevas'] != '0.00') { ?>
-                        <a href="../funciones/funcionesGenerales/XM_aprobacionHora.model.php?id_usu=<?php echo $ResumenConsultore['id_usu']; ?>&corte=<?php echo $corteSeleccionado; ?>" class="nav-link "><i class="fas  fa-edit"></i> </a>
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeResumenList.php',2,'<?php echo $ResumenConsultore['id_usu']; ?>')" class="nav-link ">
-                        <?php echo $ResumenConsultore['nombre'] ?>
-                      </a>
-
-                    </td>
-                    <!-- modal -->
-
-                    <!-- fin modal -->
-
-                    <td><?php echo $ResumenConsultore['nombreEmpresaConsultora']; ?></td>
-                    <td><?php echo $ResumenConsultore['NombreCliente']; ?></td>
-                    <td><?php echo $ResumenConsultore['nameProyecto']; ?></td>
-                    <td><?php echo $ResumenConsultore['Nuevas'];
-                        $totalNuevas = $totalNuevas + $ResumenConsultore['Nuevas']; ?></td>
-                    <td><?php echo $ResumenConsultore['Rechazadas'];
-                        $totalRechazadas = $totalRechazadas + $ResumenConsultore['Rechazadas']; ?></td>
-                    <td><?php echo $ResumenConsultore['Aprobadas'];
-                        $totalAprobadas = $totalAprobadas + $ResumenConsultore['Aprobadas']; ?></td>
-                    <td><?php echo $ResumenConsultore['Nuevas'] + $ResumenConsultore['Rechazadas'] + $ResumenConsultore['Aprobadas'];
-                        $totalTotal = $totalTotal + $ResumenConsultore['Nuevas'] + $ResumenConsultore['Rechazadas'] + $ResumenConsultore['Aprobadas']; ?></td>
-                  </tr>
-                <?php } ?>
+                    <tr>
+                      <td><?php echo $ResumenConsultore['nombre'] ?></a></td>
+                      <td><?php echo $ResumenConsultore['nombreEmpresaConsultora']; ?></td>
+                      <td><?php echo $ResumenConsultore['NombreCliente']; ?></td>
+                      <td><?php echo $ResumenConsultore['nameProyecto']; ?></td>
+                      <td><?php echo $ResumenConsultore['Aprobadas'];
+                          $totalTotal = $totalTotal + $ResumenConsultore['Aprobadas']; ?></td>
+                    </tr>
+                <?php }
+                } ?>
               </tbody>
               <tfoot>
                 <tr>
-                  <th></th>
                   <th>Trabajador</th>
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th><?php echo $totalNuevas; ?></th>
-                  <th><?php echo $totalRechazadas; ?></th>
-                  <th><?php echo $totalAprobadas; ?></th>
-                  <th><?php echo $totalTotal; ?></th>
+                  <th>Total<?php echo $totalTotal; ?></th>
                 </tr>
               </tfoot>
             </table>
