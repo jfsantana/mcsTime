@@ -64,56 +64,32 @@
         <p>
           Consultas
           <i class="fas fa-angle-left right"></i>
-          <span class="badge badge-info right">6</span>
+          <span class="badge badge-info right">4</span>
         </p>
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('eeport/report1.php')" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>TRepo1</p>
+            <p>Por Consultor</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>Top Navigation + Sidebar</p>
+            <p>Por Cliente</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="pages/layout/boxed.html" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>Boxed</p>
+            <p>Por Proyecto</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="pages/layout/fixed-sidebar.html" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Sidebar <small>+ Custom Area</small></p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/layout/fixed-topnav.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Navbar</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/layout/fixed-footer.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Fixed Footer</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Collapsed Sidebar</p>
+            <p>Por Corte</p>
           </a>
         </li>
       </ul>

@@ -51,7 +51,7 @@ if (!isset($_SESSION)) {
     <?php
 
     if(!isset($_POST['page'])){
-      $url="demo.php";
+      $url="time/cargaTimeResumenList.php"; //"demo.php";
     }else{
       $url=$_POST['page'];
     }
