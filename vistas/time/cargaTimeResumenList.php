@@ -16,18 +16,37 @@ $token = $_SESSION['token'];
 
 
 if ($_SESSION['id_rol'] < 30) {
-  $idAux='';
-  if(!isset($_POST['id'])){
-    $idAux='';
-  }else{
-  $idAux=@$_POST['id'];
-}
+  $idAux = '';
+  if (!isset($_POST['id'])) {
+    $idAux = '';
+  } else {
+    $idAux = @$_POST['id'];
+  }
   //'id' => string '122'
-}else{
-  $idAux=$_SESSION['id_user'];
+} else {
+  $idAux = $_SESSION['id_user'];
 }
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $_SESSION['corte'];
+if ($_SESSION['id_rol'] < 30) {
+  $corteAux = '';
+  if (!isset($_POST['mod'])) {
+    $corteAux = '';
+    $corteAux = $_SESSION['corte'];
+  } else {
+    $corteAux = @$_POST['mod'];
+
+  }
+  //'id' => string '122'
+} else {
+  $corteAux = $_SESSION['corte'];
+}
+// var_dump($_SESSION['id_rol'] );
+// var_dump($corteAux);
+
+
+
+
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux;
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
@@ -37,7 +56,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Registro de Tiempos (Corte - <?php echo $_SESSION['corte']; ?>)</h1>
+        <h1 class="m-0">Registro de Tiempos (Corte - <?php echo $corteAux; ?>)</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -60,7 +79,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           <div class="icon">
             <i class="ion ion-archive"></i>
           </div>
-          <a href="#" onclick="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux ; ?>','<?php echo $_SESSION['corte']; ?>')" class="small-box-footer">Carga de Factura <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" onclick="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux; ?>','<?php echo $_SESSION['corte']; ?>')" class="small-box-footer">Carga de Factura <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <div class="col-lg-6 col-12">
@@ -69,7 +88,7 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           <div class="inner">
             <h3>Reportar Hora </h3>
 
-            <p>Registro de Tiempos para el Corte - <?php echo $_SESSION['corte']; ?></p>
+            <p>Solo se puede reportar el Corte abierto - <?php echo $_SESSION['corte']; ?></p>
           </div>
           <div class="icon">
             <i class="ion ion-edit "></i>
@@ -118,22 +137,22 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                 foreach ($arrayTiempo as $TiempoCarga) { //f
                   switch ($TiempoCarga['estadoAP1']) {
                     case 1:
-                      $estado="Nuevas";
-                      $background='';
+                      $estado = "Nuevas";
+                      $background = '';
                       break;
                     case 2:
-                      $estado="Rechazadas";
-                      $background='style="background-color: red;"';
+                      $estado = "Rechazadas";
+                      $background = 'style="background-color: red;"';
                       break;
                     case 3:
-                      $estado="Aprobadas";
-                      $background='style="background-color: green;"';
+                      $estado = "Aprobadas";
+                      $background = 'style="background-color: green;"';
                       break;
                     default:
-                      $estado="Nuevas";
-                      $background='';
+                      $estado = "Nuevas";
+                      $background = '';
                       break;
-                    }
+                  }
                 ?>
 
                   <tr>
@@ -155,9 +174,9 @@ $arrayTiempo  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $TiempoCarga['descripcionTipoActividad']; ?></td>
                     <td><?php echo $TiempoCarga['descripcion']; ?></td>
                     <td><?php echo $TiempoCarga['fechaActividad']; ?></td>
-                    <td ><?php echo $TiempoCarga['hora'];
+                    <td><?php echo $TiempoCarga['hora'];
                         $total = $total + $TiempoCarga['hora']; ?></td>
-                    <td <?php  echo  $background; ?>><?php  echo  $estado; ?></td>
+                    <td <?php echo  $background; ?>><?php echo  $estado; ?></td>
                   </tr>
                 <?php } ?>
               </tbody>

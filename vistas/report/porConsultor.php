@@ -49,7 +49,7 @@ $cortes = array(
       <div class="col-sm-6">
         <h1 class="m-0">Por Consultor</h1>
         <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user'];?>',this.value)">
-            <?php for ($i = 1; $i <= $mes_actual; $i++) {
+            <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
               <option <?php if (@$corteAux2 ==  $corteSeleccionado) {

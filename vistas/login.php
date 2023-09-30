@@ -19,7 +19,7 @@
 
       <form name="login" id="login" action="funciones/funcionesGenerales/XM_validarusu.php" method="POST">
         <div class="input-group mb-3">
-          <input name="user" type="text" class="form-control" placeholder="Email@gaga.com" value="jsantana">
+          <input name="user" type="text" class="form-control" placeholder="user" >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input name="password" type="password" class="form-control" placeholder="Password" value="123456">
+          <input name="password" type="password" class="form-control" placeholder="Password" >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -53,7 +53,7 @@
                                 <b> <?php echo @$_GET['mensaje']; ?></b>
 <br>
 
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
         </div>
       </p>
     </div>

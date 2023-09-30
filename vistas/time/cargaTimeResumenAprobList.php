@@ -19,6 +19,22 @@ if (!isset($_POST['id'])) {
   $corteSeleccionado = $_POST['id'];
 }
 
+// if ($_SESSION['id_rol'] < 30) {
+//   $corteAux = '';
+//   if (!isset($_POST['mod'])) {
+//     $corteAux = '';
+//     $corteAux = $_SESSION['corte'];
+//   } else {
+//     $corteAux = @$_POST['mod'];
+
+//   }
+//   //'id' => string '122'
+// } else {
+//   $corteAux = $_SESSION['corte'];
+// }
+// // var_dump($_SESSION['id_rol'] );
+//  var_dump($corteSeleccionado);
+
 //var_dump($corteSeleccionado);
 
 //Listado Consultora
@@ -26,6 +42,7 @@ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHor
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 
+//var_dump($URL);
 
 $cortes = array(
   1 => '01',
@@ -50,7 +67,7 @@ $cortes = array(
       <div class="col-sm-6">
         <h1 class="m-0">Aprobacion de Tiempos</h1>
         <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/cargaTimeResumenAprobList.php',2,this.value)">
-            <?php for ($i = 1; $i <= $mes_actual; $i++) {
+            <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
               <option <?php if (@$corteAux2 ==  $corteSeleccionado) {
@@ -71,25 +88,20 @@ $cortes = array(
 <section class="content">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>Aprobaciones</h3>
-
-            <p>Num Registro de Tiempos</p>
+        <!-- <div class="row">
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>Aprobaciones</h3>
+                <p>Num Registro de Tiempos</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer">Registro de Tiempos <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
           </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="#" class="small-box-footer">Registro de Tiempos <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-
-
-      <!-- ./col -->
-    </div>
+        </div> -->
     <!-- /.row -->
 
 
@@ -101,7 +113,7 @@ $cortes = array(
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <h3 class="card-title">Listado Consolidad por Corte</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -137,7 +149,7 @@ $cortes = array(
                       <?php } ?>
                     </td>
                     <td>
-                      <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeResumenList.php',2,'<?php echo $ResumenConsultore['id_usu']; ?>')" class="nav-link ">
+                      <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeResumenList.php','<?php echo $corteSeleccionado; ?>','<?php echo $ResumenConsultore['id_usu']; ?>')" class="nav-link ">
                         <?php echo $ResumenConsultore['nombre'] ?>
                       </a>
 

@@ -52,6 +52,8 @@ class aprobacionHoras extends conexion
    */
   public function listdoConsultoresConsolidado($corte)
   {
+
+
     $where = " WHERE corte <> '' ";
     if ($corte != '') {
       $where =  $where . " and corte = '" . $corte . "'";
@@ -61,7 +63,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-
+                //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }

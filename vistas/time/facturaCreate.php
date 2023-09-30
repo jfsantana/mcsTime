@@ -102,7 +102,7 @@ $mes_actual = date('m');
               <div class="form-group">
                 <label>Corte</label>
                 <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux;?>',this.value)" required>
-                  <?php for ($i = 1; $i <= $mes_actual; $i++) {
+                  <?php for ($i = 1; $i <= 12; $i++) {
                     $corteAux2 = $meses[$i] . @date('Y');
                   ?>
                     <option <?php if (@$corteAux2 ==  $corteAux) {
