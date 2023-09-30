@@ -6,7 +6,16 @@ require_once 'clases/respuestas.class.php';
 $_auth = new auth;
 $_respuestas = new respuestas;
 
-if($_SERVER['REQUEST_METHOD']=="POST"){
+if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
+  if (isset($_GET['updateToken'])) {
+    $listaclientes = $_clientes->updateToken();
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($listaclientes);
+    http_response_code(200);
+  } else {
+    http_response_code(200);
+  }
+} elseif ($_SERVER['REQUEST_METHOD']=="POST"){
     //$postBody=file_get_contents("php://input");
     $postBody = json_encode($_POST);
 

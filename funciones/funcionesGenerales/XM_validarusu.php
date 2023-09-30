@@ -10,6 +10,12 @@
   }
 
   $token = '';
+  //Update Token
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/auth?updateToken";
+  $rs         = API::GET($URL, $token);
+  $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
+
+
   $URL = 'http://'.$_SERVER['HTTP_HOST'].'/funciones/wsdl/auth';
   $parametros = [
       'usuario' => $_POST['user'],
@@ -18,6 +24,8 @@
 
   $rs = API::POST($URL, $token, $parametros);
   $rs = API::JSON_TO_ARRAY($rs);
+
+//qui
 
   if (@$rs['result']['token']) {
 

@@ -69,6 +69,20 @@ class auth extends conexion{
         }
     }
 
+    private function updateToken(){
+      $query="DELETE FROM dg_empleado_token
+                WHERE TIMESTAMPDIFF(HOUR, fecha, NOW()) > 8;
+                ";
+      //echo $query; die;
+      $datos1 = parent::ObtenerDatos($query);
+
+      if(isset($datos1[0]["log_usu"])){
+          return 1;
+           }else{
+          return 0;
+      }
+  }
+
 }
 
 
