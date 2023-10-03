@@ -15,6 +15,19 @@ $token = $_SESSION['token'];
 
 
 
+  if ($_SESSION['id_rol'] < 30) {
+    $idAux = '';
+    if (!isset($_POST['idProyecto'])) {
+      $idProyectoAux = '';
+    } else {
+      $idProyectoAux = @$_POST['idProyecto'];
+    }
+    //'id' => string '122'
+  } else {
+    $idProyectoAux = '';
+  }
+
+
 if ($_SESSION['id_rol'] < 30) {
   $idAux = '';
   if (!isset($_POST['id'])) {
@@ -34,7 +47,6 @@ if ($_SESSION['id_rol'] < 30) {
     $corteAux = $_SESSION['corte'];
   } else {
     $corteAux = @$_POST['mod'];
-
   }
   //'id' => string '122'
 } else {
@@ -46,7 +58,8 @@ if ($_SESSION['id_rol'] < 30) {
 
 
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux;
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux;
+//var_dump($URL);
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);

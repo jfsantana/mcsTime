@@ -48,7 +48,7 @@ class time extends conexion
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id
    */
-  public function listaHoras($id, $corte)
+  public function listaHoras($id, $corte, $idProyecto)
   {
     $where = " WHERE idRegistro <> '' ";
     if ($id != '') {
@@ -56,6 +56,10 @@ class time extends conexion
     }
     if ($corte != '') {
       $where =  $where . " and corte = " . $corte;
+    }
+
+    if ($idProyecto != '') {
+      $where =  $where . " and dg_reporte_tiempo.idProyecto = " . $idProyecto;
     }
 
     $query = "

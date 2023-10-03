@@ -19,26 +19,11 @@ if (!isset($_POST['id'])) {
   $corteSeleccionado = $_POST['id'];
 }
 
-// if ($_SESSION['id_rol'] < 30) {
-//   $corteAux = '';
-//   if (!isset($_POST['mod'])) {
-//     $corteAux = '';
-//     $corteAux = $_SESSION['corte'];
-//   } else {
-//     $corteAux = @$_POST['mod'];
 
-//   }
-//   //'id' => string '122'
-// } else {
-//   $corteAux = $_SESSION['corte'];
-// }
-// // var_dump($_SESSION['id_rol'] );
-//  var_dump($corteSeleccionado);
-
-//var_dump($corteSeleccionado);
 
 //Listado Consultora
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado;
+//var_dump($URL);
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 
@@ -145,11 +130,13 @@ $cortes = array(
                     <td style="widtd: 2%;">
                       <?php
                       if ($ResumenConsultore['Nuevas'] != '0.00') { ?>
-                        <a href="../funciones/funcionesGenerales/XM_aprobacionHora.model.php?id_usu=<?php echo $ResumenConsultore['id_usu']; ?>&corte=<?php echo $corteSeleccionado; ?>" class="nav-link "><i class="fas  fa-edit"></i> </a>
-                      <?php } ?>
+                        <a href="../funciones/funcionesGenerales/XM_aprobacionHora.model.php?idProyecto=<?php echo $ResumenConsultore['idProyecto']; ?>&id_usu=<?php echo $ResumenConsultore['id_usu']; ?>&corte=<?php echo $corteSeleccionado; ?>" class="nav-link "><i class="fas  fa-edit"></i> </a>
+                      <?php } else {
+                        // colocar un boton para ver las aprobadas por corte
+                      }?>
                     </td>
                     <td>
-                      <a href="#" onclick="enviarParametrosGetsionUpdate('time/cargaTimeResumenList.php','<?php echo $corteSeleccionado; ?>','<?php echo $ResumenConsultore['id_usu']; ?>')" class="nav-link ">
+                      <a href="#" onclick="enviarParametrosAprobacionDetalleProyecto('time/cargaTimeResumenList.php','<?php echo $corteSeleccionado; ?>','<?php echo $ResumenConsultore['id_usu']; ?>','<?php echo $ResumenConsultore['idProyecto']; ?>')" class="nav-link ">
                         <?php echo $ResumenConsultore['nombre'] ?>
                       </a>
 

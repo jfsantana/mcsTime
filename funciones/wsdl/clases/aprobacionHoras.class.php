@@ -191,6 +191,8 @@ class aprobacionHoras extends conexion
           $this->corte = @$datos['corte'];
           $this->observacionEstado = @$datos['observacionEstado'];
 
+          $this->idProyecto = @$datos['idProyecto'];
+
 
           $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
@@ -233,7 +235,8 @@ class aprobacionHoras extends conexion
                     WHERE
                       idEmpleado=$this->id_usu
                       AND corte='$this->corte'
-                      and estadoAP1=1 ";
+                      and estadoAP1=1
+                      and idProyecto=$this->idProyecto";
 
     $update = parent::nonQuery($query);
 

@@ -222,5 +222,39 @@ function validarSesion() {
     form.submit();
   }
 
+  function enviarParametrosAprobacionDetalleProyecto(page,mod,id,idProyecto) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'idProyecto';
+    parametro1.value = idProyecto;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
 
 </script>
