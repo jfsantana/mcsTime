@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_user'])) {
   exit();
 }
 
-//var_dump($_POST);
+//var_dump($_SESSION);
 
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
@@ -15,17 +15,17 @@ $token = $_SESSION['token'];
 
 
 
-  if ($_SESSION['id_rol'] < 30) {
-    $idAux = '';
-    if (!isset($_POST['idProyecto'])) {
-      $idProyectoAux = '';
-    } else {
-      $idProyectoAux = @$_POST['idProyecto'];
-    }
-    //'id' => string '122'
-  } else {
+if ($_SESSION['id_rol'] < 30) {
+  $idAux = '';
+  if (!isset($_POST['idProyecto'])) {
     $idProyectoAux = '';
+  } else {
+    $idProyectoAux = @$_POST['idProyecto'];
   }
+  //'id' => string '122'
+} else {
+  $idProyectoAux = '';
+}
 
 
 if ($_SESSION['id_rol'] < 30) {
@@ -57,8 +57,11 @@ if ($_SESSION['id_rol'] < 30) {
 
 
 
-
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux;
+if ($_SESSION['id_rol'] == 20) {
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux . "&idAprobador=" . $_SESSION['id_user'];
+} else {
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux . "&idProyecto=";
+}
 //var_dump($URL);
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);

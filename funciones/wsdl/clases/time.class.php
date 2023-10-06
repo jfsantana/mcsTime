@@ -48,9 +48,14 @@ class time extends conexion
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id
    */
-  public function listaHoras($id, $corte, $idProyecto)
+  public function listaHoras($id, $corte, $idProyecto, $idAprobador)
   {
     $where = " WHERE idRegistro <> '' ";
+
+   if($idAprobador!=''){
+    $where =  $where . " and dg_empresa_consultora.idAprobador = " . $idAprobador;
+   }
+
     if ($id != '') {
       $where =  $where . " and idEmpleado = " . $id;
     }
@@ -103,7 +108,7 @@ class time extends conexion
 
                 $where order by dg_reporte_tiempo.fechaActividad DESC";
 
-
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }

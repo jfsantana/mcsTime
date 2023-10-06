@@ -100,7 +100,7 @@ if ($_POST['mod'] == 1) {
                   <?php
                   foreach ($arrayClientes as $cliente) {?>
                     <option value='<?php echo $cliente['idCliente'];?>'
-                           <?php if ($NombreCliente == $cliente['NombreCliente']) {
+                           <?php if (@$NombreCliente == @$cliente['NombreCliente']) {
                                   echo 'selected';
                           } ?>>
                           <?php echo $cliente['NombreCliente'];?>

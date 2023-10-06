@@ -21,8 +21,14 @@ if (!isset($_POST['id'])) {
 
 
 
-//Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado;
+if ($_SESSION['id_rol'] == 20) {
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado. "&idAprobador=" . $_SESSION['id_user'];
+} else {
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado. "&idAprobador=";
+}
+
+
+
 //var_dump($URL);
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);

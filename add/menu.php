@@ -1,6 +1,6 @@
 <nav class="mt-2">
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-    <?php if ($_SESSION['id_rol'] < 30) { ?>
+    <?php if ($_SESSION['id_rol'] < 20) { ?>
       <li class="nav-item menu-close">
         <a href="#" class="nav-link active">
           <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -37,14 +37,17 @@
         </ul>
       </li>
     <?php } ?>
-    <li class="nav-item">
-      <a href="#" onclick="enviarParametros('time/cargaTimeResumenList.php')" class="nav-link">
-        <i class="nav-icon far fa-calendar-alt  text-success"></i>
-        <p>
-          Registro de Tiempo
-        </p>
-      </a>
-    </li>
+    <?php if ($_SESSION['id_rol'] != 30) { // solo lo ve el rol  aprobacion  y administardor
+    ?>
+      <li class="nav-item">
+        <a href="#" onclick="enviarParametros('time/cargaTimeResumenList.php')" class="nav-link">
+          <i class="nav-icon far fa-calendar-alt  text-success"></i>
+          <p>
+            Registro de Tiempo
+          </p>
+        </a>
+      </li>
+    <?php } ?>
     <?php if ($_SESSION['id_rol'] < 30) { // solo lo ve el rol  aprobacion  y administardor
     ?>
       <li class="nav-item">
@@ -76,9 +79,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+          <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Por Cliente</p>
+              <p>FI - Proyectoado Mensual (27)</p>
             </a>
           </li>
           <li class="nav-item">
@@ -97,10 +100,10 @@
       </li>
     <?php } ?>
     <li class="nav-item">
-      <a href="../funciones/funcionesGenerales/XM_cerrarsesion.php"class="nav-link">
+      <a href="../funciones/funcionesGenerales/XM_cerrarsesion.php" class="nav-link">
         <i class="nav-icon far fa-close"></i>
         <p>
-         Salir
+          Salir
         </p>
       </a>
     </li>

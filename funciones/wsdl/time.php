@@ -8,9 +8,12 @@ $_respuestas = new respuestas();
 $_time = new time();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
-  if ( isset($_GET['id']) ||     isset($_GET['corte']) ||     isset($_GET['idProyecto']) ) {
+  if (  isset($_GET['id']) ||
+        isset($_GET['corte']) ||
+        isset($_GET['idProyecto']) ||
+        isset($_GET['idAprobador']) ) {
 
-    $listaclientes = $_time->listaHoras($_GET['id'], $_GET['corte'],$_GET['idProyecto']);
+    $listaclientes = $_time->listaHoras($_GET['id'], $_GET['corte'],$_GET['idProyecto'],@$_GET['idAprobador']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);

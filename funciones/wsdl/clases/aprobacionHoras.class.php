@@ -50,11 +50,16 @@ class aprobacionHoras extends conexion
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id
    */
-  public function listdoConsultoresConsolidado($corte)
+  public function listdoConsultoresConsolidado($corte, $idAprobador)
   {
 
 
     $where = " WHERE corte <> '' ";
+
+    if ($idAprobador != '') {
+      $where =  $where . " and idAprobador = '" . $idAprobador . "'";
+    }
+
     if ($corte != '') {
       $where =  $where . " and corte = '" . $corte . "'";
     }
