@@ -12,7 +12,7 @@ $token = $_SESSION['token'];
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?rol";
 $rs         = API::GET($URL, $token);
 $arrayRoles  = API::JSON_TO_ARRAY($rs);
-
+//var_dump($arrayRoles[0]['id_rol']);
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
 
@@ -39,6 +39,8 @@ if ($_POST['mod'] == 1) {
   $cor_usu = $arrayUsuario[0]['cor_usu'];
   $rol_usu = $arrayUsuario[0]['rol_usu'];
   $des_rol = $arrayUsuario[0]['des_rol'];
+
+  var_dump($act_usu );
 
 
   if ($arrayUsuario[0]['act_usu'] == 1)
@@ -117,12 +119,13 @@ if ($_POST['mod'] == 1) {
                 <select class="form-control " name="rol_usu" style="width: 100%;">
                   <option>Seleccione</option>
                   <?php
+
                   foreach ($arrayRoles as $rol) {?>
                     <option value='<?php echo $rol['id_rol'];?>'
-                           <?php if (@$rol_usu == $rol['des_rol']) {
+                           <?php if (@$rol_usu == $rol['id_rol']) {
                                   echo 'selected';
                           } ?>>
-                          <?php echo $rol['des_rol'];?>
+                          <?php echo $rol['des_rol']; ?> <?php $rol['id_rol']; ?>
                     </option>
                   <?php } ?>
                   <!-- <option selected="selected">Alabama</option> -->
@@ -133,10 +136,10 @@ if ($_POST['mod'] == 1) {
               <div class="form-group">
                 <label>Estado</label>
                 <select class="form-control" name="act_usu" id="act_usu">
-                  <option <?php if (@$estado == 1) {
+                  <option <?php if (@$estado == 'Activo') {
                             echo 'selected';
                           } ?> value=1>Activo</option>
-                  <option <?php if (@$estado == 0) {
+                  <option <?php if (@$estado != 'Activo') {
                             echo 'selected';
                           } ?> value=0>Desactivado</option>
                 </select>

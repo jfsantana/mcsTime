@@ -31,6 +31,9 @@ if ($_POST['mod'] == 1) {
   $fechaFin = $arrayProyecto[0]['fechaFin'];
   $NombreCliente = $arrayProyecto[0]['NombreCliente'];
   $gerenteProyecto = $arrayProyecto[0]['gerenteProyecto'];
+  $pais = @$arrayProyecto[0]['pais'];
+  $country = @$arrayProyecto[0]['country'];
+
   if ($arrayProyecto[0]['activo'] == 1)
     $estado = 1;
   else
@@ -97,7 +100,7 @@ if ($_POST['mod'] == 1) {
                   <?php
                   foreach ($arrayClientes as $cliente) {?>
                     <option value='<?php echo $cliente['idCliente'];?>'
-                           <?php if ($NombreCliente == $cliente['NombreCliente']) {
+                           <?php if (@$NombreCliente == @$cliente['NombreCliente']) {
                                   echo 'selected';
                           } ?>>
                           <?php echo $cliente['NombreCliente'];?>
@@ -123,6 +126,15 @@ if ($_POST['mod'] == 1) {
                             echo 'selected';
                           } ?> value=0>Desactivado</option>
                 </select>
+              </div>
+
+              <div class="form-group">
+                <label for="pais">Pais</label>
+                <input type="text" class="form-control" name="pais" id="pais" placeholder="Pais" value="<?php echo @$pais; ?>">
+              </div>
+              <div class="form-group">
+                <label for="ciudad">Estado</label>
+                <input type="text" class="form-control" name="country" id="country" placeholder="Estado" value="<?php echo @$country; ?>">
               </div>
 
             </div>

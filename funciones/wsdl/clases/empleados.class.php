@@ -88,18 +88,24 @@ class empleados extends conexion
     public function obtenerEmpleadoToken($token)
     {
         $query = "SELECT
-                       dg_empleados.*,
-                        dm_rol.des_rol
-                    FROM
-                      dg_empleado_token
-                        INNER JOIN
-                        dg_empleados
-                        ON
-                            dg_empleado_token.log_usu = dg_empleados.log_usu
-                        INNER JOIN
-                        dm_rol
-                        ON
-                            dg_empleados.rol_usu = dm_rol.id_rol
+                    dg_empleados.*,
+                    dm_rol.des_rol,
+                    dg_empresa_consultora.idEmpresaConsultora,
+                    dg_empresa_consultora.nombreEmpresaConsultora
+                  FROM
+                    dg_empleado_token
+                    INNER JOIN
+                    dg_empleados
+                    ON
+                      dg_empleado_token.log_usu = dg_empleados.log_usu
+                    INNER JOIN
+                    dm_rol
+                    ON
+                      dg_empleados.rol_usu = dm_rol.id_rol
+                    LEFT JOIN
+                    dg_empresa_consultora
+                    ON
+                      dg_empleados.id_usu = dg_empresa_consultora.idAprobador
                       where
                             dg_empleado_token.token = '$token'";
 

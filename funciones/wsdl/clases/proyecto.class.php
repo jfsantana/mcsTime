@@ -49,7 +49,9 @@ class proyecto extends conexion
                   dg_proyecto.fechaFin,
                   dg_proyecto.activo,
                   dg_proyecto.gerenteProyecto,
-                  dg_cliente.NombreCliente
+                  dg_cliente.NombreCliente,
+                  dg_proyecto.pais as pais,
+                  dg_proyecto.country as country
 
                 FROM
                   rel_clienteproyecto
