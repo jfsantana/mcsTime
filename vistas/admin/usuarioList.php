@@ -15,6 +15,7 @@ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?id_
 $rs         = API::GET($URL, $token);
 $arrayConsultores  = API::JSON_TO_ARRAY($rs);
 
+
 //print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
 ?>
@@ -64,7 +65,7 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Listado de Usuarios</h3>
+            <h3 class="card-title">Listado de Usuarios Consultores</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -72,30 +73,48 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
+                  <th>Rol</th>
+                  <th>Nombre Y apellido</th>
                   <th>User</th>
                   <th>Activo</th>
                   <th>Telefono</th>
                   <th>Cedula</th>
-                  <th>Cargo</th>
                   <th>Email</th>
-                  <th>Rol</th>
+                  <th>Cargo</th>
+
+                  <th>Ubicacion Residencia</th>
+                  <th>Ident.</th>
+                  <th>Frente Asignado</th>
+                  <th>Carnetizacion</th>
+
+                  <th>PC-Modelo</th>
+                  <th>PC-Serial</th>
+                  <th>PC-Mac-LAN</th>
+                  <th>PC-MAC-WAM</th>
+
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($arrayConsultores as $consultores) {?>
                   <tr>
                     <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioCreate.php',2,'<?php echo $consultores['id_usu']; ?>')" class="nav-link "><?php echo $consultores['id_usu'];?></a></td>
-                    <td><?php echo $consultores['nom_usu'];?></td>
-                    <td><?php echo $consultores['ape_usu'];?></td>
+                    <td><?php echo $consultores['des_rol'];?></td>
+                    <td><?php echo $consultores['ape_usu'].', '.$consultores['nom_usu'];?></td>
                     <td><?php echo $consultores['log_usu'];?></td>
                     <td><?php echo $consultores['act_usu'];?></td>
                     <td><?php echo $consultores['tel_usu'];?></td>
                     <td><?php echo $consultores['ced_usu'];?></td>
-                    <td><?php echo $consultores['car_usu'];?></td>
                     <td><?php echo $consultores['cor_usu'];?></td>
-                    <td><?php echo $consultores['des_rol'];?></td>
+                    <td><?php echo $consultores['car_usu'];?></td>
+
+                    <td><?php echo $consultores['ubicacionResidencia'];?></td>
+                    <td><?php echo $consultores['ident'];?></td>
+                    <td><?php echo $consultores['frenteAsignado'];?></td>
+                    <td><?php echo $consultores['carnetizacion'];?></td>
+                    <td><?php echo $consultores['pcModelo'];?></td>
+                    <td><?php echo $consultores['pcSerial'];?></td>
+                    <td><?php echo $consultores['pcMacLan'];?></td>
+                    <td><?php echo $consultores['pcMacWam'];?></td>
                   </tr>
                 <?php } ?>
 
@@ -103,15 +122,24 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
               <tfoot>
                 <tr>
                   <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
+                  <th>Rol</th>
+                  <th>Nombre Y apellido</th>
                   <th>User</th>
                   <th>Activo</th>
                   <th>Telefono</th>
                   <th>Cedula</th>
-                  <th>Cargo</th>
                   <th>Email</th>
-                  <th>Rol</th>
+                  <th>Cargo</th>
+
+                  <th>Ubicacion Residencia</th>
+                  <th>Ident.</th>
+                  <th>Frente Asignado</th>
+                  <th>Carnetizacion</th>
+
+                  <th>PC-Modelo</th>
+                  <th>PC-Serial</th>
+                  <th>PC-Mac-LAN</th>
+                  <th>PC-MAC-WAM</th>
                 </tr>
               </tfoot>
             </table>

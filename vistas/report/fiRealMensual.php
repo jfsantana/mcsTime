@@ -60,29 +60,16 @@ $horasHabiles = $diasHabiles*8;
 /***/
 
 $query="SELECT
-          CONCAT(dg_empleados.ape_usu,', ', dg_empleados.nom_usu) as nombre,
-          dg_empresa_consultora.nombreEmpresaConsultora as nombreEmpresaConsultora,
-          dg_cliente.NombreCliente as NombreCliente,
-          dg_proyecto.nameProyecto as nameProyecto,
-          sum( dg_reporte_tiempo.hora ) AS hora,
-          sum( dg_reporte_tiempo.hora )+ $horasHabiles AS horaProyectada
+          *
           FROM
-          dg_reporte_tiempo
-          INNER JOIN dg_empleados ON dg_reporte_tiempo.idEmpleado = dg_empleados.id_usu
-          INNER JOIN dg_empresa_consultora ON dg_reporte_tiempo.idEmpresaConsultora = dg_empresa_consultora.idEmpresaConsultora
-          INNER JOIN dg_cliente ON dg_reporte_tiempo.idCliente = dg_cliente.idCliente
-          INNER JOIN dg_proyecto ON dg_reporte_tiempo.idProyecto = dg_proyecto.idProyecto
+            vw_horas_reales_mensuales_consultor
           WHERE
-
-
-          dg_reporte_tiempo.fechaActividad BETWEEN '$primerDia' and '$ultimoDia' and
-          corte = '$corteSeleccionado'
-          AND dg_reporte_tiempo.estadoAP1 = 3
+            mes = '$mesAux'
           GROUP BY
-          dg_reporte_tiempo.idEmpleado";
+          Consultor";
 
 $arrayResumenConsultores= $conn->ObtenerDatos($query);
-//print_r($arrayResumenConsultores);
+//print_r($query);
 //Listado Consultora
  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado."&idAprobador=";
 // $rs         = API::GET($URL, $token);
@@ -129,8 +116,8 @@ $mesTitle = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h1 class="m-0">Reporte Horas Proyectadas Por Consultora para el mes <b><?php echo $mesTitle[$mesAux].' /'.$diasHabiles.'dias ('.$horasHabiles.'hr)'; ?></b></h1>
-        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/fiProyectoadoMensual27.php','<?php echo $_SESSION['id_user'];?>',this.value)">
+        <h1 class="m-0">Reporte Horas Reales Por Consultora para el mes  - <b><?php echo $mesTitle[$mesAux]; ?></b></h1>
+        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/fiRealMensual.php','<?php echo $_SESSION['id_user'];?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
@@ -185,8 +172,10 @@ $mesTitle = array(
               <thead>
                 <tr>
                   <th>Trabajador</th>
-                   <th>Hora Registrada</th>
-                  <th>Horas Proyectadas al cierre de mes  <?php echo $diasHabiles.'dias ('.$horasHabiles.'hr)'; ?></th>
+                   <th>Consultora</th>
+                   <th>Cliente</th>
+                   <th>Aprobador</th>
+                  <th>Horas Reales cargadas</th>
                 </tr>
               </thead>
               <tbody>
@@ -196,18 +185,24 @@ $mesTitle = array(
                 ?>
 
                     <tr>
-                      <td><?php echo $ResumenConsultore['nombre'] ?></a></td>
-                      <td><?php echo $ResumenConsultore['hora']; ?></td>
-                      <td><?php echo $ResumenConsultore['horaProyectada'];
-                          $totalTotal = $totalTotal + $ResumenConsultore['horaProyectada']; ?></td>
+                      <td><?php echo $ResumenConsultore['Consultor'] ?></a></td>
+                      <td><?php echo $ResumenConsultore['Consultora']; ?></td>
+                      <td><?php echo $ResumenConsultore['Cliente']; ?></td>
+                      <td><?php echo $ResumenConsultore['Aprobador']; ?></td>
+
+
+                      <td><?php echo $ResumenConsultore['totalHoras'];
+                      $totalTotal = $totalTotal + $ResumenConsultore['totalHoras']; ?></td>
                     </tr>
                 <?php
                 } ?>
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Trabajador</th>
+                <th>Trabajador</th>
                    <th>Consultora</th>
+                   <th>Cliente</th>
+                   <th>Aprobador</th>
                   <th>Total - <?php echo $totalTotal; ?></th>
                 </tr>
               </tfoot>

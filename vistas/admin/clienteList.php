@@ -12,6 +12,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=$id";
+
 $rs         = API::GET($URL, $token);
 $arrayClientes  = API::JSON_TO_ARRAY($rs);
 

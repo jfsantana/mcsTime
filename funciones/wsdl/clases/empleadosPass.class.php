@@ -11,7 +11,7 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class empleadosPass extends conexion
 {
     // Tabla Principal de Empleados
     private $tabla = 'dg_empleados';
@@ -130,12 +130,9 @@ class empleados extends conexion
         if ($arrayToken) {
           // valida los campos obligatorios
           if (
-            (!isset($datos['nom_usu'])) ||
-            (!isset($datos['ape_usu'])) ||
-            (!isset($datos['log_usu'])) ||
-            (!isset($datos['pass_usu'])) ||
-            (!isset($datos['ced_usu'])) ||
-            (!isset($datos['cor_usu']))
+            (!isset($datos['idEmpleado'])) ||
+            (!isset($datos['tel_usu'])) ||
+            (!isset($datos['pass_usu']))
           ) {
             // en caso de que la validacion no se cumpla se arroja un error
             $datosArray = $_respuestas->error_400();
@@ -144,38 +141,15 @@ class empleados extends conexion
 
 
             // Asignacion de datos validados su existencia en el If anterior
-            $this->nom_usu = @$datos['nom_usu'];
-            $this->ape_usu = @$datos['ape_usu'];
-            $this->log_usu = @$datos['log_usu'];
-            $this->pass_usu = @$datos['pass_usu'];
+            $this->idEmpleado = @$datos['idEmpleado'];
             $this->tel_usu = @$datos['tel_usu'];
-            $this->ced_usu = @$datos['ced_usu'];
-            $this->car_usu = @$datos['car_usu'];
-            $this->cor_usu = @$datos['cor_usu'];
-            $this->act_usu = @$datos['act_usu'];
-            $this->rol_usu = @$datos['rol_usu'];
-
-            $this->ubicacionResidencia = @$datos['ubicacionResidencia'];
-            $this->ident = @$datos['ident'];
-            $this->frenteAsignado = @$datos['frenteAsignado'];
-            $this->carnetizacion = @$datos['carnetizacion'];
-            $this->pcModelo = @$datos['pcModelo'];
-            $this->pcSerial = @$datos['pcSerial'];
-            $this->pcMacLan = @$datos['pcMacLan'];
-            $this->pcMacWam = @$datos['pcMacWam'];
-
+            $this->pass_usu = @$datos['pass_usu'];
 
 
             $this->fechaCreacion = date('Y-m-d');
 
-            if ($datos['mod'] != 1) {
-
               $this->idEmpleado = @$datos['idEmpleado'];
               $resp = $this->Update();
-
-            } else {
-              $resp = $this->Insertar();
-            }
 
 
             if ($resp) {
@@ -201,90 +175,12 @@ class empleados extends conexion
       }
     }
 
-    private function Insertar()
-    {
-      $query = 'insert Into ' . $this->tabla . "
-              (
-                nom_usu,
-                ape_usu,
-                log_usu,
-                pass_usu,
-                act_usu,
-                tel_usu,
-                ced_usu,
-                car_usu,
-                cor_usu,
-                rol_usu,
-                ubicacionResidencia,
-                ident,
-                frenteAsignado,
-                carnetizacion,
-                pcModelo,
-                pcSerial,
-                pcMacLan,
-                pcMacWam
-                  )
-          value
-          (
-              '$this->nom_usu',
-              '$this->ape_usu',
-              '$this->log_usu',
-              '$this->pass_usu',
-              '$this->act_usu',
-              '$this->tel_usu',
-              '$this->ced_usu',
-              '$this->car_usu',
-              '$this->cor_usu',
-              '$this->rol_usu',
-
-              '$this->ubicacionResidencia',
-              '$this->ident',
-              '$this->frenteAsignado',
-              '$this->carnetizacion',
-              '$this->pcModelo',
-              '$this->pcSerial',
-              '$this->pcMacLan',
-              '$this->pcMacWam'
-
-
-
-              )";
-              //echo $query; die;
-      $Insertar = parent::nonQueryId($query);
-
-      // print_r ($Insertar);die;
-      if ($Insertar) {
-        return $Insertar;
-      } else {
-        return 0;
-      }
-    }
-
     private function Update()
     {
       $query = 'update ' . $this->tabla . "
                           set
-                          nom_usu='$this->nom_usu',
-                          ape_usu='$this->ape_usu',
-                          log_usu='$this->log_usu',
                           pass_usu='$this->pass_usu',
-                          act_usu='$this->act_usu',
-                          tel_usu='$this->tel_usu',
-                          ced_usu='$this->ced_usu',
-                          car_usu='$this->car_usu',
-                          cor_usu='$this->cor_usu',
-                          rol_usu='$this->rol_usu',
-
-                          ubicacionResidencia='$this->ubicacionResidencia',
-                          ident='$this->ident',
-                          frenteAsignado='$this->frenteAsignado',
-                          carnetizacion='$this->carnetizacion',
-                          pcModelo='$this->pcModelo',
-                          pcSerial='$this->pcSerial',
-                          pcMacLan='$this->pcMacLan',
-                          pcMacWam='$this->pcMacWam'
-
-
+                          tel_usu='$this->tel_usu'
                       WHERE id_usu = $this->idEmpleado";
       //echo  $query; die;
       $update = parent::nonQuery($query);
@@ -296,63 +192,6 @@ class empleados extends conexion
       }
     }
 
-    public function delete($json)
-    {
-        $_respuestas = new respuestas();
-        $datos = json_decode($json, true);
-
-        if (!isset($datos['token'])) {
-            return $_respuestas->error_401();
-        } else {
-            $this->token = $datos['token'];
-            $arrayToken = $this->buscarToken();
-
-            if ($arrayToken) {
-                // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
-                if (
-                    !isset($datos['id'])
-                ) {
-                    // en caso de que la validacion no se cumpla se arroja un error
-                    $datosArray = $_respuestas->error_400();
-                    echo json_encode($datosArray);
-                } else {
-                    // Asignacion de datos validados su existencia en el If anterior
-                   // $this->id = $datos['id'];
-
-                    // llama a la funcion de insertar
-                    $resp = $this->EliminarEmpleados();
-
-                    // valida que paso d/rante el inser
-                    if ($resp) {
-                        $respuesta = $_respuestas->response;
-                        $respuesta['result'] = [
-                            'Msg' => "eliminado el registro $ this->id",
-                        ];
-
-                        return $respuesta;
-                    } else {
-                        return $_respuestas->error_500();
-                    }
-                }
-            } else {
-                return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
-            }
-        }
-    }
-
-    private function EliminarEmpleados()
-    {
-        $query = "delete from $this->tabla
-        WHERE id = $ this->id";
-
-        $update = parent::nonQuery($query);
-
-        if ($update >= 1) {
-            return $update;
-        } else {
-            return 0;
-        }
-    }
 
     private function buscarToken()
     {

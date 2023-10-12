@@ -47,6 +47,15 @@
           </p>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioChangePass.php',2,<?php $_SESSION['id_user'];?>) " class="nav-link">
+          <i class="nav-icon far fa-edit  text-danger  "></i>
+          <p>
+          usuarioChangePass
+          </p>
+        </a>
+      </li>
+
     <?php } ?>
     <?php if ($_SESSION['id_rol'] < 30) { // solo lo ve el rol  aprobacion  y administardor
     ?>
@@ -85,9 +94,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/layout/boxed.html" class="nav-link">
+          <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Por Proyecto</p>
+              <p>FI - Real Mensual</p>
             </a>
           </li>
           <li class="nav-item">
