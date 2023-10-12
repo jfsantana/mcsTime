@@ -43,6 +43,17 @@ class clientes extends conexion
     return $datos;
   }
 
+  public function listaClientesActivos($idActivo)
+  {
+    $where = " WHERE idCliente <> ''  and activo = 1 ";
+    if ($idActivo != '') {
+      $where =  $where . " and idCliente = " . $idActivo;
+    }
+    $query = "select idCliente, NombreCliente,CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
+
   public function obtenerEmpleado($NumPersonal)
   {
     $query = 'select * from ' . $this->tabla . " where npe_usu ='$NumPersonal'";

@@ -17,7 +17,7 @@ $rs         = API::GET($URL, $token);
 $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
 
 //Listado Clientes
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?idActivos=";
 $rs         = API::GET($URL, $token);
 $arrayClientes  = API::JSON_TO_ARRAY($rs);
 
