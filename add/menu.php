@@ -34,6 +34,13 @@
               <p>Consultores</p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="../manual/Documentacion del Sisterma de Tiempo de MCS.docx"  class="nav-link ">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>Manual de Usuario</p>
+            </a>
+          </li>
         </ul>
       </li>
     <?php } ?>
