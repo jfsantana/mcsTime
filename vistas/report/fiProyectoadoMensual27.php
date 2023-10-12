@@ -129,7 +129,7 @@ $mesTitle = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h1 class="m-0">Reporte Horas Proyectadas Por Consultora para el mes <b><?php echo $mesTitle[$mesAux].' /'.$diasHabiles.'dias ('.$horasHabiles.'hr)'; ?></b></h1>
+        <h1 class="m-0">Horas proyectadas consolidado por <b>Consultor</b>,  mes <b><?php echo $mesTitle[$mesAux].' /'.$diasHabiles.'dias ('.$horasHabiles.'hr)'; ?></b></h1>
         <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/fiProyectoadoMensual27.php','<?php echo $_SESSION['id_user'];?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');

@@ -18,14 +18,14 @@ if (!isset($_POST['id'])) {
   $corteSeleccionado = $_POST['id'];
 }
 
-//var_dump($corteSeleccionado);
+//var_dump($_SESSION['nombreEmpresaConsultora']);
 
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado;
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado."&Consultora=".$_SESSION['nombreEmpresaConsultora'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 
-
+//var_dump($URL);
 $cortes = array(
   1 => '01',
   2 => '02',
@@ -133,7 +133,7 @@ $cortes = array(
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Total<?php echo $totalTotal; ?></th>
+                  <th>Total - <?php echo $totalTotal; ?> (hr)</th>
                 </tr>
               </tfoot>
             </table>

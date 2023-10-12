@@ -47,14 +47,14 @@
           </p>
         </a>
       </li>
-      <li class="nav-item">
-        <a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioChangePass.php',2,<?php $_SESSION['id_user'];?>) " class="nav-link">
+      <!-- <li class="nav-item">
+        <a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioChangePass.php',2,< ?php $_SESSION['id_user'];?>) " class="nav-link">
           <i class="nav-icon far fa-edit  text-danger  "></i>
           <p>
           usuarioChangePass
           </p>
         </a>
-      </li>
+      </li> -->
 
     <?php } ?>
     <?php if ($_SESSION['id_rol'] < 30) { // solo lo ve el rol  aprobacion  y administardor
@@ -90,7 +90,7 @@
           <li class="nav-item">
           <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>FI - Proyectoado Mensual (27)</p>
+              <p>FI - Proyectoado Mensual</p>
             </a>
           </li>
           <li class="nav-item">
@@ -99,12 +99,12 @@
               <p>FI - Real Mensual</p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="pages/layout/fixed-sidebar.html" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Por Corte</p>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li>
     <?php } ?>

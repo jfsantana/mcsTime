@@ -46,6 +46,33 @@ class aprobacionHoras extends conexion
   // Activaciond e token
   private $token = '';
 
+
+
+
+
+  public function listdoConsultoresConsolidadoConsultora($corte, $consultora)
+  {
+
+    $where = " WHERE corte <> '' ";
+
+    if ($consultora != '') {
+      $where =  $where . " and nombreEmpresaConsultora = '" . $consultora . "'";
+    }
+
+    if ($corte != '') {
+      $where =  $where . " and corte = '" . $corte . "'";
+    }
+
+    $query = "
+              select * from vw_consolidado_horas_consultores
+                $where order by vw_consolidado_horas_consultores.nombre ";
+
+                //echo $query; die;
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
+
+
   /**
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id

@@ -8,14 +8,21 @@ $_respuestas = new respuestas();
 $_aprobacionHoras = new aprobacionHoras();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
-  if ( isset($_GET['corte']) || isset($_GET['idAprobador'])) {
+  if (isset($_GET['corte']) && isset($_GET['idAprobador'])) {
 
-    $listaclientes = $_aprobacionHoras->listdoConsultoresConsolidado($_GET['corte'], $_GET['idAprobador']);
+    $listaclientes = $_aprobacionHoras->listdoConsultoresConsolidado(@$_GET['corte'], @$_GET['idAprobador']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
 
-  } elseif (    isset($_GET['idTipoActividad'])  ) {
+  } elseif (isset($_GET['corte'] ) && isset($_GET['Consultora']) ) {
+
+    $listaclientes = $_aprobacionHoras->listdoConsultoresConsolidadoConsultora($_GET['corte'],$_GET['Consultora']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($listaclientes);
+    http_response_code(200);
+
+  } elseif (isset($_GET['idTipoActividad'])  ) {
 
     $listaclientes = $_aprobacionHoras->listTipoActividad($_GET['idTipoActividad']);
     header('Content-Type: application/json;charset=utf-8');
