@@ -50,10 +50,12 @@ class time extends conexion
    */
   public function listaHoras($id, $corte, $idProyecto, $idAprobador)
   {
+
+
     $where = " WHERE idRegistro <> '' ";
 
    if($idAprobador!=''){
-    $where =  $where . " and dg_empresa_consultora.idAprobador = " . $idAprobador;
+    $where =  $where . " and FIND_IN_SET('$idAprobador', dg_empresa_consultora.idAprobador) > 0 ";
    }
 
     if ($id != '') {

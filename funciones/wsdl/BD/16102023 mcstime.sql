@@ -100,7 +100,7 @@ CREATE TABLE `dg_empleados`  (
   `vehiculoAseguradora` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   `vehiculoContrato` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_usu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 256 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB ;
 
 -- ----------------------------
 -- Records of dg_empleados
@@ -193,42 +193,6 @@ INSERT INTO `dg_empleados` VALUES (246, 'Kira', 'Rocha', 'Kira.Rocha', '988510',
 -- ----------------------------
 -- Table structure for dg_empleados_old
 -- ----------------------------
-DROP TABLE IF EXISTS `dg_empleados_old`;
-CREATE TABLE `dg_empleados_old`  (
-  `id_usu` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `ape_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `log_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `pass_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `act_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `tel_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `ced_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `car_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `cor_usu` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `rol_usu` int(11) NULL DEFAULT NULL,
-  `ubicacionResidencia` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `ident` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `frenteAsignado` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `carnetizacion` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `pcMacLan` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `pcMacWam` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `pcModelo` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  `pcSerial` varchar(255) CHARACTER SET utf8 COLLATE utf8_spanish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id_usu`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8 COLLATE = utf8_spanish_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of dg_empleados_old
--- ----------------------------
-INSERT INTO `dg_empleados_old` VALUES (74, 'JESUS F', 'SANTANA S', 'jsantana', '123456', '1', '4244380137', '13336768', 'CONSULTOR', 'jfsantana77@gmail.com|', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (122, 'JOSE', 'SALAZAR', 'c1', 'c1', '1', 'd', 'd', 'd', 'd', 40, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (123, 'Administrador', 'administrador', 'admin', 'admin', '1', '123', '123', '123', '123', 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (124, 'Aprobador', 'MPS', 'mps', 'mps', '1', '123', '123', '123', '123', 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (125, 'Finanzas', 'FI', 'fi', 'fi', '1', '123', '123', '123', '132', 30, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (126, 'ALEJANDRO', 'PARRA', 'c2', 'c2', '1', '123', '123', '123', '132', 40, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (127, 'Aprobador', 'QP', 'qp', 'qp', '1', '123', '123', '123', '123', 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (128, 'Aprobador', 'MCS', 'mcs', 'mcs', '1', '123', '123', '132', '132', 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `dg_empleados_old` VALUES (129, 'Juan ', 'Merchan', 'Juan.Merchan', '149946229', '1', '+507 61597081', '149946229', 'Gerente de Proyecto para integraciones', 'juan.merchan@mmdmcs.com', 10, 'PANAMA/REMOTO', 'GTE', 'TECNICO', '', '', '', 'Macbook Pro', 'C02G908EMD6R');
 
 -- ----------------------------
 -- Table structure for dg_empresa_consultora

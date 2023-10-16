@@ -34,7 +34,7 @@
       $rs = API::GET($URL, $token);
       $array = API::JSON_TO_ARRAY($rs);
       $datosEmpleado = $array;
-
+      //echo $URL;
 
       $_SESSION['usuario'] = $datosEmpleado[0]['log_usu'];
       $_SESSION['id_user'] = @$datosEmpleado[0]['id_usu'];
@@ -45,9 +45,18 @@
       $_SESSION['cargo'] = @$datosEmpleado[0]['"car_usu'];
       $_SESSION['activo'] = @$datosEmpleado[0]['"act_usu'];
       $_SESSION['HOY'] = @date('Y-m-d');
-      $_SESSION['idEmpresaConsultora'] = @$datosEmpleado[0]['idEmpresaConsultora'];
-      $_SESSION['nombreEmpresaConsultora'] = @$datosEmpleado[0]['nombreEmpresaConsultora'];
+
       $_SESSION['des_rol'] = @$datosEmpleado[0]['des_rol'];
+
+
+      foreach($datosEmpleado as $dato){
+        //print("<pre>".print_r(($dato),true)."</pre>");die;
+        $_SESSION['idEmpresaConsultora'] =@$dato['idEmpresaConsultora'] . " " . @$_SESSION['idEmpresaConsultora'] ;
+        $_SESSION['nombreEmpresaConsultora'] = @$dato['nombreEmpresaConsultora'] . " ". @$_SESSION['nombreEmpresaConsultora'] ;
+      }
+
+      //print_r($_SESSION); die;
+
 
       $dia_actual = date('j'); // Obtener el día actual
       $dia_semana_actual = date('N'); // Obtener el día de la semana actual (1 para lunes, 7 para domingo)

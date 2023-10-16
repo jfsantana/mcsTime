@@ -101,30 +101,54 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
+
+  public function obtenerEmpleadoAprobadores()
+  {
+    $query = 'select * from dg_empleados where rol_usu = 20 and act_usu=1';
+
+    return parent::ObtenerDatos($query);
+  }
+
+
   public function obtenerEmpleadoToken($token)
   {
     $query = "SELECT
-                    dg_empleados.*,
-                    dm_rol.des_rol,
-                    dg_empresa_consultora.idEmpresaConsultora,
-                    dg_empresa_consultora.nombreEmpresaConsultora
-                  FROM
-                    dg_empleado_token
-                    INNER JOIN
-                    dg_empleados
-                    ON
-                      dg_empleado_token.log_usu = dg_empleados.log_usu
-                    INNER JOIN
-                    dm_rol
-                    ON
-                      dg_empleados.rol_usu = dm_rol.id_rol
-                    LEFT JOIN
-                    dg_empresa_consultora
-                    ON
-                      dg_empleados.id_usu = dg_empresa_consultora.idAprobador
-                      where
-                            dg_empleado_token.token = '$token'";
+    dg_empleados.*,
+    dm_rol.des_rol,
+    (
+    SELECT
+      #GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora ',') as idEmpresaConsultora#dg_empresa_consultora.nombreEmpresaConsultora
+      GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora SEPARATOR ',') as idEmpresaConsultora
+    FROM
+      dg_empleado_token
+      INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+      INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+      LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
+    WHERE
+      dg_empleado_token.token = '$token'
+    ) AS idEmpresaConsultora,
+    (
+    SELECT
+      #GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora ',') as idEmpresaConsultora#dg_empresa_consultora.nombreEmpresaConsultora
+      GROUP_CONCAT(dg_empresa_consultora.nombreEmpresaConsultora SEPARATOR ',') as idEmpresaConsultora
+    FROM
+      dg_empleado_token
+      INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+      INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+      LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
+    WHERE
+      dg_empleado_token.token = '$token'
+    ) AS nombreEmpresaConsultora
+  FROM
+    dg_empleado_token
+    INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+    INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+    LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
+  WHERE
+    dg_empleado_token.token = '$token'
 
+  group by 	dg_empleados.id_usu";
+//echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

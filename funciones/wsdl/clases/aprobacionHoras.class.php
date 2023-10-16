@@ -84,7 +84,7 @@ class aprobacionHoras extends conexion
     $where = " WHERE corte <> '' ";
 
     if ($idAprobador != '') {
-      $where =  $where . " and idAprobador = '" . $idAprobador . "'";
+      $where =  $where . "  and FIND_IN_SET('$idAprobador', vw_consolidado_horas_consultores.idAprobador) > 0 ";
     }
 
     if ($corte != '') {
@@ -95,7 +95,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-                //echo $query; die;
+               // echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }

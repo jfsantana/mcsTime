@@ -245,7 +245,7 @@ if ($_POST['mod'] == 1) {
                 </div>
                 <!-- select -->
 
-                <?php if ($_SESSION['id_rol'] > 30) { ?>
+                <?php if (($_SESSION['id_rol'] > 30) || ($_POST['mod'] == 1)) { ?>
                 <?php } else { ?>
                   <div class="col-sm-4">
                     <label>Estado de la Actividad</label>

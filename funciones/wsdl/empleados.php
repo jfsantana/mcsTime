@@ -10,9 +10,7 @@ $_empleados = new empleados();
 if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   if (isset($_GET['id_usu'])) {
     $id_usu = $_GET['id_usu'];
-
     $listaEmpleados = $_empleados->listaEmpleados($id_usu);
-
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaEmpleados);
     http_response_code(200);
@@ -26,6 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   } elseif (isset($_GET['token'])) {
     $token = $_GET['token'];
     $datosEmpleado = $_empleados->obtenerEmpleadoToken($token);
+    // prepara salida del ws
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
+  }elseif (isset($_GET['aprobadores'])) {
+    $datosEmpleado = $_empleados->obtenerEmpleadoAprobadores();
     // prepara salida del ws
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);

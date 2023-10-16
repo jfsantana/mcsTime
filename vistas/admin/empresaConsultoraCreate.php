@@ -11,7 +11,12 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+$token='';
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?aprobadores";
+$rs         = API::GET($URL, $token);
+$arrayAprobadores  = API::JSON_TO_ARRAY($rs);
 
+ //print("<pre>".print_r(($arrayAprobadores) ,true)."</pre>"); //die;
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
@@ -23,7 +28,7 @@ if ($_POST['mod'] == 1) {
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=$id";
   $rs         = API::GET($URL, $token);
   $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
-  //var_dump($arrayCconsultora);
+  //var_dump($arrayCconsultora );
 
   $Nombre = $arrayCconsultora[0]['nombreEmpresaConsultora'];
   if ($arrayCconsultora[0]['estado'] == 'Activo')
@@ -65,12 +70,12 @@ if ($_POST['mod'] == 1) {
             <div class="card-body">
               <div class="form-group">
                 <label for="nombreCliente">Nombre</label>
-                <input type="text" class="form-control" name="nombreEmpresaConsultora" id="nombreEmpresaConsultora" placeholder="Nombre de la Consultora" value="<?php echo @$Nombre; ?>">
+                <input type="text" class="form-control" require name="nombreEmpresaConsultora" id="nombreEmpresaConsultora" placeholder="Nombre de la Consultora" value="<?php echo @$Nombre; ?>">
               </div>
               <!-- select -->
               <div class="form-group">
                 <label>Estado</label>
-                <select class="form-control" name="activo" id="activo">
+                <select class="form-control" name="activo" id="activo" require>
                   <option <?php if (@$estado == 1) {
                             echo 'selected';
                           } ?> value=1>Activo</option>
@@ -80,18 +85,37 @@ if ($_POST['mod'] == 1) {
                 </select>
               </div>
 
-            </div>
-            <!-- /.card-body -->
+              <!-- select  checked-->
+              <div class="form-group">
+                <?php
+                foreach ($arrayAprobadores as $aprobadores) {?>
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      <?php if (
+                        strpos($arrayCconsultora[0]['idAprobador'], $aprobadores['id_usu']) !== false
+                        //strpos($arrayCconsultora[0]['idAprobador'],$aprobadores['id_usu']) || ($arrayCconsultora[0]['idAprobador']==$aprobadores['id_usu'])
+                        ){echo 'checked';}?>
+                    class="custom-control-input" type="checkbox" name="aprobador[]" id="customCheckbox<?php echo $aprobadores['id_usu'];?>" value="<?php echo $aprobadores['id_usu']; ?>">
+                    <label for="customCheckbox<?php echo $aprobadores['id_usu'];?>" class="custom-control-label"><?php echo $aprobadores['ape_usu']; ?>, <?php echo $aprobadores['nom_usu']; ?>  </label>
+                  </div>
 
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary"><?php echo $accion; ?></button>
+                <?php  } ?>
+
+              </div>
+
             </div>
-          </form>
         </div>
-      </div>
-      <!-- ./col -->
-    </div>
-    <!-- /.row (main row) -->
-  </div><!-- /.container-fluid -->
-  </section>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary"><?php echo $accion; ?></button>
+        </div>
+</form>
+</div>
+</div>
+<!-- ./col -->
+</div>
+<!-- /.row (main row) -->
+</div><!-- /.container-fluid -->
+</section>
 </form>

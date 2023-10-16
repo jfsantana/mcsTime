@@ -24,6 +24,7 @@ class consultora extends conexion
   private $idEmpresaConsultora = '';
   private $activo = '';
   private $fechaCreacion = '0000-00-00';
+  private $idAprobador ='';
 
   // Activaciond e token
   private $token = '';
@@ -38,7 +39,8 @@ class consultora extends conexion
     if ($id != '') {
       $where =  $where . " and idEmpresaConsultora = " . $id;
     }
-    $query = "select idEmpresaConsultora, nombreEmpresaConsultora,CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $query = "select idEmpresaConsultora, nombreEmpresaConsultora, idAprobador, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
@@ -100,6 +102,13 @@ class consultora extends conexion
           $this->activo = @$datos['activo'];
           $this->fechaCreacion = date('Y-m-d');
 
+          $this->idAprobador = implode(",", @$datos['aprobador']);
+
+          //$stringAprobador = implode(",", $aprobador);
+
+
+
+
           if ($datos['mod'] != 1) {
 
             $this->idEmpresaConsultora = @$datos['idEmpresaConsultora'];
@@ -138,12 +147,14 @@ class consultora extends conexion
     $query = 'insert Into ' . $this->tabla . "
             (
               nombreEmpresaConsultora,
-              activo
+              activo,
+              idAprobador
                 )
         value
         (
             '$this->nombreEmpresaConsultora',
-            $this->activo
+            $this->activo,
+            '$this->idAprobador'
             )";
     $Insertar = parent::nonQueryId($query);
 
@@ -161,7 +172,10 @@ class consultora extends conexion
                         set
 
                         nombreEmpresaConsultora ='$this->nombreEmpresaConsultora',
-                        activo =$this->activo
+                        activo =$this->activo,
+                        idAprobador='$this->idAprobador'
+
+
                     WHERE idEmpresaConsultora = $this->idEmpresaConsultora";
     //echo $query; die;
     $update = parent::nonQuery($query);

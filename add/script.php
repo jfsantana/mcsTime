@@ -98,7 +98,7 @@ function validarSesion() {
 
     $("#registro").DataTable({
       "responsive": true,
-      "order": [[ 1, "asc" ]],
+      "order": [[ 2, "asc" ]],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
