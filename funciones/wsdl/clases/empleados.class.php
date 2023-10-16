@@ -104,7 +104,7 @@ class empleados extends conexion
 
   public function obtenerEmpleadoAprobadores()
   {
-    $query = 'select * from dg_empleados where rol_usu = 20 and act_usu=1';
+    $query = 'select * from dg_empleados where rol_usu < 21 and act_usu=1';
 
     return parent::ObtenerDatos($query);
   }
