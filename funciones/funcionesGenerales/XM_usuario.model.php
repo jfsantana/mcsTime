@@ -20,8 +20,8 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados";
 
-// echo $URL;
-// print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
+//  echo $URL;
+//  print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 

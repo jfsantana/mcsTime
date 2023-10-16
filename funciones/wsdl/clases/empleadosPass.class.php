@@ -38,6 +38,19 @@ class empleadosPass extends conexion
     private $pcMacLan = '';
     private $pcMacWam = '';
 
+    private $foraneo = '';
+    private $idConsultoraContratante = '';
+    private $equipoAsignado = '';
+    private $vehiculoTipo = '';
+    private $vehiculoModelo = '';
+    private $vehiculoMarca = '';
+    private $vehiculoColor = '';
+    private $vehiculoPlaca = '';
+    private $vehiculoAnio = '';
+    private $vehiculoAseguradora = '';
+    private $vehiculoContrato = '';
+
+
 
 
     private $fechaCreacion = '0000-00-00';
@@ -144,6 +157,21 @@ class empleadosPass extends conexion
             $this->idEmpleado = @$datos['idEmpleado'];
             $this->tel_usu = @$datos['tel_usu'];
             $this->pass_usu = @$datos['pass_usu'];
+            //equipo
+            $this->pcModelo = @$datos['pcModelo'];
+            $this->pcSerial = @$datos['pcSerial'];
+            $this->pcMacLan = @$datos['pcMacLan'];
+            $this->pcMacWam = @$datos['pcMacWam'];
+
+            //vehiculo
+            $this->vehiculoTipo = @$datos['vehiculoTipo'];
+            $this->vehiculoModelo = @$datos['vehiculoModelo'];
+            $this->vehiculoMarca = @$datos['vehiculoMarca'];
+            $this->vehiculoColor = @$datos['vehiculoColor'];
+            $this->vehiculoPlaca = @$datos['vehiculoPlaca'];
+            $this->vehiculoAnio = @$datos['vehiculoAnio'];
+            $this->vehiculoAseguradora = @$datos['vehiculoAseguradora'];
+            $this->vehiculoContrato = @$datos['vehiculoContrato'];
 
 
             $this->fechaCreacion = date('Y-m-d');
@@ -180,9 +208,21 @@ class empleadosPass extends conexion
       $query = 'update ' . $this->tabla . "
                           set
                           pass_usu='$this->pass_usu',
-                          tel_usu='$this->tel_usu'
+                          tel_usu='$this->tel_usu',
+                          pcModelo='$this->pcModelo',
+                          pcSerial='$this->pcSerial',
+                          pcMacLan='$this->pcMacLan',
+                          pcMacWam='$this->pcMacWam',
+                          vehiculoTipo='$this->vehiculoTipo',
+                          vehiculoModelo='$this->vehiculoModelo',
+                          vehiculoMarca='$this->vehiculoMarca',
+                          vehiculoColor='$this->vehiculoColor',
+                          vehiculoPlaca='$this->vehiculoPlaca',
+                          vehiculoAnio='$this->vehiculoAnio',
+                          vehiculoAseguradora='$this->vehiculoAseguradora',
+                          vehiculoContrato='$this->vehiculoContrato'
                       WHERE id_usu = $this->idEmpleado";
-      //echo  $query; die;
+
       $update = parent::nonQuery($query);
 
       if ($update >= 1) {

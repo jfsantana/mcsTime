@@ -16,7 +16,7 @@ $rs         = API::GET($URL, $token);
 $arrayConsultores  = API::JSON_TO_ARRAY($rs);
 
 
-//print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
 
 ?>
 <!-- Content Header (Page header) -->
@@ -82,6 +82,9 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>Email</th>
                   <th>Cargo</th>
 
+                  <th>Foraneo</th>
+                  <th>Consultora</th>
+
                   <th>Ubicacion Residencia</th>
                   <th>Ident.</th>
                   <th>Frente Asignado</th>
@@ -91,6 +94,15 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>PC-Serial</th>
                   <th>PC-Mac-LAN</th>
                   <th>PC-MAC-WAM</th>
+
+                  <th>Car-Tipo</th>
+                  <th>Car-Modelo</th>
+                  <th>Car-Marca</th>
+                  <th>Car-Color</th>
+                  <th>Car-Placa</th>
+                  <th>Car-Año</th>
+                  <th>Car-Aseguradora</th>
+                  <th>Car-Ase. Contrat.</th>
 
                 </tr>
               </thead>
@@ -107,6 +119,9 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $consultores['cor_usu'];?></td>
                     <td><?php echo $consultores['car_usu'];?></td>
 
+                    <td><?php echo $consultores['foraneo'];?></td>
+                    <td><?php echo $consultores['nombreEmpresaConsultora'];?></td>
+
                     <td><?php echo $consultores['ubicacionResidencia'];?></td>
                     <td><?php echo $consultores['ident'];?></td>
                     <td><?php echo $consultores['frenteAsignado'];?></td>
@@ -115,13 +130,23 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $consultores['pcSerial'];?></td>
                     <td><?php echo $consultores['pcMacLan'];?></td>
                     <td><?php echo $consultores['pcMacWam'];?></td>
+
+                    <td><?php echo $consultores['vehiculoTipo'];?></td>
+                    <td><?php echo $consultores['vehiculoModelo'];?></td>
+                    <td><?php echo $consultores['vehiculoMarca'];?></td>
+                    <td><?php echo $consultores['vehiculoColor'];?></td>
+                    <td><?php echo $consultores['vehiculoPlaca'];?></td>
+                    <td><?php echo $consultores['vehiculoAnio'];?></td>
+                    <td><?php echo $consultores['vehiculoAseguradora'];?></td>
+                    <td><?php echo $consultores['vehiculoContrato'];?></td>
+
                   </tr>
                 <?php } ?>
 
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Id</th>
+                <th>Id</th>
                   <th>Rol</th>
                   <th>Nombre Y apellido</th>
                   <th>User</th>
@@ -130,6 +155,9 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>Cedula</th>
                   <th>Email</th>
                   <th>Cargo</th>
+
+                  <th>Foraneo</th>
+                  <th>Consultora</th>
 
                   <th>Ubicacion Residencia</th>
                   <th>Ident.</th>
@@ -140,6 +168,15 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>PC-Serial</th>
                   <th>PC-Mac-LAN</th>
                   <th>PC-MAC-WAM</th>
+
+                  <th>Car-Tipo</th>
+                  <th>Car-Modelo</th>
+                  <th>Car-Marca</th>
+                  <th>Car-Color</th>
+                  <th>Car-Placa</th>
+                  <th>Car-Año</th>
+                  <th>Car-Aseguradora</th>
+                  <th>Car-Ase. Contrat.</th>
                 </tr>
               </tfoot>
             </table>

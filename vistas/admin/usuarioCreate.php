@@ -14,7 +14,11 @@ $rs         = API::GET($URL, $token);
 $arrayRoles  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayRoles[0]['id_rol']);
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
-
+$token = $_SESSION['token'];
+$URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
+$rs         = API::GET($URL1, $token);
+$arrayCconsultora  = API::JSON_TO_ARRAY($rs);
+//var_dump($_POST);
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
@@ -27,6 +31,8 @@ if ($_POST['mod'] == 1) {
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
   //var_dump($arrayUsuario);
+
+
 
   $nom_usu = $arrayUsuario[0]['nom_usu'];
   $ape_usu = $arrayUsuario[0]['ape_usu'];
@@ -49,6 +55,20 @@ if ($_POST['mod'] == 1) {
   $pcMacWam = $arrayUsuario[0]['pcMacWam'];
   $pcModelo = $arrayUsuario[0]['pcModelo'];
   $pcSerial = $arrayUsuario[0]['pcSerial'];
+
+  $equipoAsignado = $arrayUsuario[0]['equipoAsignado'];
+
+  $vehiculoTipo = $arrayUsuario[0]['vehiculoTipo'];
+  $vehiculoModelo = $arrayUsuario[0]['vehiculoModelo'];
+  $vehiculoMarca = $arrayUsuario[0]['vehiculoMarca'];
+  $vehiculoColor = $arrayUsuario[0]['vehiculoColor'];
+  $vehiculoPlaca = $arrayUsuario[0]['vehiculoPlaca'];
+  $vehiculoAnio = $arrayUsuario[0]['vehiculoAnio'];
+  $vehiculoAseguradora = $arrayUsuario[0]['vehiculoAseguradora'];
+  $vehiculoContrato = $arrayUsuario[0]['vehiculoContrato'];
+
+  $foraneo = $arrayUsuario[0]['foraneo'];
+  $idConsultoraContratante = $arrayUsuario[0]['idConsultoraContratante'];
 
 
 
@@ -73,7 +93,7 @@ if ($_POST['mod'] == 1) {
         <h1 class="m-0">Consultores</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+  </div><!-- /.container -fluid -->
 </div>
 <!-- /.content-header -->
 
@@ -95,11 +115,11 @@ if ($_POST['mod'] == 1) {
           <form>
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <label for="nombreCliente">Nombre</label>
                   <input type="text" class="form-control" name="nom_usu" id="nom_usu" placeholder="Nombre(s)" value="<?php echo @$nom_usu; ?>">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <label for="nombreCliente">Apellido</label>
                   <input type="text" class="form-control" name="ape_usu" id="nom_usu" placeholder="Apellido(s)" value="<?php echo @$ape_usu; ?>">
                 </div>
@@ -118,6 +138,36 @@ if ($_POST['mod'] == 1) {
                   <label for="nombreCliente">Email</label>
                   <input type="mail" class="form-control" name="cor_usu" id="cor_usu" placeholder="Cargo del Personal" value="<?php echo @$cor_usu; ?>">
                 </div>
+
+                <div class="col-sm-4">
+                  <label for="nombreCliente">foraneo</label>
+                  <input type="mail" class="form-control" name="foraneo" id="foraneo" placeholder="Cargo del Personal" value="<?php echo @$foraneo; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                  <label for="nombreCliente">Equipo Asignado</label>
+                  <input type="mail" class="form-control" name="equipoAsignado" id="equipoAsignado" placeholder="Cargo del Personal" value="<?php echo @$equipoAsignado; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                  <label>Consultora</label>
+                  <select class="form-control select2" name="idConsultoraContratante" style="width: 100%;">
+                    <option>Seleccione</option>
+                    <?php
+                    foreach ($arrayCconsultora  as $consultora) {
+                    ?>
+                      <option value='<?php echo $consultora['idEmpresaConsultora']; ?>' <?php if (@$idConsultoraContratante == @$consultora['idEmpresaConsultora']) {
+                                                                                          echo 'selected';
+                                                                                        } ?>>
+                        <?php echo $consultora['nombreEmpresaConsultora']; ?>
+                      </option>
+                    <?php } ?>
+                    <!-- <option selected="selected">Alabama</option>  -->
+
+                  </select>
+                </div>
+
+
 
                 <div class="col-sm-3">
                   <label for="nombreCliente">Ubicacion Residencia</label>
@@ -153,7 +203,7 @@ if ($_POST['mod'] == 1) {
 
                     foreach ($arrayRoles as $rol) {
 
-                      ?>
+                    ?>
                       <option value='<?php echo $rol['id_rol']; ?>' <?php if (@$rol_usu == $rol['id_rol']) {
                                                                       echo 'selected';
                                                                     } ?>>
@@ -204,6 +254,61 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-3">
                   <label for="nombreCliente">MAC-WAN</label>
                   <input type="text" class="form-control" name="pcMacWam" id="pcMacWam" placeholder="Mac para WAN" value="<?php echo @$pcMacWam; ?>">
+                </div>
+
+                <div class="col-sm-12">
+                  <label></br>*********Datos del Vehiculo**********</label>
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Modelo</label>
+                  <select class="form-control select2" name="vehiculoTipo" style="width: 100%;">
+                    <option>Seleccione</option>
+                    <option value="Camioneta" <?php if (@$vehiculoTipo == 'Camioneta') {
+                                                echo 'selected';
+                                              } ?>>Camioneta</option>
+                    <option value="Rustico" <?php if (@$vehiculoTipo == 'Rustico') {
+                                              echo 'selected';
+                                            } ?>>Rustico</option>
+                    <option value="Sedan" <?php if (@$vehiculoTipo == 'Sedan') {
+                                            echo 'selected';
+                                          } ?>>Sedan</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Modelo</label>
+                  <input type="text" class="form-control" name="vehiculoModelo" id="vehiculoModelo" placeholder="Modelo" value="<?php echo @$vehiculoModelo; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Marca</label>
+                  <input type="text" class="form-control" name="vehiculoMarca" id="vehiculoMarca" placeholder="Marca" value="<?php echo @$vehiculoMarca; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Color</label>
+                  <input type="text" class="form-control" name="vehiculoColor" id="vehiculoColor" placeholder="Color del Vehiculo" value="<?php echo @$vehiculoColor; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Placa</label>
+                  <input type="text" class="form-control" name="vehiculoPlaca" id="vehiculoPlaca" placeholder="Placa" value="<?php echo @$vehiculoPlaca; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Año</label>
+                  <input type="text" class="form-control" name="vehiculoAnio" id="vehiculoAnio" placeholder="Año del Vehiculo" value="<?php echo @$vehiculoAnio; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Aseguradora</label>
+                  <input type="text" class="form-control" name="vehiculoAseguradora" id="vehiculoAseguradora" placeholder="Aseguradora del Vehiculo" value="<?php echo @$vehiculoAseguradora; ?>">
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Contrato No</label>
+                  <input type="text" class="form-control" name="vehiculoContrato" id="vehiculoContrato" placeholder="Numero de contrato" value="<?php echo @$vehiculoContrato; ?>">
                 </div>
               </div>
 
