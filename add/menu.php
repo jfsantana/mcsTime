@@ -97,7 +97,7 @@
           <li class="nav-item">
           <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>FI - Proyectoado Mensual</p>
+              <p>FI - Proyectado Mensual</p>
             </a>
           </li>
           <li class="nav-item">
