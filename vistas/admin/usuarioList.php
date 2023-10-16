@@ -16,7 +16,7 @@ $rs         = API::GET($URL, $token);
 $arrayConsultores  = API::JSON_TO_ARRAY($rs);
 
 
-print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
+//print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
 
 ?>
 <!-- Content Header (Page header) -->
