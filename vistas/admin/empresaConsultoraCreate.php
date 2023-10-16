@@ -92,7 +92,7 @@ if ($_POST['mod'] == 1) {
                   <div class="custom-control custom-checkbox">
                     <input
                       <?php if (
-                        strpos($arrayCconsultora[0]['idAprobador'], $aprobadores['id_usu']) !== false
+                        strpos(@$arrayCconsultora[0]['idAprobador'], @$aprobadores['id_usu']) !== false
                         //strpos($arrayCconsultora[0]['idAprobador'],$aprobadores['id_usu']) || ($arrayCconsultora[0]['idAprobador']==$aprobadores['id_usu'])
                         ){echo 'checked';}?>
                     class="custom-control-input" type="checkbox" name="aprobador[]" id="customCheckbox<?php echo $aprobadores['id_usu'];?>" value="<?php echo $aprobadores['id_usu']; ?>">
