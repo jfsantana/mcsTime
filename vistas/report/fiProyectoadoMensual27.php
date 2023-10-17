@@ -60,27 +60,30 @@ $horasHabiles = $diasHabiles*8;
 /***/
 
 $query="SELECT
-          CONCAT(dg_empleados.ape_usu,', ', dg_empleados.nom_usu) as nombre,
-          dg_empresa_consultora.nombreEmpresaConsultora as nombreEmpresaConsultora,
-          dg_cliente.NombreCliente as NombreCliente,
-          dg_proyecto.nameProyecto as nameProyecto,
-          sum( dg_reporte_tiempo.hora ) AS hora,
-          sum( dg_reporte_tiempo.hora )+ $horasHabiles AS horaProyectada
+          	CONCAT( dg_empleados.ape_usu, ', ', dg_empleados.nom_usu ) AS nombre,
+            dg_empresa_consultora.nombreEmpresaConsultora AS nombreEmpresaConsultora,
+            dg_cliente.NombreCliente AS NombreCliente,
+            dg_proyecto.nameProyecto AS nameProyecto,
+            dg_reporte_factura.urlFactura,
+            sum( dg_reporte_tiempo.hora ) AS hora,
+            sum( dg_reporte_tiempo.hora )+ 24 AS horaProyectada
           FROM
           dg_reporte_tiempo
           INNER JOIN dg_empleados ON dg_reporte_tiempo.idEmpleado = dg_empleados.id_usu
           INNER JOIN dg_empresa_consultora ON dg_reporte_tiempo.idEmpresaConsultora = dg_empresa_consultora.idEmpresaConsultora
           INNER JOIN dg_cliente ON dg_reporte_tiempo.idCliente = dg_cliente.idCliente
           INNER JOIN dg_proyecto ON dg_reporte_tiempo.idProyecto = dg_proyecto.idProyecto
+          LEFT JOIN dg_reporte_factura ON dg_reporte_factura.idEmpleado = dg_reporte_tiempo.idEmpleado and  dg_reporte_tiempo.corte = dg_reporte_factura.corte
           WHERE
 
 
           dg_reporte_tiempo.fechaActividad BETWEEN '$primerDia' and '$ultimoDia' and
-          corte = '$corteSeleccionado'
+          dg_reporte_tiempo.corte = '$corteSeleccionado'
           AND dg_reporte_tiempo.estadoAP1 = 3
           GROUP BY
-          dg_reporte_tiempo.idEmpleado";
-
+          dg_reporte_tiempo.idEmpleado,
+		      dg_reporte_factura.urlFactura";
+//print_r($query);
 $arrayResumenConsultores= $conn->ObtenerDatos($query);
 //print_r($arrayResumenConsultores);
 //Listado Consultora
@@ -184,6 +187,7 @@ $mesTitle = array(
             <table id="Aprobacion" class="table table-bordered table-striped">
               <thead>
                 <tr>
+                <th></th>
                   <th>Trabajador</th>
                    <th>Hora Registrada</th>
                   <th>Horas Proyectadas al cierre de mes  <?php echo $diasHabiles.'dias ('.$horasHabiles.'hr)'; ?></th>
@@ -196,6 +200,7 @@ $mesTitle = array(
                 ?>
 
                     <tr>
+                    <td> <?php if($ResumenConsultore['urlFactura']){?> <a href="<?php echo $ResumenConsultore['urlFactura'] ?>"><i class="fas fa-eye"></i> Recibo </a> <?php } ?>  </td>
                       <td><?php echo $ResumenConsultore['nombre'] ?></a></td>
                       <td><?php echo $ResumenConsultore['hora']; ?></td>
                       <td><?php echo $ResumenConsultore['horaProyectada'];
@@ -206,6 +211,7 @@ $mesTitle = array(
               </tbody>
               <tfoot>
                 <tr>
+                <th></th>
                   <th>Trabajador</th>
                    <th>Consultora</th>
                   <th>Total - <?php echo $totalTotal; ?></th>

@@ -21,10 +21,10 @@ if (!isset($_POST['id'])) {
 //var_dump($_SESSION['nombreEmpresaConsultora']);
 
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado."&Consultora=".$_SESSION['nombreEmpresaConsultora'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&Consultora=" . $_SESSION['nombreEmpresaConsultora'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
-
+//var_dump($URL);
 //var_dump($URL);
 $cortes = array(
   1 => '01',
@@ -48,7 +48,7 @@ $cortes = array(
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1 class="m-0">Por Consultor</h1>
-        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user'];?>',this.value)">
+        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>

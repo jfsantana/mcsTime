@@ -55,6 +55,8 @@
         $_SESSION['nombreEmpresaConsultora'] = @$dato['nombreEmpresaConsultora'] . " ". @$_SESSION['nombreEmpresaConsultora'] ;
       }
 
+      $_SESSION['idEmpresaConsultora']=trim($_SESSION['idEmpresaConsultora']);
+      $_SESSION['nombreEmpresaConsultora']=trim($_SESSION['nombreEmpresaConsultora']);
       //print_r($_SESSION); die;
 
 

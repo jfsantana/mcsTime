@@ -56,7 +56,12 @@ class aprobacionHoras extends conexion
     $where = " WHERE corte <> '' ";
 
     if ($consultora != '') {
-      $where =  $where . " and nombreEmpresaConsultora = '" . $consultora . "'";
+
+      $cadena = "('MCS,MPS,QP')";
+      $array = explode(',', $cadena);
+      $ArrayConsultora = implode("', '", $array) ;
+
+      $where =  $where . " and nombreEmpresaConsultora in " . $ArrayConsultora ;
     }
 
     if ($corte != '') {
@@ -67,7 +72,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-                //echo $query; die;
+               //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
@@ -95,7 +100,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-               // echo $query; die;
+                //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
