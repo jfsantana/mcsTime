@@ -187,7 +187,7 @@ $mesTitle = array(
                 ?>
 
                   <tr>
-                  <td> <?php if($ResumenConsultore['urlFactura']){?> <a href="<?php echo $ResumenConsultore['urlFactura'] ?>"><i class="fas fa-eye"></i> Recibo </a> <?php } ?>  </td>
+                  <td> <?php if($ResumenConsultore['urlFactura']){?> <a href="<?php echo $ResumenConsultore['urlFactura'] ?>"  target="_blank"><i class="fas fa-eye"></i> Recibo </a> <?php } ?>  </td>
                     <td><?php echo $ResumenConsultore['Consultor'] ?></a></td>
                     <td><?php echo $ResumenConsultore['Consultora']; ?></td>
                     <td><?php echo $ResumenConsultore['Cliente']; ?></td>
