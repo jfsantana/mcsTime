@@ -166,7 +166,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="nombreCliente">Hora(s)</label>
-                  <input type="number" required min=0 max=20 class="form-control" <?php echo   @$disabled; ?> name="hora" id="hora" placeholder="Nombre del Cliente" value="<?php echo @$hora; ?>">
+                  <input type="number" required min=0 max=20 class="form-control" <?php echo   @$disabled; ?> name="hora" id="hora" placeholder="Carga de horas diarias" value="<?php echo @$hora; ?>">
                 </div>
 
                 <div class="col-sm-3">
