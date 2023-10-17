@@ -11,7 +11,7 @@ $token = $_SESSION['token'];
 $mes_actual = date('m');
 require_once '../funciones/wsdl/clases/conexion/conexion.php';
 
-$conn= new conexion;
+$conn = new conexion;
 
 if (!isset($_POST['id'])) {
   $corteSeleccionado = $_SESSION['corte'];
@@ -23,16 +23,17 @@ if (!isset($_POST['id'])) {
 
 
 
-function diasHabilesDesde27($fechaIni,$fecha27,$fechaFin) {
+function diasHabilesDesde27($fechaIni, $fecha27, $fechaFin)
+{
   $fechaInicio = date('Y-m-d', strtotime($fecha27));
   $diasHabiles = 0;
   $fechaAux = $fecha27;
   while ($fechaAux <= $fechaFin) {
-      $diaSemana = date('N', strtotime($fechaAux));
-      if ($diaSemana !=7 ) { // Días de la semana (lunes a viernes)
-          $diasHabiles++;
-      }
-      $fechaAux = date('Y-m-d', strtotime($fechaAux . ' + 1 day'));
+    $diaSemana = date('N', strtotime($fechaAux));
+    if ($diaSemana != 7) { // Días de la semana (lunes a viernes)
+      $diasHabiles++;
+    }
+    $fechaAux = date('Y-m-d', strtotime($fechaAux . ' + 1 day'));
   }
 
   return $diasHabiles;
@@ -47,19 +48,19 @@ $fechaString =  @$corteSeleccionado;
 $fecha = date_create_from_format("mY", $fechaString);
 $primerDia = date_format($fecha, "Y-m-01");
 $ultimoDia = date('Y-m-t', strtotime($primerDia));
-$mesAux=date('m', strtotime($primerDia));
+$mesAux = date('m', strtotime($primerDia));
 
 
 
-$fecha27 = '28'.$fechaString;
+$fecha27 = '28' . $fechaString;
 $fecha = date_create_from_format("dmY", $fecha27);
 $fecha27 = date_format($fecha, "Y-m-d");
-$diasHabiles =diasHabilesDesde27($primerDia, $fecha27, $ultimoDia);
-$horasHabiles = $diasHabiles*8;
+$diasHabiles = diasHabilesDesde27($primerDia, $fecha27, $ultimoDia);
+$horasHabiles = $diasHabiles * 8;
 
 /***/
 
-$query="SELECT
+$query = "SELECT
           *
           FROM
             vw_horas_reales_mensuales_consultor
@@ -68,12 +69,12 @@ $query="SELECT
           GROUP BY
           Consultor";
 
-$arrayResumenConsultores= $conn->ObtenerDatos($query);
+$arrayResumenConsultores = $conn->ObtenerDatos($query);
 //print_r($query);
 //Listado Consultora
- $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado."&idAprobador=";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&idAprobador=";
 // $rs         = API::GET($URL, $token);
-//var_dump($URL);
+//var_dump($arrayResumenConsultores);
 //$arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 
 
@@ -116,8 +117,8 @@ $mesTitle = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h1 class="m-0">Reporte Horas Reales Por Consultora para el mes  - <b><?php echo $mesTitle[$mesAux]; ?></b></h1>
-        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/fiRealMensual.php','<?php echo $_SESSION['id_user'];?>',this.value)">
+        <h1 class="m-0">Reporte Horas Reales Por Consultora para el mes - <b><?php echo $mesTitle[$mesAux]; ?></b></h1>
+        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/fiRealMensual.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
@@ -171,10 +172,11 @@ $mesTitle = array(
             <table id="Aprobacion" class="table table-bordered table-striped">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Trabajador</th>
-                   <th>Consultora</th>
-                   <th>Cliente</th>
-                   <th>Aprobador</th>
+                  <th>Consultora</th>
+                  <th>Cliente</th>
+                  <th>Aprobador</th>
                   <th>Horas Reales cargadas</th>
                 </tr>
               </thead>
@@ -184,25 +186,27 @@ $mesTitle = array(
                 foreach ($arrayResumenConsultores as $ResumenConsultore) { //
                 ?>
 
-                    <tr>
-                      <td><?php echo $ResumenConsultore['Consultor'] ?></a></td>
-                      <td><?php echo $ResumenConsultore['Consultora']; ?></td>
-                      <td><?php echo $ResumenConsultore['Cliente']; ?></td>
-                      <td><?php echo $ResumenConsultore['Aprobador']; ?></td>
+                  <tr>
+                  <td> <?php if($ResumenConsultore['urlFactura']){?> <a href="<?php echo $ResumenConsultore['urlFactura'] ?>"><i class="fas fa-eye"></i> Recibo </a> <?php } ?>  </td>
+                    <td><?php echo $ResumenConsultore['Consultor'] ?></a></td>
+                    <td><?php echo $ResumenConsultore['Consultora']; ?></td>
+                    <td><?php echo $ResumenConsultore['Cliente']; ?></td>
+                    <td><?php echo $ResumenConsultore['Aprobador']; ?></td>
 
 
-                      <td><?php echo $ResumenConsultore['totalHoras'];
-                      $totalTotal = $totalTotal + $ResumenConsultore['totalHoras']; ?></td>
-                    </tr>
+                    <td><?php echo $ResumenConsultore['totalHoras'];
+                        $totalTotal = $totalTotal + $ResumenConsultore['totalHoras']; ?></td>
+                  </tr>
                 <?php
                 } ?>
               </tbody>
               <tfoot>
                 <tr>
-                <th>Trabajador</th>
-                   <th>Consultora</th>
-                   <th>Cliente</th>
-                   <th>Aprobador</th>
+                  <th></th>
+                  <th>Trabajador</th>
+                  <th>Consultora</th>
+                  <th>Cliente</th>
+                  <th>Aprobador</th>
                   <th>Total - <?php echo $totalTotal; ?></th>
                 </tr>
               </tfoot>
