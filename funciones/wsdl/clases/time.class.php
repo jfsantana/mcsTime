@@ -36,6 +36,8 @@ class time extends conexion
   private $fechaActualizacion = '';
   private $actualizadoPor = '';
 
+  private $ticketNum = '';
+
 
 
   private $creadoPor = '';
@@ -253,6 +255,8 @@ class time extends conexion
           $this->tipoAtencion = @$datos['tipoAtencion'];
           $this->descripcion = @$datos['descripcion'];
 
+          $this->ticketNum = @$datos['ticketNum'];
+
           $this->observacionEstado = @$datos['observacionEstado'];
           if(@$datos['estadoAP1']<>'') {
             $this->estadoAP1 = @$datos['estadoAP1'];
@@ -315,7 +319,8 @@ class time extends conexion
                     estadoAP1,
                     estadoAP2,
                     fechaActualizacion,
-                    actualizadoPor
+                    actualizadoPor,
+                    ticketNum
                   )
               value
               (
@@ -334,7 +339,8 @@ class time extends conexion
                   '1',
                   '1',
                   '$this->fechaCreacion',
-                  '$this->creadoPor'
+                  '$this->creadoPor',
+                  '$this->ticketNum'
                   )";
                   //echo $query; die;
     $Insertar = parent::nonQueryId($query);
@@ -363,7 +369,8 @@ class time extends conexion
                         hora ='$this->hora',
                         observacionEstado ='$this->observacionEstado',
                         fechaActualizacion ='$this->fechaCreacion',
-                        actualizadoPor ='$this->creadoPor'
+                        actualizadoPor ='$this->creadoPor',
+                        ticketNum ='$this->ticketNum'
                     WHERE idRegistro = $this->idRegistro ";
       //echo $query; die;
     $update = parent::nonQuery($query);

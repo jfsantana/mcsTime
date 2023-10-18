@@ -100,6 +100,7 @@ if ($_POST['mod'] == 1) {
   $hora = @$arrayRegistroTimne[0]['hora'];
   $corte = @$arrayRegistroTimne[0]['corte'];
   $estadoAP1 = @$arrayRegistroTimne[0]['estadoAP1'];
+  $ticketNum = @$arrayRegistroTimne[0]['ticketNum'];
 
   @$Observacion = @$arrayRegistroTimne[0]['observacionEstado'];
 
@@ -239,6 +240,12 @@ if ($_POST['mod'] == 1) {
                             } ?> value="Presencial">Presencial</option>
                   </select>
                 </div>
+
+                <div class="col-sm-4">
+                  <label for="nombreCliente">Numero de Ticket</label>
+                  <input type="text" class="form-control" name="ticketNum" <?php echo   @$disabled; ?> placeholder="Numero de ticket" value="<?php echo @$ticketNum ?>">
+                </div>
+
                 <div class="col-sm-12">
                   <label for="nombreCliente">Descripcion Actividad</label>
                   <input type="text" class="form-control" name="descripcion" <?php echo   @$disabled; ?> required placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$descripcion ?>">
