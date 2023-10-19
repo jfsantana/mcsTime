@@ -31,6 +31,12 @@ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idTip
 $rs         = API::GET($URL, $token);
 $arrayTipoActividad  = API::JSON_TO_ARRAY($rs);
 
+//Listado Modulos
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?modulos=";
+$rs         = API::GET($URL, $token);
+$arrayModulos = API::JSON_TO_ARRAY($rs);
+//var_dump($URL);
+
 //var_dump($_POST);
 
 if ($_POST['mod'] == 1) {
@@ -100,9 +106,13 @@ if ($_POST['mod'] == 1) {
   $hora = @$arrayRegistroTimne[0]['hora'];
   $corte = @$arrayRegistroTimne[0]['corte'];
   $estadoAP1 = @$arrayRegistroTimne[0]['estadoAP1'];
-  $ticketNum = @$arrayRegistroTimne[0]['ticketNum'];
+  $Observacion = @$arrayRegistroTimne[0]['observacionEstado'];
 
-  @$Observacion = @$arrayRegistroTimne[0]['observacionEstado'];
+  //campos nuevos
+  $ticketNum = @$arrayRegistroTimne[0]['ticketNum'];
+  $descripcionModulo = @$arrayRegistroTimne[0]['descripcionModulo'];
+  //var_dump($arrayRegistroTimne);
+
 
 
 
@@ -215,7 +225,7 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <!-- select -->
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <label>Tipo de Actividad</label>
                   <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   @$disabled; ?> required>
                     <option>Seleccione</option>
@@ -226,8 +236,21 @@ if ($_POST['mod'] == 1) {
                     <?php } ?>
                   </select>
                 </div>
+
                 <!-- select -->
-                <div class="col-sm-4">
+                <div class="col-sm-2">
+                  <label>Modulo</label>
+                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled; ?> required>
+                    <option>Seleccione</option>
+                    <?php foreach ($arrayModulos as $modulos) { ?>
+                      <option <?php if (@$descripcionModulo == $modulos['descripcionModulo']) {
+                                echo 'selected';
+                              } ?> value=<?php echo $modulos['descripcionModulo']; ?>><?php echo $modulos['descripcionModulo']; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <!-- select arrayModulos-->
+                <div class="col-sm-3">
                   <label>Tipo de Atencion</label>
                   <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   @$disabled; ?> required>
                     <option>Seleccione</option>
@@ -241,10 +264,12 @@ if ($_POST['mod'] == 1) {
                   </select>
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                   <label for="nombreCliente">Numero de Ticket</label>
                   <input type="text" class="form-control" name="ticketNum" <?php echo   @$disabled; ?> placeholder="Numero de ticket" value="<?php echo @$ticketNum ?>">
                 </div>
+
+
 
                 <div class="col-sm-12">
                   <label for="nombreCliente">Descripcion Actividad</label>
@@ -284,7 +309,9 @@ if ($_POST['mod'] == 1) {
                         <span class="info-box-icon"><i class="fas fa-comments"></i></span>
 
                         <div class="info-box-content">
-                          <span class="info-box-text"><h1>Observacion Rechazo</h1></span>
+                          <span class="info-box-text">
+                            <h1>Observacion Rechazo</h1>
+                          </span>
                           <span class="info-box-number"><?php echo @$Observacion ?></span>
                           <!-- /.info-box-content -->
                         </div>

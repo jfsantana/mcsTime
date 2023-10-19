@@ -30,6 +30,7 @@ class time extends conexion
   private $tipoAtencion = '';
   private $descripcion = '';
   private $observacionEstado = '';
+  private $descripcionModulo = '';
 
   private $estadoAP1 = '';
   private $estadoAP2 = '';
@@ -56,9 +57,9 @@ class time extends conexion
 
     $where = " WHERE idRegistro <> '' ";
 
-   if($idAprobador!=''){
-    $where =  $where . " and FIND_IN_SET('$idAprobador', dg_empresa_consultora.idAprobador) > 0 ";
-   }
+    if ($idAprobador != '') {
+      $where =  $where . " and FIND_IN_SET('$idAprobador', dg_empresa_consultora.idAprobador) > 0 ";
+    }
 
     if ($id != '') {
       $where =  $where . " and idEmpleado = " . $id;
@@ -136,13 +137,13 @@ class time extends conexion
 
               $where
                 ";
-               // echo $query; die;
+    // echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
   public function detalleFactura($idUser, $corte)
   {
-    $id=$idUser;
+    $id = $idUser;
     $where = " WHERE idFactura <> '' ";
 
     $where =  $where . " and idEmpleado = " . $id;
@@ -161,12 +162,26 @@ class time extends conexion
     return $datos;
   }
 
+  public function listModulos()
+  {
+    $query = "
+              SELECT
+                *
+              FROM
+              dm_modulos
+              order by 2
+                ";
+    //echo $query; die;
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
+
   public function listTipoActividad($idTipoActividad)
   {
 
     $where = " WHERE irTipoActividad <> '' ";
-    if($idTipoActividad<>'')
-    $where =  $where . " and irTipoActividad = " . $idTipoActividad;
+    if ($idTipoActividad <> '')
+      $where =  $where . " and irTipoActividad = " . $idTipoActividad;
 
     $query = "
               SELECT
@@ -177,12 +192,10 @@ class time extends conexion
               $where
               order by 1
                 ";
-                //echo $query; die;
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
-
-
 
   public function obtenerEmpleado($NumPersonal)
   {
@@ -228,14 +241,14 @@ class time extends conexion
         // valida los campos obligatorios
         if (
           (!isset($datos['idEmpleado'])) ||
-          (!isset($datos['corte']))||
-          (!isset($datos['fechaActividad']))||
-          (!isset($datos['hora']))||
-          (!isset($datos['idEmpresaConsultora']))||
-          (!isset($datos['idCliente']))||
-          (!isset($datos['idProyecto']))||
-          (!isset($datos['idTipoActividad']))||
-          (!isset($datos['tipoAtencion']))||
+          (!isset($datos['corte'])) ||
+          (!isset($datos['fechaActividad'])) ||
+          (!isset($datos['hora'])) ||
+          (!isset($datos['idEmpresaConsultora'])) ||
+          (!isset($datos['idCliente'])) ||
+          (!isset($datos['idProyecto'])) ||
+          (!isset($datos['idTipoActividad'])) ||
+          (!isset($datos['tipoAtencion'])) ||
           (!isset($datos['descripcion']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
@@ -256,24 +269,23 @@ class time extends conexion
           $this->descripcion = @$datos['descripcion'];
 
           $this->ticketNum = @$datos['ticketNum'];
+          $this->descripcionModulo = @$datos['descripcionModulo'];
 
           $this->observacionEstado = @$datos['observacionEstado'];
-          if(@$datos['estadoAP1']<>'') {
+          if (@$datos['estadoAP1'] <> '') {
             $this->estadoAP1 = @$datos['estadoAP1'];
-          }else{
+          } else {
             $this->estadoAP1 = 1;
           }
 
           $this->creadoPor = @$datos['creadoPor'];
           $this->fechaCreacion = date('Y-m-d');
 
-          if (($datos['mod'])==2) {
+          if (($datos['mod']) == 2) {
             $this->idRegistro = @$datos['idRegistro'];
             $resp = $this->Update();
-
           } else {
             $resp = $this->Insertar();
-
           }
 
 
@@ -320,7 +332,8 @@ class time extends conexion
                     estadoAP2,
                     fechaActualizacion,
                     actualizadoPor,
-                    ticketNum
+                    ticketNum,
+                    descripcionModulo
                   )
               value
               (
@@ -340,9 +353,10 @@ class time extends conexion
                   '1',
                   '$this->fechaCreacion',
                   '$this->creadoPor',
-                  '$this->ticketNum'
+                  '$this->ticketNum',
+                  '$this->descripcionModulo'
                   )";
-                  //echo $query; die;
+    //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
@@ -370,9 +384,10 @@ class time extends conexion
                         observacionEstado ='$this->observacionEstado',
                         fechaActualizacion ='$this->fechaCreacion',
                         actualizadoPor ='$this->creadoPor',
-                        ticketNum ='$this->ticketNum'
+                        ticketNum ='$this->ticketNum',
+                        descripcionModulo ='$this->descripcionModulo'
                     WHERE idRegistro = $this->idRegistro ";
-      //echo $query; die;
+    //echo $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
