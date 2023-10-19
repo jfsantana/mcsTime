@@ -72,17 +72,19 @@
 
 
 <script>
-function validarSesion() {
+  function validarSesion() {
     if (!isset($_SESSION['id_user'])) {
-        header("Location: https://www.google.com");
-        exit();
+      header("Location: https://www.google.com");
+      exit();
     }
-}
+  }
 
-  $(function () {
+  $(function() {
     $("#example1").DataTable({
       "responsive": true,
-      "order": [[ 7, "desc" ]],
+      "order": [
+        [7, "desc"]
+      ],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
@@ -90,23 +92,49 @@ function validarSesion() {
 
     $("#Aprobacion").DataTable({
       "responsive": true,
-      "order": [[ 1, "asc" ]],
+      "order": [
+        [1, "asc"]
+      ],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#Aprobacion_wrapper .col-md-6:eq(0)');
 
+    $("#tablaModalBase").DataTable({
+      "responsive": true,
+      "order": [
+        [1, "asc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": [],
+    }).buttons().container().appendTo('#tablaModalBase_wrapper .col-md-6:eq(0)');
+
     $("#registro").DataTable({
       "responsive": true,
-      "order": [[ 2, "asc" ]],
+      "order": [
+        [2, "asc"]
+      ],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#registro_wrapper .col-md-6:eq(0)');
 
+    $("#tablaModal").DataTable({
+      "responsive": true,
+      "order": [
+        [1, "asc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#tablaModal_wrapper .col-md-6:eq(0)');
+
     $("#reporte").DataTable({
       "responsive": true,
-      "order": [[ 1, "asc" ]],
+      "order": [
+        [1, "asc"]
+      ],
       "lengthChange": true,
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
@@ -126,17 +154,14 @@ function validarSesion() {
 
   });
 
-    //Date picker
-    $('#reservationdate').datetimepicker({
-        format: 'YYYY-MM-DD'
-    });
-    //Date picker
-    $('#reservationdateFin').datetimepicker({
-        format: 'YYYY-MM-DD'
-    });
-
-
-
+  //Date picker
+  $('#reservationdate').datetimepicker({
+    format: 'YYYY-MM-DD'
+  });
+  //Date picker
+  $('#reservationdateFin').datetimepicker({
+    format: 'YYYY-MM-DD'
+  });
 </script>
 
 <script>
@@ -171,7 +196,7 @@ function validarSesion() {
     form.submit();
   }
 
-  function enviarParametrosGetsionCreate(page,mod) {
+  function enviarParametrosGetsionCreate(page, mod) {
 
     var form = document.createElement('form');
     form.method = 'POST';
@@ -194,7 +219,7 @@ function validarSesion() {
   }
 
 
-  function enviarParametrosGetsionUpdate(page,mod,id) {
+  function enviarParametrosGetsionUpdate(page, mod, id) {
 
     var form = document.createElement('form');
     form.method = 'POST';
@@ -222,7 +247,7 @@ function validarSesion() {
     form.submit();
   }
 
-  function enviarParametrosAprobacionDetalleProyecto(page,mod,id,idProyecto) {
+  function enviarParametrosAprobacionDetalleProyecto(page, mod, id, idProyecto) {
 
     var form = document.createElement('form');
     form.method = 'POST';
@@ -256,5 +281,65 @@ function validarSesion() {
     form.submit();
   }
 
+  function enviarParametrosReportFi2(page, mod, mes) {
 
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function enviarParametrosReportFi3(page, mes, consultora, proyecto) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mes';
+    parametro1.value = mes;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'consultora';
+    parametro1.value = consultora;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'proyecto';
+    parametro1.value = proyecto;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
 </script>

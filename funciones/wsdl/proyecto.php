@@ -15,9 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {// Get READ
         echo json_encode($listaclientes);
         http_response_code(200);
 
-    }else {
+    }elseif (isset($_GET['idConsultora']) && isset($_GET['mes']) ) {
+
+      $listaclientes = $_proyecto->listaProyectoConsultora($_GET['idConsultora'],$_GET['mes']);
+      header('Content-Type: application/json;charset=utf-8');
+      echo json_encode($listaclientes);
+      http_response_code(200);
+
+  }else {
         http_response_code(200);
-    }
+  }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {// POST CREATE
     //$postBody = file_get_contents('php://input'); // para el plug in de crome

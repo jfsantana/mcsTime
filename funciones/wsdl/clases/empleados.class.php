@@ -101,6 +101,61 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  ///agregar el filtro de fecha y continuar con el reporte
+  public function obtenerEmpleadoConsultora($idConsultora, $idProyecto, $mes)
+  {
+    $where = " Where consultor <> ''";
+    if ($idConsultora) {
+
+      $where = $where . " and idEmpresaConsultora = $idConsultora";
+    }
+    if ($idProyecto) {
+
+      $where = $where . " and idProyecto = $idProyecto";
+    }
+    if ($mes) {
+      $where = $where . "  and  mes=$mes";
+    }
+    $query = "SELECT
+                *
+              FROM
+                vw_reporteFIConsultoresxProyecto
+              $where
+                ";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
+
+  public function obtenerEmpleadoDetalleMes($id_empleado,$idEmpresaConsultora,$idProyecto, $mes)
+  {
+    $where = " Where idEmpleado <> ''";
+    if ($id_empleado) {
+      $where = $where . " and idEmpleado = $id_empleado";
+    }
+
+    if ($idEmpresaConsultora) {
+      $where = $where . " and idEmpresaConsultora = $idEmpresaConsultora";
+    }
+    if ($idProyecto) {
+      $where = $where . " and idProyecto = $idProyecto";
+    }
+    if ($mes) {
+      $where = $where . "  and  CONCAT(MONTH(fechaActividad),YEAR(fechaActividad))=$mes";
+    }
+
+
+    $query = "SELECT
+                *
+              FROM
+              vw_reportefi_diario_mensual_detalle
+              $where
+
+              order by fechaActividad
+                ";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
 
   public function obtenerEmpleadoAprobadores()
   {
@@ -148,7 +203,7 @@ class empleados extends conexion
     dg_empleado_token.token = '$token'
 
   group by 	dg_empleados.id_usu";
-//echo $query; die;
+    //echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

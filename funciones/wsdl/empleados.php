@@ -34,6 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);
     http_response_code(200);
+  }elseif ( isset($_GET['idConsultora']) && isset($_GET['idProyecto']) && isset($_GET['mes'])) {
+    $datosEmpleado = $_empleados->obtenerEmpleadoConsultora($_GET['idConsultora'],$_GET['idProyecto'], $_GET['mes']);
+    // prepara salida del ws
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
+  }elseif ( isset($_GET['id_empleado']) && isset($_GET['idEmpresaConsultora']) && isset($_GET['idProyecto']) && isset($_GET['mes'])) {
+    $datosEmpleado = $_empleados->obtenerEmpleadoDetalleMes($_GET['id_empleado'],$_GET['idEmpresaConsultora'],$_GET['idProyecto'], $_GET['mes']);
+    // prepara salida del ws
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
   }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
   //$postBody = file_get_contents('php://input'); // para el plug in de crome

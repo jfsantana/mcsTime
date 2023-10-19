@@ -116,7 +116,7 @@ $cortes = array(
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Num Ticket</th>
+
                   <th>Horas Nuevas</th>
                   <th>Horas Rechazadas</th>
                   <th>Horas Aprobadas</th>
@@ -155,7 +155,7 @@ $cortes = array(
                     <td><?php echo $ResumenConsultore['nombreEmpresaConsultora']; ?></td>
                     <td><?php echo $ResumenConsultore['NombreCliente']; ?></td>
                     <td><?php echo $ResumenConsultore['nameProyecto']; ?></td>
-                    <td><?php echo $ResumenConsultore['ticketNum']; ?></td>
+                    <!-- <td>< ?php echo @$ResumenConsultore['ticketNum']; ?></td> -->
                     <td><?php echo $ResumenConsultore['Nuevas'];
                         $totalNuevas = $totalNuevas + $ResumenConsultore['Nuevas']; ?></td>
                     <td><?php echo $ResumenConsultore['Rechazadas'];
@@ -174,7 +174,7 @@ $cortes = array(
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Num Ticket</th>
+                  <!-- <th>Num Ticket</th> -->
                   <th><?php echo $totalNuevas; ?></th>
                   <th><?php echo $totalRechazadas; ?></th>
                   <th><?php echo $totalAprobadas; ?></th>

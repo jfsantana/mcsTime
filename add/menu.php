@@ -36,7 +36,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="../manual/Documentacion del Sisterma de Tiempo de MCS.docx"  class="nav-link ">
+            <a href="../manual/Documentacion del Sisterma de Tiempo de MCS.docx" class="nav-link ">
               <i class="nav-icon far fa-circle text-danger"></i>
               <p>Manual de Usuario</p>
             </a>
@@ -95,15 +95,21 @@
             </a>
           </li>
           <li class="nav-item">
-          <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
+            <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>FI - Proyectado Mensual</p>
             </a>
           </li>
           <li class="nav-item">
-          <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
+            <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>FI - Real Mensual</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('report/fiConsolidadoMensualConsultores.php')" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>FI - Mensual Consultor</p>
             </a>
           </li>
           <!-- <li class="nav-item">
