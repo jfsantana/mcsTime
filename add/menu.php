@@ -82,9 +82,9 @@
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-copy  text-info"></i>
           <p>
-            Consultas
+            Consultas de Hr. Aprob.
             <i class="fas fa-angle-left right"></i>
-            <span class="badge badge-info right">4</span>
+
           </p>
         </a>
         <ul class="nav nav-treeview">
