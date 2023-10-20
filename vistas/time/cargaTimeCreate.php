@@ -240,7 +240,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-2">
                   <label>Modulo</label>
-                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled; ?> required>
+                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled; ?> >
                     <option>Seleccione</option>
                     <?php foreach ($arrayModulos as $modulos) { ?>
                       <option <?php if (@$descripcionModulo == $modulos['descripcionModulo']) {
