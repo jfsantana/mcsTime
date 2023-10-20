@@ -107,7 +107,7 @@
       ],
       "lengthChange": true,
       "autoWidth": false,
-      "buttons": [],
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#tablaModalBase_wrapper .col-md-6:eq(0)');
 
     $("#registro").DataTable({
@@ -150,6 +150,14 @@
       "autoWidth": false,
       "responsive": true,
     });
+
+
+
+
+
+
+
+
     $('.select2').select2();
 
   });
@@ -162,9 +170,7 @@
   $('#reservationdateFin').datetimepicker({
     format: 'YYYY-MM-DD'
   });
-</script>
 
-<script>
   function enviarParametros(page) {
 
     var form = document.createElement('form');
