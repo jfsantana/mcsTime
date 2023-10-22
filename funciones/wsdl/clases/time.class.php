@@ -47,6 +47,37 @@ class time extends conexion
   // Activaciond e token
   private $token = '';
 
+
+
+
+  public function getDetalleMensual($idEmpleadoDetalle, $idEmpresaConsultoraDetalle, $mes)
+  {
+
+
+    $where = " WHERE idEmpleado <> '' ";
+
+    if ($idEmpleadoDetalle != '') {
+      $where =  $where . " and idEmpleado = $idEmpleadoDetalle";
+    }
+
+    if ($idEmpresaConsultoraDetalle != '') {
+      $where =  $where . " and idEmpresaConsultora = " . $idEmpresaConsultoraDetalle;
+    }
+    if ($mes != '') {
+      $where =  $where . " and DATE_FORMAT(fechaActividad, '%m%Y')  = " . $mes;
+    }
+    $query = "
+              SELECT
+                *
+              FROM
+                vw_reportefi_formateado_xls
+
+                $where order by fechaActividad DESC";
+
+    //echo $query; die;
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+  }
   /**
    * Listaod de Cliente
    * http://mcstime/funciones/wsdl/clientes?id

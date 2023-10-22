@@ -101,6 +101,27 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function obtenerEmpleadoConsultoraMes($idEmpresaConsultora, $mes)
+  {
+    $where = " Where consultor <> ''";
+    if ($idEmpresaConsultora) {
+      $where = $where . " and idEmpresaConsultora = $idEmpresaConsultora";
+    }
+    if ($mes) {
+      //$where = $where . "  and  mes=$mes";
+      $where =  $where . " and DATE_FORMAT(fechaActividad, '%m%Y')  = " . $mes;
+    }
+    $query = "SELECT
+                distinct id_usu,Consultor
+              FROM
+                vw_reporteFIConsultoresxProyecto
+              $where
+                ";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
+
   ///agregar el filtro de fecha y continuar con el reporte
   public function obtenerEmpleadoConsultora($idConsultora, $idProyecto, $mes)
   {
@@ -114,7 +135,7 @@ class empleados extends conexion
       $where = $where . " and idProyecto = $idProyecto";
     }
     if ($mes) {
-      $where = $where . "  and  mes=$mes";
+      $where . " and DATE_FORMAT(fechaActividad, '%m%Y')  = " . $mes;
     }
     $query = "SELECT
                 *

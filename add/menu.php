@@ -112,6 +112,13 @@
               <p>FI - Mensual Consultor</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('report/fiReporteDetalleFormatoXLS.php')" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>FI - Reporte Detalle diario</p>
+            </a>
+          </li>
+
           <!-- <li class="nav-item">
             <a href="pages/layout/fixed-sidebar.html" class="nav-link">
               <i class="far fa-circle nav-icon"></i>

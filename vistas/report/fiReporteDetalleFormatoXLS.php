@@ -10,14 +10,16 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 $mes_actual = date('m');
 
-
-
 if (!isset($_POST['mes'])) {
   $corteSeleccionado = $_SESSION['corte'];
   $_POST['mes'] = $_SESSION['corte'];
 } else {
   $corteSeleccionado = $_POST['mes'];
 }
+if (isset($_POST['proyecto'])) {
+  $_POST['consultor'] = $_POST['proyecto'];
+}
+
 
 //var_dump($_POST);
 //var_dump($_SESSION['nombreEmpresaConsultora']);
@@ -29,20 +31,20 @@ $rs         = API::GET($URL, $token);
 $arrayListaConsultora  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
 
-//Listado lista de Proyectos x Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idConsultora=" . @$_POST['consultora'] . "&mes=" . @$_POST['mes'];
-$rs         = API::GET($URL, $token);
-$arrayListaProyecto  = API::JSON_TO_ARRAY($rs);
-//var_dump($arrayListaProyecto);
-
 //Listado lista de consultores por Consultora/Proyecto
 $string = $_POST['mes'];
 $ultimos4 = substr($string, -4);
 $mesAux = substr($string, 0, -4);
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idProyecto=" . @$_POST['proyecto'] . "&idConsultora=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idEmpresaConsultora=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
-var_dump($URL);
+//var_dump($URL);
+
+// DESTALLE DE CONSULTOR MENSUAL
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idEmpleadoDetalle=" . @$_POST['consultor'] . "&idEmpresaConsultoraDetalle=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
+$rs         = API::GET($URL, $token);
+$arrayResumenConsultoresDetalleDiario  = API::JSON_TO_ARRAY($rs);
+
 
 //var_dump($URL);
 $cortes = array(
@@ -62,6 +64,7 @@ $cortes = array(
 
 ?>
 <!-- Content Header (Page header) -->
+
 <div class="content-header">
   <div class="container-fluid">
     <h1 class="m-0">Detalle Mensual Consultor - Proyecto</h1>
@@ -71,7 +74,7 @@ $cortes = array(
         <div class="small-box bg-info">
           <div class="inner">
             <h5>Mes a Consultar
-              <select class="form-control" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiConsolidadoMensualConsultores.php',this.value,'','')">
+              <select class="form-control select2" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiReporteDetalleFormatoXLS.php',this.value,'','')">
                 <?php for ($i = 1; $i <= 12; $i++) {
                   $corteAux2 = $cortes[$i] . @date('Y');
                 ?>
@@ -88,7 +91,7 @@ $cortes = array(
         <div class="small-box bg-info">
           <div class="inner">
             <h5>Consultoras
-              <select class="form-control" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiConsolidadoMensualConsultores.php','<?php echo @$_POST['mes']; ?>',this.value,'')">
+              <select class="form-control select2" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiReporteDetalleFormatoXLS.php','<?php echo @$_POST['mes']; ?>',this.value,'')">
                 <option value="">Todas</option>
                 <?php
                 foreach ($arrayListaConsultora as $listaConsultora) { ?>
@@ -104,14 +107,14 @@ $cortes = array(
       <div class="col-sm-4">
         <div class="small-box bg-info">
           <div class="inner">
-            <h5>Proyectos
-              <select class="form-control" name="proyecto" id="proyecto" onchange="enviarParametrosReportFi3('report/fiConsolidadoMensualConsultores.php','<?php echo @$_POST['mes']; ?>','<?php echo @$_POST['consultora']; ?>',this.value)">
+            <h5>Consultores
+              <select class="form-control select2" style="width: 100%;" name="proyecto" id="proyecto" onchange="enviarParametrosReportFi3('report/fiReporteDetalleFormatoXLS.php','<?php echo @$_POST['mes']; ?>','<?php echo @$_POST['consultora']; ?>',this.value)">
                 <option value="">Todos</option>
                 <?php
-                foreach ($arrayListaProyecto as $listaProyecto) { ?>
-                  <option <?php if (@$_POST['proyecto'] ==  $listaProyecto['idProyecto']) {
+                foreach ($arrayResumenConsultores as $ResumenConsultore) { ?>
+                  <option <?php if (@$_POST['proyecto'] ==  $ResumenConsultore['id_usu']) {
                             echo 'selected';
-                          } ?> value=<?php echo $listaProyecto['idProyecto']; ?>><?php echo $listaProyecto['nameProyecto']; ?></option>
+                          } ?> value=<?php echo $ResumenConsultore['id_usu']; ?>><?php echo $ResumenConsultore['Consultor']; ?></option>
                 <?php } ?>
               </select>
             </h5>
@@ -124,25 +127,6 @@ $cortes = array(
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- <div class="row">
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>Aprobaciones</h3>
-
-            <p>Num Registro de Tiempos</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="#" class="small-box-footer">Registro de Tiempos <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-    </div> -->
-        <!-- /.row -->
-
-
-
         <!-- Main row -->
         <div class="row">
           <!-- Left col -->
@@ -155,46 +139,62 @@ $cortes = array(
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="tablaModalBase" class="table table-bordered table-striped">
+                  <?php
+                  $string1 = $_POST['mes'];
+                  $year1 = substr($string1, -4); // Obtén los últimos 4 dígitos que corresponden al año
+                  $month1 = substr($string1, 0, -4); // Obtén los caracteres restantes que corresponden al mes
+
+                  $date11 = date('01/m/Y', strtotime($string)); // Crea un objeto DateTime con el formato "my" (mes y año)
+
+                  $Presencial = 0;
+                  $Remota = 0;
+                  foreach ($arrayResumenConsultoresDetalleDiario as $ResumenConsultore) { //
+                    $Presencial= $Presencial+$ResumenConsultore['horasPresenciales'];
+                    $Remota = $Remota + $ResumenConsultore['horasRemotas'];
+                  }
+
+
+                  ?>
+                  <input type="hidden" id="fechaActividad" value="<?php echo @$date11; ?>">
                   <thead>
                     <tr>
-                      <th>Trabajador</th>
-                      <th>Cedula</th>
-                      <th>Consultora</th>
                       <th>Cliente</th>
-                      <th>nameProyecto</th>
-                      <th>Aprobador</th>
-                      <th>totalHoras</th>
-
+                      <th>Ticket</th>
+                      <th>Fecha</th>
+                      <th>Consultor</th>
+                      <th>Modulo</th>
+                      <th>Descripcion</th>
+                      <th>Presencial (<?php echo $Presencial; ?>)</th>
+                      <th>Remota (<?php echo $Remota; ?>)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $totalTotal = 0;
-                    foreach ($arrayResumenConsultores as $ResumenConsultore) { //
+
+                    foreach ($arrayResumenConsultoresDetalleDiario as $ResumenConsultore) { //
                     ?>
-
                       <tr>
-
-                        <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl<?php echo $ResumenConsultore['id_usu'] . $ResumenConsultore['idEmpresaConsultora']; ?>"><?php echo $ResumenConsultore['Consultor']; ?> </button></a></td>
-                        <td><?php echo $ResumenConsultore['Cedula']; ?></td>
-                        <td><?php echo $ResumenConsultore['Consultora'] ; ?></td>
-                        <td><?php echo $ResumenConsultore['Cliente'] ; ?></td>
-                        <td><?php echo $ResumenConsultore['nameProyecto']; ?></td>
-                        <td><?php echo $ResumenConsultore['Aprobador']; ?></td>
-                        <td><?php echo $ResumenConsultore['totalHoras'];
-                            $totalTotal = $totalTotal + $ResumenConsultore['totalHoras']; ?></td>
+                        <td><?php echo $ResumenConsultore['NombreCliente']; ?> </td>
+                        <td><?php echo $ResumenConsultore['ticketNum']; ?> </td>
+                        <td><?php echo $ResumenConsultore['fechaActividad']; ?></td>
+                        <td><?php echo $ResumenConsultore['consultor']; ?></td>
+                        <td><?php echo $ResumenConsultore['descripcionModulo']; ?></td>
+                        <td><?php echo $ResumenConsultore['descripcion']; ?></td>
+                        <td><?php echo $ResumenConsultore['horasPresenciales'];?></td>
+                        <td><?php echo $ResumenConsultore['horasRemotas']; ?></td>
                       </tr>
                     <?php } ?>
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th>Trabajador</th>
-                      <th>Cedula</th>
-                      <th>Consultora</th>
                       <th>Cliente</th>
-                      <th>nameProyecto</th>
-                      <th>Aprobador</th>
-                      <th>Horas Totales (<?php echo $totalTotal; ?>)</th>
+                      <th>Ticket</th>
+                      <th>Fecha</th>
+                      <th>Consultor</th>
+                      <th>Modulo</th>
+                      <th>Descripcion</th>
+                      <th>Presencial (<?php echo $Presencial; ?>)</th>
+                      <th>Remota (<?php echo $Remota; ?>)</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -241,7 +241,7 @@ $cortes = array(
               //var_dump($URLaux);
               ?>
 
-              <table id="tablaModal<?php echo $index;?>" name="<?php echo $index;?>" class="table table-bordered table-striped">
+              <table id="tablaModal<?php echo $index; ?>" name="<?php echo $index; ?>" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Consultor</th>
@@ -312,6 +312,3 @@ $cortes = array(
       </div>
 
     <?php } ?>
-
-
-

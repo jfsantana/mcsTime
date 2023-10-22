@@ -189,7 +189,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-4">
                   <label>Consultora</label>
                   <select class="form-control" name="idEmpresaConsultora" <?php echo   @$disabled; ?> required id="idEmpresaConsultora">
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                     <?php foreach ($arrayCconsultora as $consultora) { ?>
                       <option <?php if (@$idEmpresaConsultora == $consultora['idEmpresaConsultora']) {
                                 echo 'selected';
@@ -202,7 +202,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-4">
                   <label>Cliente</label>
                   <select class="form-control" name="idCliente" id="idCliente" <?php echo   @$disabled; ?> required>
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                     <?php foreach ($arrayClientes as $cliente) { ?>
                       <option <?php if (@$idCliente == $cliente['idCliente']) {
                                 echo 'selected';
@@ -215,7 +215,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-4">
                   <label>Proyecto</label>
                   <select class="form-control" name="idProyecto" id="idProyecto" <?php echo   @$disabled; ?> required>
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                     <?php foreach ($arrayProyecto as $proyecto) { ?>
                       <option <?php if (@$idProyecto == $proyecto['idProyecto']) {
                                 echo 'selected';
@@ -228,7 +228,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-5">
                   <label>Tipo de Actividad</label>
                   <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   @$disabled; ?> required>
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                     <?php foreach ($arrayTipoActividad as $tipoActividad) { ?>
                       <option <?php if (@$idTipoActividad == $tipoActividad['irTipoActividad']) {
                                 echo 'selected';
@@ -240,8 +240,8 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-2">
                   <label>Modulo</label>
-                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled; ?> >
-                    <option>Seleccione</option>
+                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled; ?> required >
+                    <option value="">Seleccione</option>
                     <?php foreach ($arrayModulos as $modulos) { ?>
                       <option <?php if (@$descripcionModulo == $modulos['descripcionModulo']) {
                                 echo 'selected';
@@ -251,9 +251,9 @@ if ($_POST['mod'] == 1) {
                 </div>
                 <!-- select arrayModulos-->
                 <div class="col-sm-3">
-                  <label>Tipo de Atencion</label>
+                  <label >Tipo de Atencion</label>
                   <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   @$disabled; ?> required>
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
 
                     <option <?php if (@$tipoAtencion == "Remota") {
                               echo 'selected';
@@ -282,7 +282,7 @@ if ($_POST['mod'] == 1) {
                   <div class="col-sm-4">
                     <label>Estado de la Actividad</label>
                     <select class="form-control" name="estadoAP1" id="estadoAP1" <?php echo   @$disabled; ?>>
-                      <option>Seleccione</option>
+                      <option value="">Seleccione</option>
                       <option <?php if (@$estadoAP1 == "1") {
                                 echo 'selected';
                               } ?> value="1">Nuevo</option>

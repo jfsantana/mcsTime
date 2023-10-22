@@ -47,6 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
     echo json_encode($listaclientes);
     http_response_code(200);
 
+  }elseif ( isset($_GET['idEmpleadoDetalle']) &&  isset($_GET['idEmpresaConsultoraDetalle']) && isset($_GET['mes'])) {
+    $listaclientes = $_time->getDetalleMensual($_GET['idEmpleadoDetalle'], $_GET['idEmpresaConsultoraDetalle'], $_GET['mes']);
+    // prepara salida del ws
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($listaclientes);
+    http_response_code(200);
   } else {
     http_response_code(200);
   }
