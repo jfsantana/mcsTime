@@ -100,11 +100,12 @@
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#Aprobacion_wrapper .col-md-6:eq(0)');
 
-    $("#tablaModalBase").DataTable({
+    $("#tablaModalBase1").DataTable({
       "responsive": true,
       "order": [
         [1, "asc"]
       ],
+      "searching": false,
       "lengthChange": true,
       "autoWidth": false,
       "buttons": [{
