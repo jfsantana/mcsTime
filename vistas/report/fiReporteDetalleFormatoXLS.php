@@ -138,7 +138,7 @@ $cortes = array(
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tablaModalBase1" class="table table-bordered table-striped">
+                <table id="tablaModalBase" class="table table-bordered table-striped">
                   <?php
                   $string1 = $_POST['mes'];
                   $year1 = substr($string1, -4); // Obtén los últimos 4 dígitos que corresponden al año
