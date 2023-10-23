@@ -103,7 +103,7 @@
     $("#tablaModalBase").DataTable({
       "responsive": true,
       "order": [
-        [1, "asc"]
+        [2, "asc"]
       ],
       "searching": false,
       "lengthChange": true,
