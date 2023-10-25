@@ -59,9 +59,9 @@ class aprobacionHoras extends conexion
 
       $cadena = "('MCS,MPS,QP')";
       $array = explode(',', $cadena);
-      $ArrayConsultora = implode("', '", $array) ;
+      $ArrayConsultora = implode("', '", $array);
 
-      $where =  $where . " and nombreEmpresaConsultora in " . $ArrayConsultora ;
+      $where =  $where . " and nombreEmpresaConsultora in " . $ArrayConsultora;
     }
 
     if ($corte != '') {
@@ -72,7 +72,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-               //echo $query; die;
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
@@ -100,7 +100,7 @@ class aprobacionHoras extends conexion
               select * from vw_consolidado_horas_consultores
                 $where order by vw_consolidado_horas_consultores.nombre ";
 
-                //echo $query; die;
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
@@ -147,6 +147,87 @@ class aprobacionHoras extends conexion
                 ";
     $datos = parent::ObtenerDatos($query);
     return $datos;
+  }
+
+
+  public function cargaXcorteXconsultor($corte,$carga)
+  {
+
+
+    $where = " WHERE ";
+    if ($corte) {
+
+
+      if($carga==0){
+        $where= $where." corte = '' ";
+      }else{
+        $where= $where." corte <> '' ". " and corte = " . $corte;
+      }
+
+      // $condicionCarga= " corte <> '' ";
+
+
+      // $where =  $where . " and corte = " . $corte;
+
+      $query = "
+            SELECT
+            id_usu,
+            CONCAT( ape_usu, ', ', nom_usu ) AS consultor,
+            sum( hora ) AS horas,
+            corte
+          FROM
+            (
+              (
+              SELECT
+                *
+              FROM
+                dg_empleados AS emp
+                LEFT JOIN dg_reporte_tiempo AS rt ON emp.id_usu = rt.idEmpleado
+              WHERE
+                emp.id_usu IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt1 WHERE rt1.corte = $corte )
+              ) UNION
+              (
+              SELECT
+                emp.*,
+                '' AS idRegistro,
+                '' AS idEmpleado,
+                '' AS idEmpresaConsultora,
+                '' AS idCliente,
+                '' AS idProyecto,
+                '' AS idTipoActividad,
+                '' AS tipoAtencion,
+                '' AS descripcion,
+                '' AS fechaActividad,
+                '' AS hora,
+                '' AS corte,
+                '' AS fechaCreacion,
+                '' AS creadoPor,
+                '' AS estadoAP1,
+                '' AS estadoAP2,
+                '' AS fechaActualizacion,
+                '' AS actualizadoPor,
+                '' AS observacionEstado,
+                '' AS ticketNum,
+                '' AS descripcionModulo
+              FROM
+                dg_empleados AS emp
+              WHERE
+                emp.id_usu NOT IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt WHERE rt.corte = $corte )
+              )
+            ) AS t
+            $where
+          GROUP BY
+            id_usu,
+            CONCAT( ape_usu, ', ', nom_usu ),
+            corte
+          ORDER BY
+            3 DESC,
+            2
+                  ";
+      //echo $query;  die;
+      $datos = parent::ObtenerDatos($query);
+      return $datos;
+    }
   }
 
   public function listTipoActividad($idTipoActividad)

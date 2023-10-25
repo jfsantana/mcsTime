@@ -149,6 +149,27 @@
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#tablaModal_wrapper .col-md-6:eq(0)');
 
+
+    $("#cargas22").DataTable({
+      "responsive": true,
+      "order": [
+        [1, "desc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print"],
+    }).buttons().container().appendTo('#cargas22_wrapper .col-md-6:eq(0)');
+
+    $("#cargas11").DataTable({
+      "responsive": true,
+      "order": [
+        [1, "desc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print"],
+    }).buttons().container().appendTo('#cargas11_wrapper .col-md-6:eq(0)');
+
     $("#reporte").DataTable({
       "responsive": true,
       "order": [

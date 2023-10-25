@@ -119,6 +119,13 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('report/cargaXcorteXconsultor.php')" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Carga por Corte</p>
+            </a>
+          </li>
+
           <!-- <li class="nav-item">
             <a href="pages/layout/fixed-sidebar.html" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
