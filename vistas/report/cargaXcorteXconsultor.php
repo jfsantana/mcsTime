@@ -24,12 +24,12 @@ if (!isset($_POST['id'])) {
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=1";
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultoresHoras  = API::JSON_TO_ARRAY($rs);
-var_dump($URL);
+//var_dump($URL);
 //Listado Consultora
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=0";
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultoresHorasCero  = API::JSON_TO_ARRAY($rs);
-var_dump($URL);
+//var_dump($URL);
 //var_dump($URL);
 $cortes = array(
   1 => '01',
