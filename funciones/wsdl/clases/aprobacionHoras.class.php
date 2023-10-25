@@ -185,6 +185,7 @@ class aprobacionHoras extends conexion
                 LEFT JOIN dg_reporte_tiempo AS rt ON emp.id_usu = rt.idEmpleado
               WHERE
                 emp.id_usu IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt1 WHERE rt1.corte = $corte )
+                and act_usu = 1
               ) UNION
               (
               SELECT
@@ -213,6 +214,7 @@ class aprobacionHoras extends conexion
                 dg_empleados AS emp
               WHERE
                 emp.id_usu NOT IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt WHERE rt.corte = $corte )
+                and act_usu = 1
               )
             ) AS t
             $where
