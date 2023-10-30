@@ -96,7 +96,7 @@ if ($_POST['mod'] == 1) {
 
   $disabledCorte ='**';
   if($_SESSION['corte']!=@$arrayRegistroTimne[0]['corte']){
-    @$disabledCorte = " readonly disabled ";
+    $disabledCorte = " readonly disabled ";
   }
 
   $estadtusRegistro = "Aprobado";
@@ -175,7 +175,7 @@ if ($_POST['mod'] == 1) {
                 <div class="col-sm-3">
                   <label>Fecha Actividad</label>
                   <div class="input-group date" id="reservationdateFin" data-target-input="nearest">
-                    <input type="text" name="fechaActividad" required <?php echo   @$disabled.@$disabledCorte ; ?> class="form-control datetimepicker-input" data-target="#reservationdateFin" value="<?php echo @$fechaActividad; ?>" />
+                    <input type="text" name="fechaActividad" required <?php echo   @$disabled.$disabledCorte ; ?> class="form-control datetimepicker-input" data-target="#reservationdateFin" value="<?php echo @$fechaActividad; ?>" />
                     <div class="input-group-append" data-target="#reservationdateFin" data-toggle="datetimepicker">
                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
@@ -184,7 +184,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="nombreCliente">Hora(s)</label>
-                  <input type="number" required min=0 max=20 class="form-control" <?php echo   @$disabled.@$disabledCorte ; ?> name="hora" id="hora" placeholder="Carga de horas diarias" value="<?php echo @$hora; ?>">
+                  <input type="number" required min=0 max=20 class="form-control" <?php echo   @$disabled.$disabledCorte ; ?> name="hora" id="hora" placeholder="Carga de horas diarias" value="<?php echo @$hora; ?>">
                 </div>
 
                 <div class="col-sm-3">
@@ -195,7 +195,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Consultora</label>
-                  <select class="form-control" name="idEmpresaConsultora" <?php echo   @$disabled.@$disabledCorte ; ?> required id="idEmpresaConsultora">
+                  <select class="form-control" name="idEmpresaConsultora" <?php echo   @$disabled.$disabledCorte ; ?> required id="idEmpresaConsultora">
                     <option value="">Seleccione</option>
                     <?php foreach ($arrayCconsultora as $consultora) { ?>
                       <option <?php if (@$idEmpresaConsultora == $consultora['idEmpresaConsultora']) {
@@ -208,7 +208,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Cliente</label>
-                  <select class="form-control" name="idCliente" id="idCliente" <?php echo   @$disabled.@$disabledCorte ; ?> required>
+                  <select class="form-control" name="idCliente" id="idCliente" <?php echo   @$disabled.$disabledCorte ; ?> required>
                     <option value="">Seleccione</option>
                     <?php foreach ($arrayClientes as $cliente) { ?>
                       <option <?php if (@$idCliente == $cliente['idCliente']) {
@@ -221,7 +221,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-4">
                   <label>Proyecto</label>
-                  <select class="form-control" name="idProyecto" id="idProyecto" <?php echo   @$disabled.@$disabledCorte ; ?> required>
+                  <select class="form-control" name="idProyecto" id="idProyecto" <?php echo   @$disabled.$disabledCorte ; ?> required>
                     <option value="">Seleccione</option>
                     <?php foreach ($arrayProyecto as $proyecto) { ?>
                       <option <?php if (@$idProyecto == $proyecto['idProyecto']) {
@@ -234,7 +234,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-5">
                   <label>Tipo de Actividad</label>
-                  <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   @$disabled.@$disabledCorte ; ?> required>
+                  <select class="form-control" name="idTipoActividad" id="idTipoActividad" <?php echo   @$disabled.$disabledCorte ; ?> required>
                     <option value="">Seleccione</option>
                     <?php foreach ($arrayTipoActividad as $tipoActividad) { ?>
                       <option <?php if (@$idTipoActividad == $tipoActividad['irTipoActividad']) {
@@ -247,7 +247,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select -->
                 <div class="col-sm-2">
                   <label>Modulo</label>
-                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled.@$disabledCorte ; ?> required >
+                  <select class="form-control" name="descripcionModulo" id="descripcionModulo" <?php echo   @$disabled.$disabledCorte ; ?> required >
                     <option value="">Seleccione</option>
                     <?php foreach ($arrayModulos as $modulos) { ?>
                       <option <?php if (@$descripcionModulo == $modulos['descripcionModulo']) {
@@ -259,7 +259,7 @@ if ($_POST['mod'] == 1) {
                 <!-- select arrayModulos-->
                 <div class="col-sm-3">
                   <label >Tipo de Atencion</label>
-                  <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   @$disabled.@$disabledCorte ; ?> required>
+                  <select class="form-control" name="tipoAtencion" id="tipoAtencion" <?php echo   @$disabled.$disabledCorte ; ?> required>
                     <option value="">Seleccione</option>
 
                     <option <?php if (@$tipoAtencion == "Remota") {
@@ -273,14 +273,14 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-2">
                   <label for="nombreCliente">Numero de Ticket</label>
-                  <input type="text" class="form-control" name="ticketNum" <?php echo   @$disabled.@$disabledCorte ; ?> placeholder="Numero de ticket" value="<?php echo @$ticketNum ?>">
+                  <input type="text" class="form-control" name="ticketNum" <?php echo   @$disabled.$disabledCorte ; ?> placeholder="Numero de ticket" value="<?php echo @$ticketNum ?>">
                 </div>
 
 
 
                 <div class="col-sm-12">
                   <label for="nombreCliente">Descripcion Actividad</label>
-                  <input type="text" class="form-control" name="descripcion" <?php echo   @$disabled.@$disabledCorte ; ?> required placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$descripcion ?>">
+                  <input type="text" class="form-control" name="descripcion" <?php echo   @$disabled.$disabledCorte ; ?> required placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$descripcion ?>">
                 </div>
                 <!-- select -->
 
@@ -288,7 +288,7 @@ if ($_POST['mod'] == 1) {
                 <?php } else { ?>
                   <div class="col-sm-4">
                     <label>Estado de la Actividad</label>
-                    <select class="form-control" name="estadoAP1" id="estadoAP1" <?php echo   @$disabled.@$disabledCorte ; ?>>
+                    <select class="form-control" name="estadoAP1" id="estadoAP1" <?php echo   @$disabled.$disabledCorte ; ?>>
                       <option value="">Seleccione</option>
                       <option <?php if (@$estadoAP1 == "1") {
                                 echo 'selected';
@@ -304,7 +304,7 @@ if ($_POST['mod'] == 1) {
                   </div>
                   <div class="col-sm-12">
                     <label for="nombreCliente">Observacion Rechazo</label>
-                    <input type="text" class="form-control" name="observacionEstado" <?php echo   @$disabled.@$disabledCorte ; ?> placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$Observacion ?>">
+                    <input type="text" class="form-control" name="observacionEstado" <?php echo   @$disabled.$disabledCorte ; ?> placeholder="Descripcion de la Actividad (256 Caracteres)" value="<?php echo @$Observacion ?>">
                   </div>
                 <?php }
 
@@ -335,7 +335,7 @@ if ($_POST['mod'] == 1) {
               <!-- /.card-body -->
               <?php if (@$arrayRegistroTimne[0]['estadoAP1'] <> 3) { ?>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" <?php echo   @$disabled.@$disabledCorte ; ?> disable><?php echo $accion; ?></button>
+                  <button type="submit" class="btn btn-primary" <?php echo   @$disabled.$disabledCorte ; ?> disable><?php echo $accion; ?></button>
                 </div>
               <?php } ?>
           </form>
