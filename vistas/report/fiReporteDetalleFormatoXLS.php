@@ -114,6 +114,7 @@ $cortes = array(
                 foreach ($arrayResumenConsultores as $ResumenConsultore) { ?>
                   <option <?php if (@$_POST['proyecto'] ==  $ResumenConsultore['id_usu']) {
                             echo 'selected';
+                            @$Consultor = @$ResumenConsultore['Consultor']." - ".$corteSeleccionado;
                           } ?> value=<?php echo $ResumenConsultore['id_usu']; ?>><?php echo $ResumenConsultore['Consultor']; ?></option>
                 <?php } ?>
               </select>
@@ -156,6 +157,7 @@ $cortes = array(
 
                   ?>
                   <input type="hidden" id="fechaActividad" value="<?php echo @$date11; ?>">
+                  <input type="hidden" id="Consultor" value="<?php echo @$Consultor; ?>">
                   <thead>
                     <tr>
                       <th>Cliente</th>
@@ -215,100 +217,4 @@ $cortes = array(
       </div><!-- /.container-fluid -->
     </section>
 
-    <?php
-    $totalTotal = 0;
-    foreach ($arrayResumenConsultores as $index => $ResumenConsultore) {
-      //var_dump($ResumenConsultore['id_usu']. $ResumenConsultore['idEmpresaConsultora']);
-    ?>
 
-      <div class="modal fade" id="modal-xl<?php echo $ResumenConsultore['id_usu'] . $ResumenConsultore['idEmpresaConsultora']; ?>">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Extra Large Modal</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <!-- incicio body
-
-              AQUI TENGO QUE LLAMAR AL SERVICIO CON LOS DATOS -->
-              <?php
-              $URLaux        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?id_empleado=" . @$ResumenConsultore['id_usu'] . "&idEmpresaConsultora=" . @$ResumenConsultore['idEmpresaConsultora'] . "&idProyecto=" . @$_POST['proyecto'] . "&mes=" . @$_POST['mes'];
-              $rs         = API::GET($URLaux, $token);
-              $arrayResumenConsultoresDetalle  = API::JSON_TO_ARRAY($rs);
-              //var_dump($URLaux);
-              ?>
-
-              <table id="tablaModal<?php echo $index; ?>" name="<?php echo $index; ?>" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Consultor</th>
-                    <th>Cedula</th>
-                    <th>Consultora</th>
-                    <th>Cliente</th>
-                    <th>Proyecto</th>
-                    <th>Tipo de Atencion</th>
-                    <th>Num Ticket</th>
-
-                    <th>Descripcion Activiad</th>
-                    <th>Fecha Actividad</th>
-                    <th>Horas</th>
-
-
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  $totalTotal = 0;
-                  foreach ($arrayResumenConsultoresDetalle as $ResumenConsultoreDetalle) { //
-                  ?>
-
-                    <tr>
-
-                      <td><?php echo $ResumenConsultoreDetalle['ape_usu'] . ', ' . $ResumenConsultoreDetalle['nom_usu']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['ced_usu']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['nombreEmpresaConsultora']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['NombreCliente']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['nameProyecto']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['tipoAtencion']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['ticketNum']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['descripcion']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['fechaActividad']; ?></td>
-                      <td><?php echo $ResumenConsultoreDetalle['hora']; ?></td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th>Consultor</th>
-                    <th>Cedula</th>
-                    <th>Consultora</th>
-                    <th>Cliente</th>
-                    <th>Proyecto</th>
-                    <th>Tipo de Atencion</th>
-                    <th>Num Ticket</th>
-
-                    <th>Descripcion Activiad</th>
-                    <th>Fecha Actividad</th>
-                    <th>Horas</th>
-                  </tr>
-                </tfoot>
-              </table>
-
-              <!-- Fin Body -->
-              </body>
-
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-
-    <?php } ?>

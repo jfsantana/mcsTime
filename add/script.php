@@ -112,6 +112,7 @@
 
           extend: 'excel',
           text: 'Exportar a Excel',
+          filename: $('#Consultor').val(),
           customize: function(xlsx) {
             var sheet = xlsx.xl.worksheets['sheet1.xml'];
             var fechaActividad = $('#fechaActividad').val();
