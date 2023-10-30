@@ -405,4 +405,33 @@
     document.body.appendChild(form);
     form.submit();
   }
+
+
+  function enviarRegistoTiempo(page, corteActual, corteSelect) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'corteActual';
+    parametro1.value = corteActual;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'corteSelect';
+    parametro1.value = corteSelect;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
 </script>

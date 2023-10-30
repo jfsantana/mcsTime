@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_user'])) {
   exit();
 }
 
-//var_dump($_SESSION);
+//var_dump($_POST);
 
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
@@ -52,27 +52,66 @@ if ($_SESSION['id_rol'] < 30) {
 } else {
   $corteAux = $_SESSION['corte'];
 }
+
+if(@$_POST['corteActual']){
+
+}else{
+  $_POST['corteActual']=$corteAux;
+}
+
+if(@$_POST['corteSelect']){
+
+}else{
+  $_POST['corteSelect']=$corteAux;
+}
 // var_dump($_SESSION['id_rol'] );
 // var_dump($corteAux);
 
 
 
 if ($_SESSION['id_rol'] == 20) {
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux . "&idAprobador=" . $_SESSION['id_user'];
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $_POST['corteSelect'] . "&idProyecto=" . $idProyectoAux . "&idAprobador=" . $_SESSION['id_user'];
 } else {
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $corteAux . "&idProyecto=" . $idProyectoAux . "&idProyecto=";
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $idAux . "&corte=" . $_POST['corteSelect'] . "&idProyecto=" . $idProyectoAux . "&idProyecto=";
 }
 //var_dump($URL);
 $rs         = API::GET($URL, $token);
 $arrayTiempo  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
+
+$meses = array(
+  1 => '01',
+  2 => '02',
+  3 => '03',
+  4 => '04',
+  5 => '05',
+  6 => '06',
+  7 => '07',
+  8 => '08',
+  9 => '09',
+  10 => '10',
+  11 => '11',
+  12 => '12'
+);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Registro de Tiempos (Corte - <?php echo $corteAux; ?>)</h1>
+
+        <h1 class="m-0">Visualizar Registro de Tiempos del Corte: <select class="form-control" name="corte" id="miSelect" onchange="enviarRegistoTiempo('time/cargaTimeResumenList.php','<?php echo $corteAux; ?>',this.value)" required>
+                  <?php for ($i = 1; $i <= 12; $i++) {
+                    $corteAux2 = $meses[$i] . @date('Y');
+                  ?>
+                    <option <?php if (@$corteAux2 ==  @$_POST['corteSelect']) {
+                              echo 'selected';
+                            } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
+
+                  <?php } ?>
+
+
+                </select></h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
