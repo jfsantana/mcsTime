@@ -130,6 +130,22 @@
       ]
     }).buttons().container().appendTo('#tablaModalBase_wrapper .col-md-6:eq(0)');
 
+    $("#tablaExcel").DataTable({
+      "responsive": true,
+      "order": [
+        [2, "asc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv",
+        {
+          extend: 'excel',
+          text: 'Excel',
+          filename: $('#nameProyecto').val()
+        }, "pdf", "print", "colvis"
+      ],
+    }).buttons().container().appendTo('#tablaExcel_wrapper .col-md-6:eq(0)');
+
     $("#registro").DataTable({
       "responsive": true,
       "order": [

@@ -42,7 +42,7 @@ $mesAux = substr($string, 0, -4);
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idProyecto=" . @$_POST['proyecto'] . "&idConsultora=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
-var_dump($URL);
+//var_dump($URL);
 
 //var_dump($URL);
 $cortes = array(
@@ -94,6 +94,7 @@ $cortes = array(
                 foreach ($arrayListaConsultora as $listaConsultora) { ?>
                   <option <?php if (@$_POST['consultora'] ==  $listaConsultora['idEmpresaConsultora']) {
                             echo 'selected';
+                            @$consultoraAUx=@$listaConsultora['nombreEmpresaConsultora'];
                           } ?> value=<?php echo $listaConsultora['idEmpresaConsultora']; ?>><?php echo $listaConsultora['nombreEmpresaConsultora']; ?></option>
                 <?php } ?>
               </select>
@@ -111,6 +112,7 @@ $cortes = array(
                 foreach ($arrayListaProyecto as $listaProyecto) { ?>
                   <option <?php if (@$_POST['proyecto'] ==  $listaProyecto['idProyecto']) {
                             echo 'selected';
+                            @$nameProyecto= @$consultoraAUx. " " .$listaProyecto['nameProyecto']." - ".$corteSeleccionado;
                           } ?> value=<?php echo $listaProyecto['idProyecto']; ?>><?php echo $listaProyecto['nameProyecto']; ?></option>
                 <?php } ?>
               </select>
@@ -154,7 +156,8 @@ $cortes = array(
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tablaModalBase" class="table table-bordered table-striped">
+                <input type="hidden" id="nameProyecto" value="<?php echo @$nameProyecto; ?>">
+                <table id="tablaExcel" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>Trabajador</th>
@@ -170,6 +173,7 @@ $cortes = array(
                   <tbody>
                     <?php
                     $totalTotal = 0;
+
                     foreach ($arrayResumenConsultores as $ResumenConsultore) { //
                     ?>
 
@@ -177,8 +181,8 @@ $cortes = array(
 
                         <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-xl<?php echo $ResumenConsultore['id_usu'] . $ResumenConsultore['idEmpresaConsultora']; ?>"><?php echo $ResumenConsultore['Consultor']; ?> </button></a></td>
                         <td><?php echo $ResumenConsultore['Cedula']; ?></td>
-                        <td><?php echo $ResumenConsultore['Consultora'] ; ?></td>
-                        <td><?php echo $ResumenConsultore['Cliente'] ; ?></td>
+                        <td><?php echo $ResumenConsultore['Consultora']; ?></td>
+                        <td><?php echo $ResumenConsultore['Cliente']; ?></td>
                         <td><?php echo $ResumenConsultore['nameProyecto']; ?></td>
                         <td><?php echo $ResumenConsultore['Aprobador']; ?></td>
                         <td><?php echo $ResumenConsultore['totalHoras'];
@@ -241,7 +245,7 @@ $cortes = array(
               //var_dump($URLaux);
               ?>
 
-              <table id="tablaModal<?php echo $index;?>" name="<?php echo $index;?>" class="table table-bordered table-striped">
+              <table id="tablaModal<?php echo $index; ?>" name="<?php echo $index; ?>" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Consultor</th>
@@ -312,6 +316,3 @@ $cortes = array(
       </div>
 
     <?php } ?>
-
-
-
