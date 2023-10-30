@@ -109,14 +109,12 @@
       "lengthChange": true,
       "autoWidth": false,
       "buttons": [{
-
           extend: 'excel',
-          text: 'Exportar a Excel',
+          text: 'Excel',
           filename: $('#Consultor').val(),
           customize: function(xlsx) {
             var sheet = xlsx.xl.worksheets['sheet1.xml'];
             var fechaActividad = $('#fechaActividad').val();
-
             var currentDate = fechaActividad; //moment().format('DD/MM/YYYY');
             var firstDayOfMonth = moment(currentDate, 'DD/MM/YYYY').startOf('month').format('DD/MM/YYYY');
             var lastDayOfMonth = moment(currentDate, 'DD/MM/YYYY').endOf('month').format('DD/MM/YYYY');
@@ -186,7 +184,7 @@
       "autoWidth": false,
       "buttons": ["csv", "excel", "pdf", "print"],
     }).buttons().container().appendTo('#cargas11_wrapper .col-md-6:eq(0)');
-
+//
     $("#reporte").DataTable({
       "responsive": true,
       "order": [
