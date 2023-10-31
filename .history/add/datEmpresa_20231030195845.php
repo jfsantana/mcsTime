@@ -1,4 +1,4 @@
 <?php
-$nombreEmpresa='Consultora';
+$nombreEmpresa='MCS';
 $nombreSoftware= '<b>Reporte -</b>Horas ';
 ?>
