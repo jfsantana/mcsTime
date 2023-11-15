@@ -56,11 +56,10 @@ class aprobacionHoras extends conexion
     $where = " WHERE corte <> '' ";
 
     if ($consultora != '') {
-
-      $cadena = "('MCS,MPS,QP')";
+    //  $cadena = "('MCS,MPS,QP')";
+      $cadena = "('$consultora')";
       $array = explode(',', $cadena);
       $ArrayConsultora = implode("', '", $array);
-
       $where =  $where . " and nombreEmpresaConsultora in " . $ArrayConsultora;
     }
 
@@ -85,20 +84,81 @@ class aprobacionHoras extends conexion
   public function listdoConsultoresConsolidado($corte, $idAprobador)
   {
 
-
-    $where = " WHERE corte <> '' ";
+    $where = " WHERE `rt`.`fechaActividad` <> '' ";
 
     if ($idAprobador != '') {
       $where =  $where . "  and FIND_IN_SET('$idAprobador', vw_consolidado_horas_consultores.idAprobador) > 0 ";
     }
 
     if ($corte != '') {
-      $where =  $where . " and corte = '" . $corte . "'";
+      $where =  $where . " and date_format( `rt`.`fechaActividad`, '%m%Y' ) = '" . $corte . "'";
     }
 
+
+
     $query = "
-              select * from vw_consolidado_horas_consultores
-                $where order by vw_consolidado_horas_consultores.nombre ";
+    SELECT
+    `rt`.`idRegistro` AS `idRegistro`,
+    `emp`.`id_usu` AS `id_usu`,
+    concat( `emp`.`ape_usu`, ', ', `emp`.`nom_usu` ) AS `nombre`,
+    `ec`.`nombreEmpresaConsultora` AS `nombreEmpresaConsultora`,
+    `dg_cliente`.`NombreCliente` AS `NombreCliente`,
+    `rt`.`idProyecto` AS `idProyecto`,
+    `dg_proyecto`.`nameProyecto` AS `nameProyecto`,
+    date_format( `rt`.`fechaActividad`, '%m%Y' ) AS `corte`,
+    `ec`.`idAprobador` AS `idAprobador`,
+    `dg_reporte_factura`.`urlFactura` AS `urlFactura`,
+    sum((
+      CASE
+
+          WHEN ( `rt`.`estadoAP1` = 1 ) THEN
+          `rt`.`hora` ELSE 0
+        END
+        )) AS `Nuevas`,
+      sum((
+        CASE
+
+            WHEN ( `rt`.`estadoAP1` = 2 ) THEN
+            `rt`.`hora` ELSE 0
+          END
+          )) AS `Rechazadas`,
+        sum((
+          CASE
+
+              WHEN ( `rt`.`estadoAP1` = 3 ) THEN
+              `rt`.`hora` ELSE 0
+            END
+            )) AS `Aprobadas`
+        FROM
+          (((((
+                    `dg_reporte_tiempo` `rt`
+                    JOIN `dg_empleados` `emp` ON ((
+                        `rt`.`idEmpleado` = `emp`.`id_usu`
+                      )))
+                  JOIN `dg_empresa_consultora` `ec` ON ((
+                      `rt`.`idEmpresaConsultora` = `ec`.`idEmpresaConsultora`
+                    )))
+                JOIN `dg_cliente` ON ((
+                    `rt`.`idCliente` = `dg_cliente`.`idCliente`
+                  )))
+              JOIN `dg_proyecto` ON ((
+                  `rt`.`idProyecto` = `dg_proyecto`.`idProyecto`
+                )))
+            LEFT JOIN `dg_reporte_factura` ON (((
+                  `rt`.`idEmpleado` = `dg_reporte_factura`.`idEmpleado`
+                  )
+              AND ( `rt`.`corte` = `dg_reporte_factura`.`corte` ))))
+              $where
+        GROUP BY
+          `rt`.`idEmpleado`,
+          `rt`.`idEmpresaConsultora`,
+          `ec`.`idAprobador`,
+          `rt`.`idCliente`,
+          `rt`.`idProyecto`,
+        `rt`.`corte`,
+    `dg_reporte_factura`.`urlFactura`
+
+                 order by concat( `emp`.`ape_usu`, ', ', `emp`.`nom_usu` ) , date_format( `rt`.`fechaActividad`, '%m%Y' )  ";
 
     //echo $query; die;
     $datos = parent::ObtenerDatos($query);
@@ -150,7 +210,7 @@ class aprobacionHoras extends conexion
   }
 
 
-  public function cargaXcorteXconsultor($corte,$carga)
+  public function cargaXcorteXconsultor($corte, $carga)
   {
 
 
@@ -158,10 +218,10 @@ class aprobacionHoras extends conexion
     if ($corte) {
 
 
-      if($carga==0){
-        $where= $where." corte = '' ";
-      }else{
-        $where= $where." corte <> '' ". " and corte = " . $corte;
+      if ($carga == 0) {
+        $where = $where . " fechaActividad = '' ";
+      } else {
+        $where = $where . "fechaActividad  <> ''  and fechaActividad = $corte";
       }
 
       // $condicionCarga= " corte <> '' ";
@@ -170,61 +230,84 @@ class aprobacionHoras extends conexion
       // $where =  $where . " and corte = " . $corte;
 
       $query = "
-            SELECT
-            id_usu,
-            CONCAT( ape_usu, ', ', nom_usu ) AS consultor,
-            sum( hora ) AS horas,
-            corte
-          FROM
-            (
-              (
-              SELECT
-                *
-              FROM
-                dg_empleados AS emp
-                LEFT JOIN dg_reporte_tiempo AS rt ON emp.id_usu = rt.idEmpleado
-              WHERE
-                emp.id_usu IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt1 WHERE rt1.corte = $corte )
-                and act_usu = 1
-              ) UNION
-              (
-              SELECT
-                emp.*,
-                '' AS idRegistro,
-                '' AS idEmpleado,
-                '' AS idEmpresaConsultora,
-                '' AS idCliente,
-                '' AS idProyecto,
-                '' AS idTipoActividad,
-                '' AS tipoAtencion,
-                '' AS descripcion,
-                '' AS fechaActividad,
-                '' AS hora,
-                '' AS corte,
-                '' AS fechaCreacion,
-                '' AS creadoPor,
-                '' AS estadoAP1,
-                '' AS estadoAP2,
-                '' AS fechaActualizacion,
-                '' AS actualizadoPor,
-                '' AS observacionEstado,
-                '' AS ticketNum,
-                '' AS descripcionModulo
-              FROM
-                dg_empleados AS emp
-              WHERE
-                emp.id_usu NOT IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt WHERE rt.corte = $corte )
-                and act_usu = 1
-              )
-            ) AS t
-            $where
-          GROUP BY
-            id_usu,
-            CONCAT( ape_usu, ', ', nom_usu ),
-            corte
-          ORDER BY
-            3 DESC,
-            2
+
+      SELECT
+      id_usu,
+      CONCAT( ape_usu, ', ', nom_usu ) AS consultor,
+      hora  AS horas,
+      fechaActividad
+    FROM
+      (
+        (
+        SELECT
+           emp.*,
+          '' AS idRegistro,
+          '' AS idEmpleado,
+          '' AS idEmpresaConsultora,
+          '' AS idCliente,
+          '' AS idProyecto,
+          '' AS idTipoActividad,
+          '' AS tipoAtencion,
+          '' AS descripcion,
+          DATE_FORMAT(fechaActividad, '%m%Y') AS fechaActividad,
+          SUM(hora) AS hora,
+          '' AS corte,
+          '' AS fechaCreacion,
+          '' AS creadoPor,
+          '' AS estadoAP1,
+          '' AS estadoAP2,
+          '' AS fechaActualizacion,
+          '' AS actualizadoPor,
+          '' AS observacionEstado,
+          '' AS ticketNum,
+          '' AS descripcionModulo
+        FROM
+          dg_empleados AS emp
+          LEFT JOIN dg_reporte_tiempo AS rt ON emp.id_usu = rt.idEmpleado
+        WHERE
+          emp.id_usu IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt1 WHERE DATE_FORMAT(rt1.fechaActividad, '%m%Y') = $corte)
+          and act_usu = 1
+          and  DATE_FORMAT(rt.fechaActividad, '%m%Y')= $corte
+          GROUP BY id_usu, DATE_FORMAT(rt.fechaActividad, '%m%Y')
+        ) UNION
+        (
+        SELECT
+          emp.*,
+          '' AS idRegistro,
+          '' AS idEmpleado,
+          '' AS idEmpresaConsultora,
+          '' AS idCliente,
+          '' AS idProyecto,
+          '' AS idTipoActividad,
+          '' AS tipoAtencion,
+          '' AS descripcion,
+          '' AS fechaActividad,
+          '' AS hora,
+          '' AS corte,
+          '' AS fechaCreacion,
+          '' AS creadoPor,
+          '' AS estadoAP1,
+          '' AS estadoAP2,
+          '' AS fechaActualizacion,
+          '' AS actualizadoPor,
+          '' AS observacionEstado,
+          '' AS ticketNum,
+          '' AS descripcionModulo
+        FROM
+          dg_empleados AS emp
+
+        WHERE
+          emp.id_usu NOT IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt WHERE DATE_FORMAT(fechaActividad, '%m%Y')  =  112023)
+          and act_usu = 1
+        )
+      ) AS t
+      $where
+  GROUP BY
+      id_usu,
+      CONCAT( ape_usu, ', ', nom_usu )
+     ORDER BY
+       2
+
                   ";
       //echo $query;  die;
       $datos = parent::ObtenerDatos($query);

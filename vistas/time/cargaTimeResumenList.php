@@ -65,7 +65,7 @@ if(@$_POST['corteSelect']){
   $_POST['corteSelect']=$corteAux;
 }
 // var_dump($_SESSION['id_rol'] );
-// var_dump($corteAux);
+ //var_dump( $_POST['corteSelect'] );
 
 
 

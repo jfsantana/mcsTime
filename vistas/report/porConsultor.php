@@ -10,12 +10,17 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 $mes_actual = date('m');
 
-
+//var_dump($_SESSION);
 
 if (!isset($_POST['id'])) {
   $corteSeleccionado = $_SESSION['corte'];
 } else {
   $corteSeleccionado = $_POST['id'];
+}
+
+
+if($_SESSION['id_rol']==30){
+
 }
 
 //var_dump($_SESSION['nombreEmpresaConsultora']);
@@ -47,8 +52,8 @@ $cortes = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Por Consultor</h1>
-        <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
+        <h1 class="m-0">Aprobadas por Consultor</h1>
+        <h5>Seleccione el Mes que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/porConsultor.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
             ?>
@@ -106,7 +111,7 @@ $cortes = array(
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Horas Totales Aprobadas</th>
+                  <th>Horas (Aprob.)</th>
                 </tr>
               </thead>
               <tbody>
@@ -133,7 +138,7 @@ $cortes = array(
                   <th>Consultora</th>
                   <th>Cliente</th>
                   <th>Proyecto</th>
-                  <th>Total - <?php echo $totalTotal; ?> (hr)</th>
+                  <th>Horas (Aprob.) -  <?php echo $totalTotal; ?> (hr)</th>
                 </tr>
               </tfoot>
             </table>

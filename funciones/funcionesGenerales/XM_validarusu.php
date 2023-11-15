@@ -31,6 +31,9 @@ $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
 //qui
+// var_dump($URL);
+// var_dump(json_encode($parametros)); die;
+
 
 if (@$rs['result']['token']) {
 
@@ -68,7 +71,7 @@ if (@$rs['result']['token']) {
 
 
 
-  //print_r($_SESSION); die;
+
 
 
   $dia_actual = date('j'); // Obtener el día actual
@@ -76,7 +79,9 @@ if (@$rs['result']['token']) {
 
 
 
-
+  $_SESSION['corte'] = @date('mY');
+  /*
+  // Esto se elimino por que se definio que todas las consultoras trabajaran con el mismo corte
   if ($dia_actual <= 27) {
     $_SESSION['corte'] = @date('mY');
   } else { //&& $dia_semana_actual >= 1 && $dia_semana_actual <= 5
@@ -84,7 +89,7 @@ if (@$rs['result']['token']) {
     $mes = date('m', $prox_dia_habil) + 1;
     $_SESSION['corte'] = $mes . date('Y', $prox_dia_habil);
   }
-
+  */
 
   //$_SESSION['corte'] = @date('mY');
 

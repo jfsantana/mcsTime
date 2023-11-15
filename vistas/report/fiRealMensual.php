@@ -60,15 +60,25 @@ $horasHabiles = $diasHabiles * 8;
 
 /***/
 
+$where = "mes = '$mesAux'";
+if ($_SESSION['nombreEmpresaConsultora']!= '') {
+  //  $cadena = "('MCS,MPS,QP')";
+    $cadena = "('".$_SESSION['nombreEmpresaConsultora']."')";
+    $array = explode(',', $cadena);
+    $ArrayConsultora = implode("', '", $array);
+    $where =  $where . " and Consultora in " . $ArrayConsultora;
+  }
+
+
 $query = "SELECT
           *
           FROM
             vw_horas_reales_mensuales_consultor
           WHERE
-            mes = '$mesAux'
+          $where
           GROUP BY
           Consultor";
-
+//var_dump($query );
 $arrayResumenConsultores = $conn->ObtenerDatos($query);
 //print_r($query);
 //Listado Consultora

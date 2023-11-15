@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
   } else {
     http_response_code(200);
   }
-} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POS T
   //$postBody = file_get_contents('php://input'); // para el plugd in de crome
   $postBody = json_encode($_POST);
 

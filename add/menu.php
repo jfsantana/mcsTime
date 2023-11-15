@@ -82,47 +82,41 @@
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-copy  text-info"></i>
           <p>
-            Consultas de Hr. Aprob.
+            Consultas
             <i class="fas fa-angle-left right"></i>
 
           </p>
         </a>
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="#" onclick="enviarParametros('report/porConsultor.php')" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Por Consultor</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" onclick="enviarParametros('report/fiProyectoadoMensual27.php')" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>FI - Proyectado Mensual</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>FI - Real Mensual</p>
+              <p>Total Hr. Reportadas</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('report/porConsultor.php')" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Horas Aprob. Consultor</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/fiConsolidadoMensualConsultores.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>FI - Mensual Consultor</p>
+              <p>Detalle Aprobadas Consultor</p>
             </a>
           </li>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/fiReporteDetalleFormatoXLS.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>FI - Reporte Detalle diario</p>
+              <p>Reporte XLS FI</p>
             </a>
           </li>
 
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/cargaXcorteXconsultor.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Carga por Corte</p>
+              <p>Verificacion de reporte de Hr.</p>
             </a>
           </li>
 

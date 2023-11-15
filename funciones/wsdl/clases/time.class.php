@@ -95,8 +95,10 @@ class time extends conexion
     if ($id != '') {
       $where =  $where . " and idEmpleado = " . $id;
     }
+
+
     if ($corte != '') {
-      $where =  $where . " and corte = " . $corte;
+      $where =  $where . " and  DATE_FORMAT(fechaActividad, '%m%Y')  = " . $corte;
     }
 
     if ($idProyecto != '') {

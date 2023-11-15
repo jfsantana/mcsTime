@@ -10,7 +10,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 $mes_actual = date('m');
 
-
+//var_dump($_SESSION);
 
 if (!isset($_POST['mes'])) {
   $corteSeleccionado = $_SESSION['corte'];
@@ -22,14 +22,14 @@ if (!isset($_POST['mes'])) {
 //var_dump($_POST);
 //var_dump($_SESSION['nombreEmpresaConsultora']);
 
-
 //Listado lista de Consultoras
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
 $rs         = API::GET($URL, $token);
 $arrayListaConsultora  = API::JSON_TO_ARRAY($rs);
-//var_dump($URL);
+//var_dump($arrayListaConsultora);
 
 //Listado lista de Proyectos x Consultora
+
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idConsultora=" . @$_POST['consultora'] . "&mes=" . @$_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayListaProyecto  = API::JSON_TO_ARRAY($rs);
@@ -166,7 +166,7 @@ $cortes = array(
                       <th>Cliente</th>
                       <th>nameProyecto</th>
                       <th>Aprobador</th>
-                      <th>totalHoras</th>
+                      <th>Horas (Aprob.)</th>
 
                     </tr>
                   </thead>
@@ -198,7 +198,7 @@ $cortes = array(
                       <th>Cliente</th>
                       <th>nameProyecto</th>
                       <th>Aprobador</th>
-                      <th>Horas Totales (<?php echo $totalTotal; ?>)</th>
+                      <th>Horas (Aprob.) (<?php echo $totalTotal; ?>)</th>
                     </tr>
                   </tfoot>
                 </table>

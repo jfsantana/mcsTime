@@ -52,7 +52,7 @@ $cortes = array(
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Carga por Consultores enun Corte</h1>
+        <h1 class="m-0">Consultores Con y Sin reporte en el Mes</h1>
         <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/cargaXcorteXconsultor.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
             <?php for ($i = 1; $i <= 12; $i++) {
               $corteAux2 = $cortes[$i] . @date('Y');
@@ -81,7 +81,7 @@ $cortes = array(
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Consultor con Horas totales reportadas</h3>
+            <h3 class="card-title">Consultor <b>CON</b> horas reportadas</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -95,7 +95,8 @@ $cortes = array(
               <tbody>
                 <?php
                 $totalTotal = 0;
-                foreach ($arrayResumenConsultoresHoras as $ResumenConsultore) { //
+                //var_dump($arrayResumenConsultoresHoras);
+                foreach (@$arrayResumenConsultoresHoras as $ResumenConsultore) { //
                 ?>
 
                     <tr>
@@ -124,7 +125,7 @@ $cortes = array(
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Consultor Sin Reporte de Horas</h3>
+            <h3 class="card-title">Consultor <b>SIN</b> horas reportadas</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
@@ -142,15 +143,15 @@ $cortes = array(
                 ?>
 
                     <tr>
-                      <td><?php echo $ResumenConsultore['consultor'] ?></a></td>
-                      <td><?php echo $ResumenConsultore['horas'];  $totalTotal = $totalTotal + $ResumenConsultore['horas']; ?></td>
+                      <td><?php echo @$ResumenConsultore['consultor'] ?></a></td>
+                      <td> - </td>
                     </tr>
                 <?php } ?>
               </tbody>
               <tfoot>
                 <tr>
                   <th>Consultor</th>
-                  <th>Horas Reportadas - <?php echo $totalTotal; ?> (hr)</th>
+                  <th>Horas Reportadas</th>
                 </tr>
               </tfoot>
             </table>

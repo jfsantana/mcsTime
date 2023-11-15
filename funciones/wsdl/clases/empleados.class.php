@@ -103,19 +103,63 @@ class empleados extends conexion
 
   public function obtenerEmpleadoConsultoraMes($idEmpresaConsultora, $mes)
   {
-    $where = " Where consultor <> ''";
+    $where = " Where  `dg_reporte_tiempo`.`estadoAP1` = 3 ";
     if ($idEmpresaConsultora) {
-      $where = $where . " and idEmpresaConsultora = $idEmpresaConsultora";
+
+      $where = $where . " and `dg_empresa_consultora`.`idEmpresaConsultora` = $idEmpresaConsultora";
     }
+
+
     if ($mes) {
-      //$where = $where . "  and  mes=$mes";
-      $where =  $where . " and DATE_FORMAT(fechaActividad, '%m%Y')  = " . $mes;
+      $where =  $where." and DATE_FORMAT(fechaActividad, '%m%Y')  = '" . $mes."'";
     }
     $query = "SELECT
-                distinct id_usu,Consultor
+                `dg_empleados`.`id_usu` AS `id_usu`,
+                concat( `dg_empleados`.`ape_usu`, ', ', `dg_empleados`.`nom_usu` ) AS `Consultor`,
+                `dg_empleados`.`ced_usu` AS `Cedula`,
+                `dg_empresa_consultora`.`idEmpresaConsultora` AS `idEmpresaConsultora`,
+                `dg_empresa_consultora`.`nombreEmpresaConsultora` AS `Consultora`,
+                concat( `e`.`ape_usu`, ', ', `e`.`nom_usu` ) AS `Aprobador`,
+                `dg_cliente`.`NombreCliente` AS `Cliente`,
+                `dg_reporte_factura`.`urlFactura` AS `urlFactura`,
+                `dg_reporte_tiempo`.`idProyecto` AS `idProyecto`,
+                `dg_proyecto`.`nameProyecto` AS `nameProyecto`,
+                `dg_reporte_tiempo`.`fechaActividad` AS `fechaActividad`,
+                sum( `dg_reporte_tiempo`.`hora` ) AS `totalHoras`
               FROM
-                vw_reporteFIConsultoresxProyecto
+                (((((((
+                              `dg_reporte_tiempo`
+                              JOIN `dg_empleados` ON ((
+                                  `dg_reporte_tiempo`.`idEmpleado` = `dg_empleados`.`id_usu`
+                                )))
+                            JOIN `dg_empresa_consultora` ON ((
+                                `dg_reporte_tiempo`.`idEmpresaConsultora` = `dg_empresa_consultora`.`idEmpresaConsultora`
+                              )))
+                          JOIN `dg_empleados` `e` ON ((
+                              `dg_empresa_consultora`.`idAprobador` = `e`.`id_usu`
+                            )))
+                        JOIN `dg_cliente` ON ((
+                            `dg_reporte_tiempo`.`idCliente` = `dg_cliente`.`idCliente`
+                          )))
+                      JOIN `dg_proyecto` ON ((
+                          `dg_reporte_tiempo`.`idProyecto` = `dg_proyecto`.`idProyecto`
+                        )))
+                    JOIN `dm_tipo_actividad` ON ((
+                        `dg_reporte_tiempo`.`idTipoActividad` = `dm_tipo_actividad`.`irTipoActividad`
+                      )))
+                  LEFT JOIN `dg_reporte_factura` ON (((
+                        `dg_reporte_tiempo`.`idEmpleado` = `dg_reporte_factura`.`idEmpleado`
+                        )
+                    AND ( `dg_reporte_tiempo`.`corte` = `dg_reporte_factura`.`corte` ))))
+
               $where
+
+              GROUP BY
+                `dg_empleados`.`id_usu`,
+                `dg_empresa_consultora`.`idEmpresaConsultora`
+              ORDER BY
+                `dg_reporte_tiempo`.`fechaActividad`,
+                `dg_reporte_factura`.`urlFactura`
                 ";
     //echo $query; die;
     return parent::ObtenerDatos($query);
@@ -125,23 +169,66 @@ class empleados extends conexion
   ///agregar el filtro de fecha y continuar con el reporte
   public function obtenerEmpleadoConsultora($idConsultora, $idProyecto, $mes)
   {
-    $where = " Where consultor <> ''";
+    $where = " Where  `dg_reporte_tiempo`.`estadoAP1` = 3 ";
     if ($idConsultora) {
 
-      $where = $where . " and idEmpresaConsultora = $idConsultora";
+      $where = $where . " and `dg_empresa_consultora`.`idEmpresaConsultora` = $idConsultora";
     }
     if ($idProyecto) {
 
-      $where = $where . " and idProyecto = $idProyecto";
+      $where = $where . " and `dg_reporte_tiempo`.`idProyecto` = $idProyecto";
     }
+
     if ($mes) {
-      $where . " and DATE_FORMAT(fechaActividad, '%m%Y')  = " . $mes;
+      $where =  $where." and DATE_FORMAT(fechaActividad, '%m%Y')  = '" . $mes."'";
     }
     $query = "SELECT
-                *
+                `dg_empleados`.`id_usu` AS `id_usu`,
+                concat( `dg_empleados`.`ape_usu`, ', ', `dg_empleados`.`nom_usu` ) AS `Consultor`,
+                `dg_empleados`.`ced_usu` AS `Cedula`,
+                `dg_empresa_consultora`.`idEmpresaConsultora` AS `idEmpresaConsultora`,
+                `dg_empresa_consultora`.`nombreEmpresaConsultora` AS `Consultora`,
+                concat( `e`.`ape_usu`, ', ', `e`.`nom_usu` ) AS `Aprobador`,
+                `dg_cliente`.`NombreCliente` AS `Cliente`,
+                `dg_reporte_factura`.`urlFactura` AS `urlFactura`,
+                `dg_reporte_tiempo`.`idProyecto` AS `idProyecto`,
+                `dg_proyecto`.`nameProyecto` AS `nameProyecto`,
+                `dg_reporte_tiempo`.`fechaActividad` AS `fechaActividad`,
+                sum( `dg_reporte_tiempo`.`hora` ) AS `totalHoras`
               FROM
-                vw_reporteFIConsultoresxProyecto
+                (((((((
+                              `dg_reporte_tiempo`
+                              JOIN `dg_empleados` ON ((
+                                  `dg_reporte_tiempo`.`idEmpleado` = `dg_empleados`.`id_usu`
+                                )))
+                            JOIN `dg_empresa_consultora` ON ((
+                                `dg_reporte_tiempo`.`idEmpresaConsultora` = `dg_empresa_consultora`.`idEmpresaConsultora`
+                              )))
+                          JOIN `dg_empleados` `e` ON ((
+                              `dg_empresa_consultora`.`idAprobador` = `e`.`id_usu`
+                            )))
+                        JOIN `dg_cliente` ON ((
+                            `dg_reporte_tiempo`.`idCliente` = `dg_cliente`.`idCliente`
+                          )))
+                      JOIN `dg_proyecto` ON ((
+                          `dg_reporte_tiempo`.`idProyecto` = `dg_proyecto`.`idProyecto`
+                        )))
+                    JOIN `dm_tipo_actividad` ON ((
+                        `dg_reporte_tiempo`.`idTipoActividad` = `dm_tipo_actividad`.`irTipoActividad`
+                      )))
+                  LEFT JOIN `dg_reporte_factura` ON (((
+                        `dg_reporte_tiempo`.`idEmpleado` = `dg_reporte_factura`.`idEmpleado`
+                        )
+                    AND ( `dg_reporte_tiempo`.`corte` = `dg_reporte_factura`.`corte` ))))
+
               $where
+
+              GROUP BY
+                `dg_empleados`.`id_usu`,
+                `dg_empresa_consultora`.`idEmpresaConsultora`
+              ORDER BY
+                `dg_reporte_tiempo`.`fechaActividad`,
+                `dg_reporte_factura`.`urlFactura`
                 ";
     //echo $query; die;
     return parent::ObtenerDatos($query);

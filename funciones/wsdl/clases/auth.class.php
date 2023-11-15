@@ -73,7 +73,7 @@ class auth extends conexion{
       $query="DELETE FROM dg_empleado_token
                 WHERE TIMESTAMPDIFF(DAY, fecha, NOW()) > 1;
                 ";
-      echo $query; die;
+      //echo $query; die;
       $datos1 = parent::ObtenerDatos($query);
 
       if(isset($datos1[0]["log_usu"])){
