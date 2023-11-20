@@ -150,7 +150,7 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-6">
-                  <label>Consultora</label>
+                  <label>Consultora Contratante</label>
                   <select class="form-control select2" name="idConsultoraContratante" style="width: 100%;">
                     <option>Seleccione</option>
                     <?php

@@ -83,7 +83,7 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>Cargo</th>
 
                   <th>Foraneo</th>
-                  <th>Consultora</th>
+                  <th>Consultora Contratante</th>
 
                   <th>Ubicacion Residencia</th>
                   <th>Ident.</th>
@@ -157,7 +157,7 @@ $arrayConsultores  = API::JSON_TO_ARRAY($rs);
                   <th>Cargo</th>
 
                   <th>Foraneo</th>
-                  <th>Consultora</th>
+                  <th>Consultora Contratante</th>
 
                   <th>Ubicacion Residencia</th>
                   <th>Ident.</th>
