@@ -16,7 +16,7 @@ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?apr
 $rs         = API::GET($URL, $token);
 $arrayAprobadores  = API::JSON_TO_ARRAY($rs);
 
- //print("<pre>".print_r(($arrayAprobadores) ,true)."</pre>"); //die;
+ //print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
@@ -96,7 +96,7 @@ if ($_POST['mod'] == 1) {
                         //strpos($arrayCconsultora[0]['idAprobador'],$aprobadores['id_usu']) || ($arrayCconsultora[0]['idAprobador']==$aprobadores['id_usu'])
                         ){echo 'checked';}?>
                     class="custom-control-input" type="checkbox" name="aprobador[]" id="customCheckbox<?php echo $aprobadores['id_usu'];?>" value="<?php echo $aprobadores['id_usu']; ?>">
-                    <label for="customCheckbox<?php echo $aprobadores['id_usu'];?>" class="custom-control-label"><?php echo $aprobadores['ape_usu']; ?>, <?php echo $aprobadores['nom_usu']; ?>  </label>
+                    <label for="customCheckbox<?php echo $aprobadores['id_usu'];?>" class="custom-control-label"><?php echo $aprobadores['ape_usu']; ?>, <?php echo $aprobadores['nom_usu']; ?> (rol: <?php echo $aprobadores['des_rol'];?>)  </label>
                   </div>
 
                 <?php  } ?>

@@ -267,7 +267,18 @@ class empleados extends conexion
 
   public function obtenerEmpleadoAprobadores()
   {
-    $query = 'select * from dg_empleados where rol_usu < 21 and act_usu=1';
+    $query = 'SELECT
+                dg_empleados.*,
+                dm_rol.des_rol
+              FROM
+                dg_empleados
+                INNER JOIN
+                dm_rol
+                ON
+                  dg_empleados.rol_usu = dm_rol.id_rol
+              WHERE
+                rol_usu < 31 AND
+                act_usu = 1';
 
     return parent::ObtenerDatos($query);
   }
