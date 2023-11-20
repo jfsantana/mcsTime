@@ -20,7 +20,7 @@ if (isset($_POST['proyecto'])) {
   $_POST['consultor'] = $_POST['proyecto'];
 }
 
-
+//var_dump($_SESSION);
 //var_dump($_POST);
 //var_dump($_SESSION['nombreEmpresaConsultora']);
 
@@ -31,20 +31,32 @@ $rs         = API::GET($URL, $token);
 $arrayListaConsultora  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
 
+
+
+// DESTALLE DE CONSULTOR MENSUAL
+if($_SESSION['id_rol']=='30'){
+    $consultoraAux=@$_SESSION['idEmpresaConsultora'];
+}else{
+  $consultoraAux=@$_POST['consultora'];
+}
+
+
 //Listado lista de consultores por Consultora/Proyecto
 $string = $_POST['mes'];
 $ultimos4 = substr($string, -4);
 $mesAux = substr($string, 0, -4);
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idEmpresaConsultora=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idEmpresaConsultora=" . @$consultoraAux . "&mes=" . $_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
 
-// DESTALLE DE CONSULTOR MENSUAL
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idEmpleadoDetalle=" . @$_POST['consultor'] . "&idEmpresaConsultoraDetalle=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
+
+
+
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idEmpleadoDetalle=" . @$_POST['consultor'] . "&idEmpresaConsultoraDetalle=" . @$consultoraAux . "&mes=" . $_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultoresDetalleDiario  = API::JSON_TO_ARRAY($rs);
-
+//var_dump($URL);
 
 //var_dump($URL);
 $cortes = array(
@@ -67,7 +79,7 @@ $cortes = array(
 
 <div class="content-header">
   <div class="container-fluid">
-    <h1 class="m-0">Detalle Mensual Consultor - Proyecto</h1>
+    <h1 class="m-0">Detalle Mensual Consultor - Proyecto  (Exporte XML)</h1>
     <div class="row mb-2">
 
       <div class="col-sm-4">
@@ -92,13 +104,26 @@ $cortes = array(
           <div class="inner">
             <h5>Consultoras
               <select class="form-control select2" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiReporteDetalleFormatoXLS.php','<?php echo @$_POST['mes']; ?>',this.value,'')">
+              <?php
+              if($_SESSION['id_rol']<'30'){?>
                 <option value="">Todas</option>
-                <?php
-                foreach ($arrayListaConsultora as $listaConsultora) { ?>
-                  <option <?php if (@$_POST['consultora'] ==  $listaConsultora['idEmpresaConsultora']) {
+                <?php }?>
+
+                  <?php if($_SESSION['id_rol']=='30'){?>
+
+                    <option selected value=<?php echo $_SESSION['idEmpresaConsultora']; ?>><?php echo $_SESSION['nombreEmpresaConsultora']; ?></option>
+
+                    <?php }else{?>
+                      <?php foreach ($arrayListaConsultora as $listaConsultora) { ?>
+                      <option <?php if (@$_POST['consultora'] ==  $listaConsultora['idEmpresaConsultora']) {
                             echo 'selected';
                           } ?> value=<?php echo $listaConsultora['idEmpresaConsultora']; ?>><?php echo $listaConsultora['nombreEmpresaConsultora']; ?></option>
-                <?php } ?>
+                          <?php } ?>
+                    <?php } ?>
+
+
+
+
               </select>
             </h5>
           </div>

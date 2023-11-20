@@ -22,15 +22,26 @@ if (!isset($_POST['mes'])) {
 //var_dump($_POST);
 //var_dump($_SESSION['nombreEmpresaConsultora']);
 
+
+// DESTALLE DE CONSULTOR MENSUAL
+if($_SESSION['id_rol']=='30'){
+  $consultoraAux=@$_SESSION['idEmpresaConsultora'];
+  $consultoraIni=@$_SESSION['idEmpresaConsultora'];;
+}else{
+$consultoraAux=@$_POST['consultora'];
+$consultoraIni='';
+
+}
+
 //Listado lista de Consultoras
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=$consultoraIni";
 $rs         = API::GET($URL, $token);
 $arrayListaConsultora  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayListaConsultora);
 
 //Listado lista de Proyectos x Consultora
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idConsultora=" . @$_POST['consultora'] . "&mes=" . @$_POST['mes'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idConsultora=" . @$consultoraAux . "&mes=" . @$_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayListaProyecto  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayListaProyecto);
@@ -89,7 +100,9 @@ $cortes = array(
           <div class="inner">
             <h5>Consultoras
               <select class="form-control" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiConsolidadoMensualConsultores.php','<?php echo @$_POST['mes']; ?>',this.value,'')">
+              <?php if($_SESSION['id_rol']<'30'){?>
                 <option value="">Todas</option>
+                <?php }?>
                 <?php
                 foreach ($arrayListaConsultora as $listaConsultora) { ?>
                   <option <?php if (@$_POST['consultora'] ==  $listaConsultora['idEmpresaConsultora']) {
