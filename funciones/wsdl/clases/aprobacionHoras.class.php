@@ -210,11 +210,17 @@ class aprobacionHoras extends conexion
   }
 
 
-  public function cargaXcorteXconsultor($corte, $carga)
+  public function cargaXcorteXconsultor($corte, $carga,$consultora)
   {
-
-
     $where = " WHERE ";
+
+    if($consultora){
+      $consultoraWhere =" and rt.idEmpresaConsultora=$consultora ";
+    }else{
+      $consultoraWhere=' ';
+    }
+
+
     if ($corte) {
 
 
@@ -268,6 +274,7 @@ class aprobacionHoras extends conexion
           emp.id_usu IN ( SELECT DISTINCT idEmpleado FROM dg_reporte_tiempo AS rt1 WHERE DATE_FORMAT(rt1.fechaActividad, '%m%Y') = $corte)
           and act_usu = 1
           and  DATE_FORMAT(rt.fechaActividad, '%m%Y')= $corte
+          $consultoraWhere
           GROUP BY id_usu, DATE_FORMAT(rt.fechaActividad, '%m%Y')
         ) UNION
         (

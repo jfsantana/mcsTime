@@ -50,7 +50,7 @@ $arrayListaProyecto  = API::JSON_TO_ARRAY($rs);
 $string = $_POST['mes'];
 $ultimos4 = substr($string, -4);
 $mesAux = substr($string, 0, -4);
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idProyecto=" . @$_POST['proyecto'] . "&idConsultora=" . @$_POST['consultora'] . "&mes=" . $_POST['mes'];
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?idProyecto=" . @$_POST['proyecto'] . "&idConsultora=" . @$consultoraAux . "&mes=" . $_POST['mes'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
@@ -314,7 +314,7 @@ $cortes = array(
                 </tfoot>
               </table>
 
-              <!-- Fin Body -->
+              <!-- Fin Body  -->
               </body>
 
             </div>

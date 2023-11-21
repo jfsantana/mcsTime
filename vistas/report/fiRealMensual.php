@@ -82,7 +82,7 @@ $query = "SELECT
 $arrayResumenConsultores = $conn->ObtenerDatos($query);
 //print_r($query);
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&idAprobador=";
+//$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&idAprobador=";
 // $rs         = API::GET($URL, $token);
 //var_dump($arrayResumenConsultores);
 //$arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);

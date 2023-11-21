@@ -18,15 +18,24 @@ if (!isset($_POST['id'])) {
   $corteSeleccionado = $_POST['id'];
 }
 
+// DESTALLE DE CONSULTOR MENSUAL
+if($_SESSION['id_rol']=='30'){
+  $consultoraAux=@$_SESSION['idEmpresaConsultora'];
+  $consultoraIni=@$_SESSION['idEmpresaConsultora'];;
+}else{
+$consultoraAux="";
+
+}
+
 //var_dump($_SESSION['nombreEmpresaConsultora']);
 
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=1";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=1&consultora=$consultoraAux";
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultoresHoras  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=0";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&cargaXcorteXconsultor=&carga=0&consultora=$consultoraAux";
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultoresHorasCero  = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);

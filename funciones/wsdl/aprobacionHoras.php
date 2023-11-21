@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get
 
   } elseif (isset($_GET['cargaXcorteXconsultor']) &&(isset($_GET['corte'])) &&(isset($_GET['carga']))  ) {
 
-    $listaclientes = $_aprobacionHoras->cargaXcorteXconsultor($_GET['corte'], $_GET['carga']);
+    $listaclientes = $_aprobacionHoras->cargaXcorteXconsultor($_GET['corte'], $_GET['carga'],$_GET['consultora']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($listaclientes);
     http_response_code(200);
