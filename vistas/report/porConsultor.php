@@ -29,7 +29,7 @@ if($_SESSION['id_rol']==30){
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&Consultora=" . $_SESSION['nombreEmpresaConsultora'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
-var_dump($URL);
+//var_dump($URL);
 //var_dump($URL);
 $cortes = array(
   1 => '01',
