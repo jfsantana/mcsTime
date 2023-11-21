@@ -53,7 +53,7 @@ class aprobacionHoras extends conexion
   public function listdoConsultoresConsolidadoConsultora($corte, $consultora)
   {
 
-    $where = " WHERE fechaActividad <> '' ";
+    $where = " WHERE DATE_FORMAT(fechaActividad, '%m%Y') <> '' ";
 
     if ($consultora != '') {
     //  $cadena = "('MCS,MPS,QP')";
