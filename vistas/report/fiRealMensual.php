@@ -87,6 +87,8 @@ $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHor
 //var_dump($arrayResumenConsultores);
 //$arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
 
+echo $URL;
+
 
 $cortes = array(
   1 => '01',

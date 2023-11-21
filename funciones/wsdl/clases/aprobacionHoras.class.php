@@ -53,7 +53,7 @@ class aprobacionHoras extends conexion
   public function listdoConsultoresConsolidadoConsultora($corte, $consultora)
   {
 
-    $where = " WHERE corte <> '' ";
+    $where = " WHERE fechaActividad <> '' ";
 
     if ($consultora != '') {
     //  $cadena = "('MCS,MPS,QP')";
@@ -64,7 +64,7 @@ class aprobacionHoras extends conexion
     }
 
     if ($corte != '') {
-      $where =  $where . " and corte = '" . $corte . "'";
+      $where =  $where . " and DATE_FORMAT(fechaActividad, '%m%Y') = '" . $corte . "'";
     }
 
     $query = "
@@ -100,7 +100,7 @@ class aprobacionHoras extends conexion
     SELECT
     `rt`.`idRegistro` AS `idRegistro`,
     `emp`.`id_usu` AS `id_usu`,
-    concat( `emp`.`ape_usu`, ', ', `emp`.`nom_usu` ) AS `nombre`,
+    concat( `emp`.`nom_usu`, ', ', `emp`.`ape_usu` ) AS `nombre`,
     `ec`.`nombreEmpresaConsultora` AS `nombreEmpresaConsultora`,
     `dg_cliente`.`NombreCliente` AS `NombreCliente`,
     `rt`.`idProyecto` AS `idProyecto`,
@@ -158,9 +158,9 @@ class aprobacionHoras extends conexion
         `rt`.`corte`,
     `dg_reporte_factura`.`urlFactura`
 
-                 order by concat( `emp`.`ape_usu`, ', ', `emp`.`nom_usu` ) , date_format( `rt`.`fechaActividad`, '%m%Y' )  ";
+                 order by concat( `emp`.`nom_usu`, ', ', `emp`.`ape_usu` ), date_format( `rt`.`fechaActividad`, '%m%Y' )  ";
 
-    //echo $query; die;
+   // echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }

@@ -29,7 +29,7 @@ if($_SESSION['id_rol']==30){
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprobacionHoras?corte=" . @$corteSeleccionado . "&Consultora=" . $_SESSION['nombreEmpresaConsultora'];
 $rs         = API::GET($URL, $token);
 $arrayResumenConsultores  = API::JSON_TO_ARRAY($rs);
-//var_dump($URL);
+var_dump($URL);
 //var_dump($URL);
 $cortes = array(
   1 => '01',
@@ -74,25 +74,6 @@ $cortes = array(
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-    <!-- <div class="row">
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3>Aprobaciones</h3>
-
-            <p>Num Registro de Tiempos</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-bag"></i>
-          </div>
-          <a href="#" class="small-box-footer">Registro de Tiempos <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-    </div> -->
-    <!-- /.row -->
-
-
-
     <!-- Main row -->
     <div class="row">
       <!-- Left col -->
