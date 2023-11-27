@@ -84,7 +84,7 @@ class aprobacionHoras extends conexion
   public function listdoConsultoresConsolidado($corte, $idAprobador)
   {
 
-    $where = " WHERE `rt`.`fechaActividad` <> '' ";
+    $where = " WHERE `rt`.`idRegistro` <> '' ";
 
     if ($idAprobador != '') {
       $where =  $where . "  and FIND_IN_SET('$idAprobador', vw_consolidado_horas_consultores.idAprobador) > 0 ";
@@ -160,7 +160,7 @@ class aprobacionHoras extends conexion
 
                  order by concat( `emp`.`nom_usu`, ', ', `emp`.`ape_usu` ), date_format( `rt`.`fechaActividad`, '%m%Y' )  ";
 
-   // echo $query; die;
+    echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
