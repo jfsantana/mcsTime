@@ -160,7 +160,7 @@ class aprobacionHoras extends conexion
 
                  order by concat( `emp`.`nom_usu`, ', ', `emp`.`ape_usu` ), date_format( `rt`.`fechaActividad`, '%m%Y' )  ";
 
-    echo $query; die;
+    //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
   }
