@@ -63,14 +63,18 @@ $cortes = array(
       <div class="col-sm-6">
         <h1 class="m-0">Consultores Con y Sin reporte en el Mes</h1>
         <h5>Seleccione el Corte que desea consultar <select class="form-control" name="corte" id="miSelect" onchange="enviarParametrosGetsionUpdate('report/cargaXcorteXconsultor.php','<?php echo $_SESSION['id_user']; ?>',this.value)">
-            <?php for ($i = 1; $i <= 12; $i++) {
-              $corteAux2 = $cortes[$i] . @date('Y');
-            ?>
-              <option <?php if (@$corteAux2 ==  $corteSeleccionado) {
+        <?php
+                for ($anio = @date('Y')-1; $anio <= @date('Y'); $anio++) {
+                  for ($i = 1; $i <= 12; $i++) {
+                    $corteAux2 = $cortes[$i] . $anio
+              ?>
+                    <option <?php if (@$corteAux2 ==  $corteSeleccionado) {
                         echo 'selected';
                       } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
-
-            <?php } ?>
+              <?php
+                  }
+                }
+              ?>
 
 
           </select></h5>

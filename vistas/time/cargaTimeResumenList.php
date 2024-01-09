@@ -101,14 +101,18 @@ $meses = array(
       <div class="col-sm-6">
 
         <h1 class="m-0">Visualizar Registro de Tiempos del Corte: <select class="form-control" name="corte" id="miSelect" onchange="enviarRegistoTiempo('time/cargaTimeResumenList.php','<?php echo $corteAux; ?>',this.value)" required>
-                  <?php for ($i = 1; $i <= 12; $i++) {
-                    $corteAux2 = $meses[$i] . @date('Y');
-                  ?>
-                    <option <?php if (@$corteAux2 ==  @$_POST['corteSelect']) {
-                              echo 'selected';
-                            } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
-
-                  <?php } ?>
+                  <?php
+                for ($anio = @date('Y')-1; $anio <= @date('Y'); $anio++) {
+                  for ($i = 1; $i <= 12; $i++) {
+                    $corteAux2 = $meses[$i] . $anio
+              ?>
+                    <option <?php if (@$corteAux2 ==   @$_POST['corteSelect']) {
+                        echo 'selected';
+                      } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
+              <?php
+                  }
+                }
+              ?>
 
 
                 </select></h1>

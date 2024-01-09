@@ -83,13 +83,18 @@ $cortes = array(
           <div class="inner">
             <h5>Mes a Consultar
               <select class="form-control" name="fecha" id="fecha" onchange="enviarParametrosReportFi3('report/fiConsolidadoMensualConsultores.php',this.value,'','')">
-                <?php for ($i = 1; $i <= 12; $i++) {
-                  $corteAux2 = $cortes[$i] . @date('Y');
-                ?>
-                  <option <?php if (@$corteAux2 ==  $corteSeleccionado) {
-                            echo 'selected';
-                          } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
-                <?php } ?>
+              <?php
+                for ($anio = @date('Y')-1; $anio <= @date('Y'); $anio++) {
+                  for ($i = 1; $i <= 12; $i++) {
+                    $corteAux2 = $cortes[$i] . $anio
+              ?>
+                    <option <?php if (@$corteAux2 ==  $corteSeleccionado) {
+                        echo 'selected';
+                      } ?> value=<?php echo $corteAux2; ?>><?php echo $corteAux2; ?></option>
+              <?php
+                  }
+                }
+              ?>
               </select>
             </h5>
           </div>
